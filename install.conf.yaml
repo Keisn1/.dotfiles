@@ -8,6 +8,11 @@
     ~/.bashrc: bashrc
     ~/.zshrc: zshrc
     ~/.zprofile: zprofile
+    ~/.fzf.bash: fzf.bash
+    ~/.fzf.zsh: fzf.zsh
+    ~/.p10k.zsh: p10k.zsh
+    ~/.spacemacs: spacemacs
+    ~/.KayFreyerDefault.json: KayFreyerDefault.json
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
