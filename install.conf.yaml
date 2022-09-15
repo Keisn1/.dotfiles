@@ -11,8 +11,9 @@
     ~/.fzf.bash: fzf.bash
     ~/.fzf.zsh: fzf.zsh
     ~/.p10k.zsh: p10k.zsh
-    ~/.spacemacs: spacemacs
+    ~/.spacemacs: spacemacs_init
     ~/.KayFreyerDefault.json: KayFreyerDefault.json
+    ~/.oh-my-zsh: ohmyzsh
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
