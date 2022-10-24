@@ -62,6 +62,7 @@ This function should only modify configuration layer settings."
           org-log-into-drawer 'LOGBOOK
           org-enable-notifications t
           org-start-notification-daemon-on-startup t
+          org-startup-indented t
           )
      (python :variables
              python-backend 'lsp python-lsp-server 'pyright
