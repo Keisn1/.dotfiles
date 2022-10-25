@@ -110,13 +110,16 @@ source $ZSH/oh-my-zsh.sh
 # added lines
 
 # will overwrite any Setting of ZSH-theme
-source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
+# source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
+source "$(brew --prefix powerlevel10k)"/powerlevel10k.zsh-theme
 
 # source zsh-autosuggestions
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source "$(brew --prefix zsh-autosuggestions)"/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # source zsh-history-substring-search and binding keys to Up and Down Arrow
-source /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+# source /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+source "$(brew --prefix zsh-history-substring-search)"/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 bindkey '^p' history-substring-search-up
 bindkey '^n' history-substring-search-down
 
