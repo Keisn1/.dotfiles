@@ -1,2 +1,2 @@
-eval "$("$(brew --prefix)"/bin/brew shellenv)"
-eval "$(nodenv init -)"
+# eval "$("$(brew --prefix)"/bin/brew shellenv)"
+# eval "$(nodenv init -)"
