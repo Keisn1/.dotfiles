@@ -137,6 +137,11 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 ###################################
+# added lines for JAVA
+export JAVA_HOME=/Users/kaypro/jdk/jdk-19.0.1.jdk/Contents/Home
+export PATH=$JAVA_HOME/bin:$PATH
+
+###################################
 # automatically added lines
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
