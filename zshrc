@@ -123,6 +123,12 @@ source "$(brew --prefix zsh-history-substring-search)"/share/zsh-history-substri
 bindkey '^p' history-substring-search-up
 bindkey '^n' history-substring-search-down
 
+# the next two have been in zprofile but didn't work
+# set shims for nodenv
+eval "$(nodenv init -)"
+
+# some evluation for brew and shellenv 
+eval "$("$(brew --prefix)"/bin/brew shellenv)"
 ##################################
 # added lines through pyenv installation
 
