@@ -138,7 +138,7 @@ eval "$(pyenv init -)"
 
 ###################################
 # added lines for JAVA
-export JAVA_HOME=/Users/kaypro/jdk/jdk-19.0.1.jdk/Contents/Home
+export JAVA_HOME=~/jdk/jdk-19.0.1.jdk/Contents/Home
 export PATH=$JAVA_HOME/bin:$PATH
 
 ###################################
