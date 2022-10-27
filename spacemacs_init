@@ -43,6 +43,9 @@ This function should only modify configuration layer settings."
                       auto-completion-enable-help-tooltip t
                       )
      better-defaults
+     (c-c++ :variables
+            c-c++-backend 'lsp-clangd
+            )
      docker
      emacs-lisp
      git
