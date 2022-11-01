@@ -141,8 +141,10 @@ eval "$(pyenv init -)"
 export JAVA_HOME=~/jdk/jdk-19.0.1.jdk/Contents/Home
 export PATH=$JAVA_HOME/bin:$PATH
 
+export MAVEN_OPTS=-Xmx512m
 export MAVEN_HOME=~/maven/apache-maven-3.8.6
 export PATH=$MAVEN_HOME/bin:$PATH
+
 
 ###################################
 # automatically added lines
