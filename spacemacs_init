@@ -66,13 +66,11 @@ This function should only modify configuration layer settings."
           org-enable-notifications t
           org-start-notification-daemon-on-startup t
           org-startup-indented t
-          visual-line-mode t
           )
      (python :variables
              python-backend 'lsp python-lsp-server 'pyright
              python-formatter 'black
              python-format-on-save t
-             smartparens-mode t
              python-sort-imports-on-save t
              )
      rust
@@ -610,6 +608,15 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+
+  ;; org-mode configuration to enable some modes
+  (add-hook 'org-mode-hook 'auto-fill-mode)
+  (add-hook 'org-mode-hook 'smartparens-mode)
+  (add-hook 'org-mode-hook 'visual-line-mode)
+
+  ;; python-mode configuration to enable some modes
+  (add-hook 'org-mode-hook 'smartparens-mode)
+  (add-hook 'org-mode-hook 'visual-line-mode)
 
   ;; Load shell environment variables
   (exec-path-from-shell-initialize)
