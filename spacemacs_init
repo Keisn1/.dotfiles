@@ -66,6 +66,8 @@ This function should only modify configuration layer settings."
           org-enable-notifications t
           org-start-notification-daemon-on-startup t
           org-startup-indented t
+          org-ellipsis " ▼"
+          org-superstar-headline-bullets-list '(9673 9675 "◉" "○")
           )
      (python :variables
              python-backend 'lsp python-lsp-server 'pyright
@@ -613,10 +615,24 @@ before packages are loaded."
   (add-hook 'org-mode-hook 'auto-fill-mode)
   (add-hook 'org-mode-hook 'smartparens-mode)
   (add-hook 'org-mode-hook 'visual-line-mode)
+  (dolist (face '((org-level-1 . 1.2)
+                  (org-level-2 . 1.1)
+                  (org-level-3 . 1.05)
+                  (org-level-4 . 1.0)
+                  (org-level-5 . 1.1)
+                  (org-level-6 . 1.1)
+                  (org-level-7 . 1.1)
+                  (org-level-8 . 1.1)))
+    (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face)))
 
   ;; python-mode configuration to enable some modes
-  (add-hook 'org-mode-hook 'smartparens-mode)
-  (add-hook 'org-mode-hook 'visual-line-mode)
+  (add-hook 'python-mode-hook 'smartparens-mode)
+  (add-hook 'python-mode-hook 'visual-line-mode)
+
+  ;; python-mode configuration to enable some modes
+  (add-hook 'java-mode-hook 'smartparens-mode)
+  (add-hook 'java-mode-hook 'visual-line-mode)
+
 
   ;; Load shell environment variables
   (exec-path-from-shell-initialize)
