@@ -104,6 +104,7 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(
                                       exec-path-from-shell
+                                      dashboard
                                       )
 
    ;; A list of packages that cannot be updated.
@@ -210,7 +211,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil show the version string in the Spacemacs buffer. It will
    ;; appear as (spacemacs version)@(emacs version)
    ;; (default t)
-   dotspacemacs-startup-buffer-show-version t
+   dotspacemacs-startup-buffer-show-version nil
 
    ;; Specify the startup banner. Default value is `official', it displays
    ;; the official spacemacs logo. An integer value is the index of text
@@ -238,7 +239,9 @@ It should only modify the values of Spacemacs settings."
    ;; number is the project limit and the second the limit on the recent files
    ;; within a project.
    dotspacemacs-startup-lists '((recents . 5)
-                                (projects . 7))
+                                (projects . 5)
+                                (agenda .5)
+                                )
 
    ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
@@ -268,11 +271,15 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil, `kill-buffer' on *scratch* buffer
    ;; will bury it instead of killing.
-   dotspacemacs-scratch-buffer-unkillable nil
+   dotspacemacs-scratch-buffer-unkillable t
 
    ;; Initial message in the scratch buffer, such as "Welcome to Spacemacs!"
    ;; (default nil)
-   dotspacemacs-initial-scratch-message nil
+   dotspacemacs-initial-scratch-message ";; This buffer is for text that is not saved, and for Lisp evaluation.
+;; To create a file, visit it with \\[find-file] and enter text in its buffer.
+
+"
+
 
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
@@ -617,7 +624,7 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-
+  
   ;; org-mode configuration to enable some modes
   (add-hook 'org-mode-hook 'smartparens-mode)
   (add-hook 'org-mode-hook 'visual-line-mode)
@@ -633,11 +640,78 @@ before packages are loaded."
                   (org-level-8 . 1.1)))
     (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face)))
 
+  (setq org-tag-alist
+        '((:startgroup)
+                                        ; Put mutually exclusive tags here
+          (:endgroup)
+          ("@errand" . ?E)
+          ("@home" . ?H)
+          ("@work" . ?W)
+          ("agenda" . ?a)
+          ("planning" . ?p)
+          ("publish" . ?P)
+          ("batch" . ?b)
+          ("note" . ?n)
+          ("idea" . ?i)))
 
   ;; org agenda
+  (setq org-agenda-custom-commands
+        '(("d" "Dashboard"
+           ((agenda "" ((org-deadline-warning-days 7)))
+            (todo "NEXT"
+                  ((org-agenda-overriding-header "Next Tasks")))
+            (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
+
+          ("n" "Next Tasks"
+           ((todo "NEXT"
+                  ((org-agenda-overriding-header "Next Tasks")))))
+
+          ("W" "Work Tasks" tags-todo "+work-email")
+
+          ;; Low-effort next actions
+          ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
+           ((org-agenda-overriding-header "Low Effort Tasks")
+            (org-agenda-max-todos 20)
+            (org-agenda-files org-agenda-files)))
+
+          ("w" "Workflow Status"
+           ((todo "WAIT"
+                  ((org-agenda-overriding-header "Waiting on External")
+                   (org-agenda-files org-agenda-files)))
+            (todo "REVIEW"
+                  ((org-agenda-overriding-header "In Review")
+                   (org-agenda-files org-agenda-files)))
+            (todo "PLAN"
+                  ((org-agenda-overriding-header "In Planning")
+                   (org-agenda-todo-list-sublevels nil)
+                   (org-agenda-files org-agenda-files)))
+            (todo "BACKLOG"
+                  ((org-agenda-overriding-header "Project Backlog")
+                   (org-agenda-todo-list-sublevels nil)
+                   (org-agenda-files org-agenda-files)))
+            (todo "READY"
+                  ((org-agenda-overriding-header "Ready for Work")
+                   (org-agenda-files org-agenda-files)))
+            (todo "ACTIVE"
+                  ((org-agenda-overriding-header "Active Projects")
+                   (org-agenda-files org-agenda-files)))
+            (todo "COMPLETED"
+                  ((org-agenda-overriding-header "Completed Projects")
+                   (org-agenda-files org-agenda-files)))
+            (todo "CANC"
+                  ((org-agenda-overriding-header "Cancelled Projects")
+                   (org-agenda-files org-agenda-files)))))))
+
   (defadvice org-agenda (around split-window-below activate)
-    (let ((split-height-threshold 40 ))  ; or whatever width makes sense for you
+    (let ((split-height-threshold 80 ))  ; or whatever width makes sense for you
       ad-do-it))
+
+  (require 'org-habit)
+  (add-to-list 'org-modules 'org-habit)
+  (setq org-habit-graph-column 60)
+
+  ;; Save Org buffers after refiling!
+  (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
   ;; python-mode configuration to enable some modes
   (add-hook 'python-mode-hook 'smartparens-mode)
@@ -710,18 +784,54 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(global-vi-tilde-fringe-mode nil)
  '(org-agenda-files
-   '("~/Documents/emacs_studies/systemCrafter/organize_with_org_mode/Tasks_tutorial.org"))
- '(org-agenda-start-with-log-mode '(closed clock state))
- '(org-log-into-drawer t)
+   '("~/Documents/agenda_files/Tasks.org" "~/Documents/agenda_files/Habits.org"))
+ '(org-capture-templates
+   '(("t" "Tasks / Projects")
+     ("tt" "Task" entry
+      (file+olp "~/Documents/agenda_files/Tasks.org" "Inbox")
+      "* TODO %?
+  %U
+  %a
+  %i" :empty-lines 1)
+     ("j" "Journal Entries")
+     ("jj" "Journal" entry
+      (file+olp+datetree "~/Documents/agenda_files/Journal.org")
+      "
+* %<%I:%M %p> - Journal :journal:
+
+%?
+
+" :empty-lines 1 :clock-in :clock-resume)
+     ("jm" "Meeting" entry
+      (file+olp+datetree "~/Documents/agenda_files/Journal.org")
+      "* %<%I:%M %p> - %a :meetings:
+
+%?
+
+" :empty-lines 1 :clock-in :clock-resume)
+     ("w" "Workflows")
+     ("we" "Checking Email" entry
+      (file+olp+datetree "~/Documents/agenda_files/Journal.org")
+      "* Checking Email :email:
+
+%?" :empty-lines 1 :clock-in :clock-resume)
+     ("m" "Metrics Capture")
+     ("mw" "Weight" table-line
+      (file+headline "~/Documents/agenda_files/Metrics.org" "Weight")
+      "| %U | %^{Weight} | %^{Notes} |" :kill-buffer t)))
+ '(org-refile-targets '(("~/Documents/agenda_files/Archive.org" :level . 1)))
  '(org-todo-keyword-faces
    '(("TODO" . "YELLOW")
      ("NEXT" . "ORANGE")
      ("DONE" . "GREEN")))
- '(org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")))
+ '(org-todo-keywords
+   '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+     (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
  '(package-selected-packages
    '(yatemplate yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode winum which-key web-beautify vterm volatile-highlights vim-powerline vi-tilde-fringe uuidgen use-package unfill undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired toml-mode toc-org terminal-here term-cursor symon symbol-overlay string-inflection string-edit sphinx-doc spacemacs-whitespace-cleanup spacemacs-purpose-popwin spaceline-all-the-icons space-doc smeargle shell-pop rust-mode ron-mode restart-emacs rainbow-delimiters quickrun pytest pylookup pyenv-mode pydoc py-isort prettier-js popwin poetry pippel pipenv pip-requirements pcre2el password-generator paradox overseer orgit-forge org-wild-notifier org-superstar org-rich-yank org-projectile org-present org-pomodoro org-mime org-download org-contrib org-cliplink open-junk-file npm-mode nose nodejs-repl nameless mwim mvn multi-term multi-line mmm-mode maven-test-mode markdown-toc macrostep lsp-ui lsp-python-ms lsp-pyright lsp-origami lsp-java lorem-ipsum livid-mode live-py-mode link-hint kaolin-themes json-reformat json-navigator json-mode js2-refactor js-doc jinja2-mode inspector info+ indent-guide importmagic hybrid-mode hungry-delete htmlize holy-mode hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-xref helm-themes helm-swoop helm-rtags helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-lsp helm-ls-git helm-git-grep helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag groovy-mode groovy-imports google-translate google-c-style golden-ratio gnuplot gitignore-templates git-timemachine git-modes git-messenger git-link git-gutter-fringe gh-md gendoxy fuzzy font-lock+ flyspell-correct-helm flycheck-ycmd flycheck-rust flycheck-rtags flycheck-pos-tip flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-evilified-state evil-escape evil-ediff evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr elisp-slime-nav elisp-def ein editorconfig dumb-jump drag-stuff dotenv-mode doom-themes dockerfile-mode docker disaster dired-quick-sort diminish devdocs define-word cython-mode cpp-auto-include company-ycmd company-rtags company-quickhelp company-c-headers company-ansible company-anaconda column-enforce-mode code-cells clean-aindent-mode centered-cursor-mode centaur-tabs ccls cargo browse-at-remote blacken auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ansible-doc ansible aggressive-indent ace-link ace-jump-helm-line ac-ispell))
  '(visual-fill-column-center-text t)
- '(visual-fill-column-width 200))
+ '(visual-fill-column-width 200)
+ '(window-min-height 10))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
