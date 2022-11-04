@@ -633,23 +633,9 @@ before packages are loaded."
                   (org-level-8 . 1.1)))
     (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face)))
 
-  ;; ;; Set the fixed pitch face
-  ;; (set-face-attribute 'fixed-pitch nil
-  ;;                     :font "JetBrains Mono"
-  ;;                     :height 260)
-
-  ;; ;; Set the variable pitch face
-  ;; (set-face-attribute 'variable-pitch nil
-  ;;                     ;; :font "Cantarell"
-  ;;                     :font "Iosevka Aile"
-  ;;                     :height 160
-  ;;                     :weight 'regular)
 
   ;; org agenda
   (defadvice org-agenda (around split-window-below activate)
-    (let ((split-height-threshold 40 ))  ; or whatever width makes sense for you
-      ad-do-it))
-  (defadvice org-agenda-list (around split-window-below activate)
     (let ((split-height-threshold 40 ))  ; or whatever width makes sense for you
       ad-do-it))
 
@@ -724,7 +710,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(global-vi-tilde-fringe-mode nil)
  '(org-agenda-files
-   '("~/Documents/emacs_studies/systemCrafter/organize_with_org_mode/Tasks_tutorial.org" "~/Documents/emacs_studies/systemCrafter/organize_with_org_mode/birthdays.org"))
+   '("~/Documents/emacs_studies/systemCrafter/organize_with_org_mode/Tasks_tutorial.org"))
  '(org-agenda-start-with-log-mode '(closed clock state))
  '(org-log-into-drawer t)
  '(org-todo-keyword-faces
