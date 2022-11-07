@@ -145,6 +145,9 @@ export MAVEN_OPTS=-Xmx512m
 export MAVEN_HOME=~/maven/apache-maven-3.8.6
 export PATH=$MAVEN_HOME/bin:$PATH
 
+###################################
+# added so it doesn't ask for ssh keyphrase
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 
 ###################################
 # automatically added lines
