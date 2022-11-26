@@ -780,6 +780,15 @@ before packages are loaded."
 
   (global-set-key (kbd "C-}")  'centaur-tabs-forward)
   (global-set-key (kbd "C-{")  'centaur-tabs-backward)
+
+  ;; function against too many open pipes bug
+  (defun file-notify-rm-all-watches ()
+    "Remove all existing file notification watches from Emacs."
+    (interactive)
+    (maphash
+     (lambda (key _value)
+       (file-notify-rm-watch key))
+     file-notify-descriptors))
 )
 
 
