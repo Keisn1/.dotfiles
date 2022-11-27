@@ -252,7 +252,7 @@ It should only modify the values of Spacemacs settings."
    ;; within a project.
    dotspacemacs-startup-lists '((recents . 5)
                                 (projects . 5)
-                                (agenda .5)
+                                (agenda . 5)
                                 )
 
    ;; True if the home buffer should respond to resize events. (default t)
