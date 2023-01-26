@@ -129,6 +129,11 @@ eval "$(nodenv init -)"
 
 # some evluation for brew and shellenv 
 eval "$("$(brew --prefix)"/bin/brew shellenv)"
+
+# so to use zsh-vi-mode in oh-my-zsh
+source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+ZVM_VI_ESCAPE_BINDKEY=fd
+
 ##################################
 # added lines through pyenv installation
 
@@ -148,6 +153,10 @@ export PATH=$MAVEN_HOME/bin:$PATH
 ###################################
 # added so it doesn't ask for ssh keyphrase
 ssh-add --apple-use-keychain ~/.ssh/id_ed25519
+
+###################################
+# added for using tools of Nand2Tetris
+export PATH=$PATH:~/Documents/build-a-modern-computer-from-first-principles/nand2tetris/tools
 
 ###################################
 # automatically added lines
