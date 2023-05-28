@@ -15,6 +15,7 @@
     ~/.KayFreyerDefault.json: KayFreyerDefault.json
     ~/.oh-my-zsh: ohmyzsh
     ~/.emacs.d: spacemacs
+    ~/.ideavimrc: ideavimrc
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
