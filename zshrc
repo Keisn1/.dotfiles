@@ -77,7 +77,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git alias-finder brew common-aliases copyfile docker docker-compose dotenv encode64 extract git jsontools node npm urltools web-search z)
+plugins=(git alias-finder brew common-aliases copyfile docker docker-compose dotenv encode64 extract git jsontools node npm urltools web-search z zsh-vi-mode)
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
