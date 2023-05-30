@@ -2,3 +2,4 @@ imap fd <Esc>
 set timeoutlen=200
 
 Plug 'tpope/vim-surround'
+set clipboard=unnamedplus
