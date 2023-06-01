@@ -141,6 +141,9 @@ export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
+# to use Python packages globally
+export PATH=/Users/kaypro/.local/bin:$PATH
+
 ###################################
 # added lines for JAVA and Maven
 export JAVA_HOME=~/jdk/jdk-19.0.1.jdk/Contents/Home
@@ -153,6 +156,11 @@ export PATH=$MAVEN_HOME/bin:$PATH
 ###################################
 # added so it doesn't ask for ssh keyphrase
 ssh-add --apple-use-keychain ~/.ssh/KayProMacMiniGithub_rsa
+
+###################################
+# added for gpg-agent (used with forge-magit and authinfo.gpg)
+GPG_TTY=$(tty)
+export GPG_TTY
 
 ###################################
 # added for using tools of Nand2Tetris
