@@ -152,7 +152,7 @@ export PATH=$MAVEN_HOME/bin:$PATH
 
 ###################################
 # added so it doesn't ask for ssh keyphrase
-ssh-add --apple-use-keychain ~/.ssh/id_ed25519
+ssh-add --apple-use-keychain ~/.ssh/KayProMacMiniGithub_rsa
 
 ###################################
 # added for using tools of Nand2Tetris
