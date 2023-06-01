@@ -46,8 +46,8 @@ This function should only modify configuration layer settings."
      (c-c++ :variables
             c-c++-backend 'lsp-clangd
             )
-     ;; (unicode-fonts :variables
-     ;;                unicode-fonts-force-multi-color-on-mac t)
+     (unicode-fonts :variables
+                    unicode-fonts-enable-ligatures t)
      docker
      emacs-lisp
      git
