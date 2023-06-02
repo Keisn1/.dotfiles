@@ -11,7 +11,7 @@
     ~/.fzf.bash: fzf.bash
     ~/.fzf.zsh: fzf.zsh
     ~/.p10k.zsh: p10k.zsh
-    # ~/.spacemacs: spacemacs_init
+    ~/.spacemacs: spacemacs
     ~/.KayFreyerDefault.json: KayFreyerDefault.json
     ~/.oh-my-zsh: ohmyzsh
     # ~/.emacs.d: spacemacs
