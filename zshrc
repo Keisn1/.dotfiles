@@ -77,7 +77,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git alias-finder brew common-aliases copyfile docker docker-compose dotenv encode64 extract git jsontools node npm urltools web-search z zsh-vi-mode)
+plugins=(git alias-finder brew common-aliases copyfile docker docker-compose dotenv encode64 extract git jsontools node npm urltools web-search z )
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -127,12 +127,11 @@ bindkey '^n' history-substring-search-down
 # set shims for nodenv
 eval "$(nodenv init -)"
 
-# some evluation for brew and shellenv 
+# some evluation for brew and shellenv
 eval "$("$(brew --prefix)"/bin/brew shellenv)"
 
 # so to use zsh-vi-mode in oh-my-zsh
 source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-ZVM_VI_ESCAPE_BINDKEY=fd
 
 ##################################
 # added lines through pyenv installation

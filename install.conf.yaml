@@ -11,12 +11,13 @@
     ~/.fzf.bash: fzf.bash
     ~/.fzf.zsh: fzf.zsh
     ~/.p10k.zsh: p10k.zsh
-    ~/.spacemacs: spacemacs_init
+    # ~/.spacemacs: spacemacs_init
     ~/.KayFreyerDefault.json: KayFreyerDefault.json
     ~/.oh-my-zsh: ohmyzsh
-    ~/.emacs.d: spacemacs
+    # ~/.emacs.d: spacemacs
     ~/.ideavimrc: ideavimrc
+    /opt/homebrew/Cellar/zsh-vi-mode/0.9.0/share/zsh-vi-mode/zsh-vi-mode.zsh: zsh-vi-mode.zsh
+    # $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.zsh: zsh-vi-mode.zsh
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
-
