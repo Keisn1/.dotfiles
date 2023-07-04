@@ -157,6 +157,9 @@ export PATH=$MAVEN_HOME/bin:$PATH
 ssh-add --apple-use-keychain ~/.ssh/KayProMacMiniGithub_rsa
 
 ###################################
+alias venv="python3 -m venv venv && . venv/bin/activate && pip install --upgrade pip setuptools"
+
+###################################
 # added for gpg-agent (used with forge-magit and authinfo.gpg)
 GPG_TTY=$(tty)
 export GPG_TTY

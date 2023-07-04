@@ -49,6 +49,7 @@ This function should only modify configuration layer settings."
      (unicode-fonts :variables
                     unicode-fonts-enable-ligatures t)
      docker
+     pdf
      emacs-lisp
      git
      helm
@@ -67,7 +68,12 @@ This function should only modify configuration layer settings."
      (lsp :variables
           lsp-ui-doc-position 'at-point
           )
-     latex
+     (latex :variables
+            latex-backend 'lsp
+            latex-enable-folding t
+            latex-enable-magic t
+            latex-refresh-preview t
+            latex-view-pdf-in-split-window t)
      markdown
      multiple-cursors
      (org :variables
@@ -79,6 +85,7 @@ This function should only modify configuration layer settings."
           org-ellipsis " ▼"
           org-superstar-headline-bullets-list '(9673 9675 "◉" "○")
           )
+     pandoc
      (python :variables
              python-backend 'lsp python-lsp-server 'pyright
              python-formatter 'black
@@ -642,6 +649,7 @@ before packages are loaded."
   (add-hook 'org-mode-hook 'smartparens-mode)
   (add-hook 'org-mode-hook 'visual-line-mode)
   (add-hook 'org-mode-hook 'visual-fill-column-mode)
+  (setq visual-fill-column-width 100)
   (add-hook 'org-mode-hook 'auto-fill-mode)
 
   (dolist (face '((org-level-1 . 1.2)
@@ -722,12 +730,34 @@ before packages are loaded."
 
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
-  (setq org-habit-graph-column 60)
+  (setq org-habit-graph-column 100)
 
   ;; Save Org buffers after refiling!
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
+  ;;Adding latex class Beamer to org-latex-classes
+  (eval-after-load "ox-latex"
+
+    ;; update the list of LaTeX classes and associated header (encoding, etc.)
+    ;; and structure
+    '(add-to-list 'org-latex-classes
+                  `("beamer"
+                    ,(concat "\\documentclass[presentation]{beamer}\n"
+                             "[DEFAULT-PACKAGES]"
+                             "[PACKAGES]"
+                             "[EXTRA]\n")
+                    ("\\section{%s}" . "\\section*{%s}")
+                    ("\\subsection{%s}" . "\\subsection*{%s}")
+                    ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
+  ;; Keybindings for fast templates
+  (require 'org-tempo)
   ;; python-mode configuration to enable some modes
+  (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+  (add-to-list 'org-structure-template-alist '("el" .  "src emacs-lisp"))
+  (add-to-list 'org-structure-template-alist '("py" . "src python"))
+  (add-to-list 'org-structure-template-alist '("tex" . "export latex"))
+
+  ;;python mode
   (add-hook 'python-mode-hook 'smartparens-mode)
   (add-hook 'python-mode-hook 'visual-line-mode)
 
@@ -767,6 +797,7 @@ before packages are loaded."
     (mydired-sort))
 
   ;; keybinding changes
+  (evil-define-key 'treemacs treemacs-mode-map (kbd "x") #'treemacs-mark-or-unmark-path-at-point)
   (global-set-key (kbd "s-§")  'other-frame)
   (global-set-key (kbd "M-m m g u")  'lsp-ui-doc-focus-frame)
   (global-set-key (kbd "C-<tab>") 'hippie-expand) ;not using M-/
