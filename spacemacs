@@ -921,7 +921,7 @@ This function is called at the very end of Spacemacs initialization."
      (tramp-connection-local-default-system-profile
       (path-separator . ":")
       (null-device . "/dev/null"))))
- '(evil-esc-delay 0.02))
+ '(evil-esc-delay 0.03))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

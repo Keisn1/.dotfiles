@@ -273,7 +273,7 @@ fi
 : ${ZVM_KEYTIMEOUT:=0.4}
 
 # Set the escape key timeout (default is 0.03 seconds)
-: ${ZVM_ESCAPE_KEYTIMEOUT:=0.02}
+: ${ZVM_ESCAPE_KEYTIMEOUT:=0.03}
 
 # Set keybindings mode (default is true)
 # The lazy keybindings will post the keybindings of vicmd and visual
