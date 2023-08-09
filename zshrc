@@ -155,6 +155,7 @@ export PATH=$MAVEN_HOME/bin:$PATH
 ###################################
 # added so it doesn't ask for ssh keyphrase
 ssh-add --apple-use-keychain ~/.ssh/KayProMacMiniGithub_rsa
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 
 ###################################
 alias venv="python3 -m venv venv && . venv/bin/activate && pip install --upgrade pip setuptools"
