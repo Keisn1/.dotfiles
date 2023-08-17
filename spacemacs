@@ -52,6 +52,7 @@ This function should only modify configuration layer settings."
      pdf
      emacs-lisp
      git
+     gtags
      helm
      (html :variables
            css-enable-lsp t
@@ -125,6 +126,7 @@ This function should only modify configuration layer settings."
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '()
+
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -668,7 +670,8 @@ before packages are loaded."
           (:endgroup)
           ("@errand" . ?E)
           ("@home" . ?H)
-          ("@work" . ?W)
+          ("work" . ?w)
+          ("email" . ?e)
           ("agenda" . ?a)
           ("planning" . ?p)
           ("publish" . ?P)
@@ -677,6 +680,13 @@ before packages are loaded."
           ("idea" . ?i)))
 
   ;; org agenda
+  (setq org-agenda-files
+        '("~/Documents/agenda_files/Tasks1.org"))
+  (setq org-agenda-start-with-log-mode t)
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
+          (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
+
   (setq org-agenda-custom-commands
         '(("d" "Dashboard"
            ((agenda "" ((org-deadline-warning-days 7)))
@@ -688,7 +698,7 @@ before packages are loaded."
            ((todo "NEXT"
                   ((org-agenda-overriding-header "Next Tasks")))))
 
-          ("W" "Work Tasks" tags-todo "+work-email")
+          ("w" "Work Tasks" tags-todo "+work-email")
 
           ;; Low-effort next actions
           ("e" tags-todo "+TODO=\"NEXT\"+Effort<15&+Effort>0"
@@ -696,7 +706,7 @@ before packages are loaded."
             (org-agenda-max-todos 20)
             (org-agenda-files org-agenda-files)))
 
-          ("w" "Workflow Status"
+          ("W" "Workflow Status"
            ((todo "WAIT"
                   ((org-agenda-overriding-header "Waiting on External")
                    (org-agenda-files org-agenda-files)))
@@ -724,16 +734,49 @@ before packages are loaded."
                   ((org-agenda-overriding-header "Cancelled Projects")
                    (org-agenda-files org-agenda-files)))))))
 
-  (defadvice org-agenda (around split-window-below activate)
-    (let ((split-height-threshold 80 ))  ; or whatever width makes sense for you
+  (defadvice org-agenda (around split-window-right activate)
+    (let ((split-width-threshold 80 ))  ; or whatever width makes sense for you
       ad-do-it))
 
-  (require 'org-habit)
-  (add-to-list 'org-modules 'org-habit)
-  (setq org-habit-graph-column 100)
+  (setq org-habit-graph-column 60)
+
+  (setq org-refile-targets
+        '(("Archive.org" :maxlevel . 1)
+          ("Tasks.org" :maxlevel . 1)))
 
   ;; Save Org buffers after refiling!
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
+
+  ;; Capture templates
+  (setq org-capture-templates
+        `(("t" "Tasks / Projects")
+          ("tt" "Task" entry (file+olp "~/Documents/agenda_files/Tasks.org" "Inbox")
+           "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)
+
+          ("h" "Habits")
+          ("hg" "GitKata" entry (file+olp "~/Documents/agenda_files/Habits.org" "GitKata")
+           "* DONE %?\n  %U\n  %a\n  %i" :empty-lines 1)
+
+          ("j" "Journal Entries")
+          ("jj" "Journal" entry
+           (file+olp+datetree "~/Documents/agenda_files/Journal.org")
+           "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
+           ;; ,(dw/read-file-as-string "~/Notes/Templates/Daily.org")
+           :clock-in :clock-resume
+           :empty-lines 1)
+          ("jm" "Meeting" entry
+           (file+olp+datetree "~/Documents/agenda_files/Journal.org")
+           "* %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
+           :clock-in :clock-resume
+           :empty-lines 1)
+
+          ("w" "Workflows")
+          ("we" "Checking Email" entry (file+olp+datetree "~/Documents/agenda_files/Journal.org")
+           "* Checking Email :email:\n\n%?" :clock-in :clock-resume :empty-lines 1)
+
+          ("m" "Metrics Capture")
+          ("mw" "Weight" table-line (file+headline "~/Documents/agenda_files/Metrics.org" "Weight")
+           "| %U | %^{Weight} | %^{Notes} |" :kill-buffer t)))
 
   ;;Adding latex class Beamer to org-latex-classes
   (eval-after-load "ox-latex"
@@ -803,6 +846,7 @@ before packages are loaded."
   (global-set-key (kbd "C-<tab>") 'hippie-expand) ;not using M-/
   (define-key global-map "\C-x\g" 'magit-status) ;define the dired shortcut key for directory up
   (define-key global-map "\C-x\C-j" 'dired-jump) ;define the dired shortcut key for directory up
+  (global-set-key (kbd "M-y")  'helm-show-kill-ring)     ;Replacement for yank-pop
 
   ;; Change meta and Command keybindings to be able to type ABC like accentuation
   (setq mac-option-key-is-meta nil)
@@ -843,7 +887,9 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(auth-sources '("~/.authinfo.gpg"))
  '(connection-local-criteria-alist
-   '(((:application tramp :machine "localhost")
+   '(((:application tramp :machine "Kays-MacBook-Pro.local")
+      tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :machine "localhost")
       tramp-connection-local-darwin-ps-profile)
      ((:application tramp :machine "Kays-Mac-mini.local")
       tramp-connection-local-darwin-ps-profile)
@@ -922,11 +968,20 @@ This function is called at the very end of Spacemacs initialization."
      (tramp-connection-local-default-system-profile
       (path-separator . ":")
       (null-device . "/dev/null"))))
- '(evil-esc-delay 0.03))
+ '(evil-esc-delay 0.3)
+ '(org-agenda-block-separator 61)
+ '(org-agenda-files
+   '("~/Documents/agenda_files/Tasks.org" "~/Documents/agenda_files/Birthdays.org" "~/Documents/agenda_files/Habits.org" "~/Documents/agenda_files/Journal.org"))
+ '(org-tag-faces '(("work" . "Cyan3") ("email" . "Cyan3")))
+ '(org-todo-keyword-faces
+   '(("TODO" . "yellow1")
+     ("DONE" . "green1")
+     ("NEXT" . "DeepPink"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(org-drawer ((t (:foreground "goldenrod2"))))
+ '(org-special-keyword ((t (:foreground "gray100")))))
 )
