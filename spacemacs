@@ -48,11 +48,11 @@ This function should only modify configuration layer settings."
             )
      (unicode-fonts :variables
                     unicode-fonts-enable-ligatures t)
+     command-log
      docker
      pdf
      emacs-lisp
      git
-     gtags
      helm
      (html :variables
            css-enable-lsp t
@@ -85,6 +85,7 @@ This function should only modify configuration layer settings."
           org-startup-indented t
           org-ellipsis " ▼"
           org-superstar-headline-bullets-list '(9673 9675 "◉" "○")
+          org-enable-hugo-support t
           )
      pandoc
      (python :variables
@@ -125,7 +126,10 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(
+                                      org-ai
+                                      greader
+                                      )
 
 
    ;; A list of packages that cannot be updated.
@@ -742,7 +746,7 @@ before packages are loaded."
 
   (setq org-refile-targets
         '(("Archive.org" :maxlevel . 1)
-          ("Tasks.org" :maxlevel . 1)))
+          ("Tasks.org" :maxlevel . 2)))
 
   ;; Save Org buffers after refiling!
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
@@ -799,6 +803,120 @@ before packages are loaded."
   (add-to-list 'org-structure-template-alist '("el" .  "src emacs-lisp"))
   (add-to-list 'org-structure-template-alist '("py" . "src python"))
   (add-to-list 'org-structure-template-alist '("tex" . "export latex"))
+  (add-to-list 'org-structure-template-alist '("css" . "export css"))
+  ;; First Self-added emacs-lisp function (with a little help of ChatGPT aka the new Google)
+  ;; I'm going to celebrate that a bit
+  ;; it is a keybinding, added to spacemacs leader keys, to rapidly set the pomodoro timer
+  (spacemacs/set-leader-keys-for-major-mode 'org-mode "vp" 'set-pomodoro-length)
+  (defun set-pomodoro-length (minutes)
+    "Set the org-pomodoro-length variable to the specified value in MINUTES."
+    (interactive "nEnter pomodoro length in minutes: ")
+    (setq org-pomodoro-length minutes)
+    (message "org-pomodoro-length set to %d minutes." minutes)
+    )
+
+  (use-package whisper
+    :load-path "~/.dotfiles/whisper/"
+    :bind ("C-c C-r" . whisper-run)
+    :config
+    (setq whisper-install-directory (locate-user-emacs-file ".cache/")
+          whisper-model "base"
+          whisper-language "en"
+          whisper-translate nil))
+
+
+  ;; org-ai setup
+  (use-package org-ai
+    :ensure t
+    :commands (org-ai-mode
+               org-ai-global-mode)
+    :init
+    (add-hook 'org-mode-hook #'org-ai-mode) ; enable org-ai in org-mode
+    (org-ai-global-mode) ; installs global keybindings on C-c M-a
+
+    :config
+    (org-ai-install-yasnippets)
+
+    (setq org-ai-default-chat-model "gpt-4")
+
+    ;; only needed if you want speach input and output:
+    (use-package greader :ensure)
+    (require 'whisper)
+    (setq org-ai-talk-say-words-per-minute 210)
+    (setq org-ai-talk-say-voice "Karen")
+
+    ;; german
+    ;; (setq org-ai-talk-say-words-per-minute 210)
+    ;; (setq org-ai-talk-say-voice "Anna")
+    )
+
+   ;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+  ;; whisper, everything below this point is only needed if you want speech input
+
+  (defun rk/get-ffmpeg-device ()
+    "Gets the list of devices available to ffmpeg. The output of the ffmpeg command is pretty messy, e.g.
+  [AVFoundation indev @ 0x7f867f004580] AVFoundation video devices:
+  [AVFoundation indev @ 0x7f867f004580] [0] FaceTime HD Camera (Built-in)
+  [AVFoundation indev @ 0x7f867f004580] AVFoundation audio devices:
+  [AVFoundation indev @ 0x7f867f004580] [0] Cam Link 4K
+  [AVFoundation indev @ 0x7f867f004580] [1] MacBook Pro Microphone so we need to parse it to get the list of devices.
+  The return value contains two lists, one for video devices and one for audio devices.
+  Each list contains a list of cons cells, where the car is the device number and the cdr is the device name."
+    (unless (string-equal system-type "darwin")
+      (error "This function is currently only supported on macOS"))
+
+    (let ((lines (string-split (shell-command-to-string "ffmpeg -list_devices true -f avfoundation -i dummy || true") "\n")))
+      (cl-loop with at-video-devices = nil
+               with at-audio-devices = nil
+               with video-devices = nil
+               with audio-devices = nil
+               for line in lines
+               when (string-match "AVFoundation video devices:" line)
+               do (setq at-video-devices t
+                        at-audio-devices nil)
+               when (string-match "AVFoundation audio devices:" line)
+               do (setq at-audio-devices t
+                        at-video-devices nil)
+               when (and at-video-devices
+                         (string-match "\\[\\([0-9]+\\)\\] \\(.+\\)" line))
+               do (push (cons (string-to-number (match-string 1 line)) (match-string 2 line)) video-devices)
+               when (and at-audio-devices
+                         (string-match "\\[\\([0-9]+\\)\\] \\(.+\\)" line))
+               do (push (cons (string-to-number (match-string 1 line)) (match-string 2 line)) audio-devices)
+               finally return (list (nreverse video-devices) (nreverse audio-devices)))))
+
+  (defun rk/find-device-matching (string type)
+    "Get the devices from `rk/get-ffmpeg-device' and look for a device
+matching `STRING'. `TYPE' can be :video or :audio."
+    (let* ((devices (rk/get-ffmpeg-device))
+           (device-list (if (eq type :video)
+                            (car devices)
+                          (cadr devices))))
+      (cl-loop for device in device-list
+               when (string-match-p string (cdr device))
+               return (car device))))
+
+  (defcustom rk/default-audio-device "Aukey-PC-LM1E Audio"
+    "The default audio device to use for whisper.el and outher audio processes."
+    :type 'string)
+
+  (defun rk/select-default-audio-device (&optional device-name)
+    "Interactively select an audio device to use for whisper.el and other audio processes.
+If `DEVICE-NAME' is provided, it will be used instead of prompting the user."
+    (interactive)
+    (let* ((audio-devices (cadr (rk/get-ffmpeg-device)))
+           (indexes (mapcar #'car audio-devices))
+           (names (mapcar #'cdr audio-devices))
+           (name (or device-name (completing-read "Select audio device: " names nil t))))
+      (setq rk/default-audio-device (rk/find-device-matching name :audio))
+      (when (boundp 'whisper--ffmpeg-input-device)
+        (setq whisper--ffmpeg-input-device (format ":%s" rk/default-audio-device)))))
+
+  ;; example usage:
+  ;; (rk/find-device-matching "FaceTime" :video)
+  ;; (rk/find-device-matching "Macbook Pro Microphone" :audio)
+  ;; (rk/select-default-audio-device)
+  (rk/select-default-audio-device "Aukey-PC-LM1E Audio")
 
   ;;python mode
   (add-hook 'python-mode-hook 'smartparens-mode)
@@ -887,7 +1005,9 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(auth-sources '("~/.authinfo.gpg"))
  '(connection-local-criteria-alist
-   '(((:application tramp :machine "Kays-MacBook-Pro.local")
+   '(((:application eshell)
+      eshell-connection-default-profile)
+     ((:application tramp :machine "Kays-MacBook-Pro.local")
       tramp-connection-local-darwin-ps-profile)
      ((:application tramp :machine "localhost")
       tramp-connection-local-darwin-ps-profile)
@@ -896,7 +1016,9 @@ This function is called at the very end of Spacemacs initialization."
      ((:application tramp)
       tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)))
  '(connection-local-profile-alist
-   '((tramp-connection-local-darwin-ps-profile
+   '((eshell-connection-default-profile
+      (eshell-path-env-list))
+     (tramp-connection-local-darwin-ps-profile
       (tramp-process-attributes-ps-args "-acxww" "-o" "pid,uid,user,gid,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state=abcde" "-o" "ppid,pgid,sess,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etime,pcpu,pmem,args")
       (tramp-process-attributes-ps-format
        (pid . number)
@@ -972,11 +1094,15 @@ This function is called at the very end of Spacemacs initialization."
  '(org-agenda-block-separator 61)
  '(org-agenda-files
    '("~/Documents/agenda_files/Tasks.org" "~/Documents/agenda_files/Birthdays.org" "~/Documents/agenda_files/Habits.org" "~/Documents/agenda_files/Journal.org"))
+ '(org-hugo-export-with-toc 2)
  '(org-tag-faces '(("work" . "Cyan3") ("email" . "Cyan3")))
  '(org-todo-keyword-faces
    '(("TODO" . "yellow1")
      ("DONE" . "green1")
-     ("NEXT" . "DeepPink"))))
+     ("NEXT" . "DeepPink")))
+ '(package-selected-packages
+   '(ox-hugo tomelr writeroom-mode orgit-forge docker ansible-doc yasnippet-snippets evil-lion vimrc-mode pandoc-mode winum disaster helm-themes command-log-mode google-translate paradox treemacs-magit js2-refactor evil-iedit-state helm-org gendoxy elisp-def git-link indent-guide link-hint devdocs ace-jump-helm-line evil-easymotion org-superstar spacemacs-whitespace-cleanup mvn web-beautify org-pomodoro evil-textobj-line dockerfile-mode ron-mode flycheck-elsa evil-visual-mark-mode hide-comnt poetry inspector helm-c-yasnippet aggressive-indent which-key volatile-highlights elisp-slime-nav symon term-cursor auctex-latexmk groovy-mode scss-mode nameless highlight-numbers company-ansible holy-mode clean-aindent-mode slim-mode diminish blacken helm-company highlight-parentheses flycheck-ycmd drag-stuff esh-help string-inflection nodejs-repl org-mime js-doc pylookup unkillable-scratch org-projectile vi-tilde-fringe json-mode sass-mode expand-region helm-make uuidgen livid-mode treeview magic-latex-buffer evil-anzu vim-powerline info+ importmagic helm-rtags cargo company-ycmd fuzzy treemacs-projectile yaml-mode evil-unimpaired helm-pydoc emr lorem-ipsum fancy-battery flx-ido gh-md helm-mode-manager treemacs-evil company-math helm-projectile tagedit gitignore-templates pippel groovy-imports terminal-here evil-surround evil-lisp-state eval-sexp-fu prettier-js markdown-toc company-rtags keycast undo-tree evil-matchit emmet-mode org-contrib golden-ratio helm-git-grep auto-highlight-symbol help-fns+ treemacs-persp pug-mode ox-pandoc multi-term evil-visualstar org-download flycheck-rust pyenv-mode helm-purpose dotenv-mode ace-link json-reformat lsp-latex toc-org shell-pop dactyl-mode jinja2-mode sphinx-doc helm-ag smeargle toml-mode company-c-headers spacemacs-purpose-popwin org-wild-notifier hybrid-mode restart-emacs yapfify pytest flycheck-rtags evil-mc flycheck-pos-tip company-quickhelp ansible evil-goggles gnuplot google-c-style helm-ls-git lsp-ui highlight-indentation evil-numbers treemacs-icons-dired evil-tutor evil-exchange helm-descbinds npm-mode live-py-mode evil-args eshell-prompt-extras hungry-delete symbol-overlay evil-collection helm-css-scss lsp-origami pydoc doom-themes ws-butler dumb-jump flycheck-package space-doc company-web flyspell-correct-helm column-enforce-mode eshell-z maven-test-mode quickrun multi-line unicode-fonts open-junk-file unfill git-modes multi-vterm evil-org rainbow-delimiters hl-todo json-navigator persistent-scratch define-word pdf-view-restore helm-lsp company-auctex spaceline overseer macrostep evil-escape cpp-auto-include code-cells helm-xref ccls centered-cursor-mode evil-indent-plus ligature helm-swoop ein lsp-java auto-dictionary yatemplate pcre2el lsp-python-ms git-gutter-fringe evil-nerd-commenter org-cliplink lsp-pyright impatient-mode nose company-reftex cython-mode pipenv evil-tex auto-compile password-generator evil-cleverparens string-edit-at-point dired-quick-sort pip-requirements auto-yasnippet org-rich-yank ac-ispell popwin eyebrowse company-anaconda all-the-icons py-isort editorconfig xterm-color kaolin-themes web-mode mmm-mode org-present helm-org-rifle git-timemachine git-messenger browse-at-remote evil-evilified-state rust-mode mwim))
+ '(python-shell-interpreter "/Users/kaypro/Documents/pybites_download/venv/bin/python"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
