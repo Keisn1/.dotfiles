@@ -53,6 +53,7 @@ This function should only modify configuration layer settings."
      pdf
      emacs-lisp
      git
+     helpful
      helm
      (html :variables
            css-enable-lsp t
@@ -61,7 +62,7 @@ This function should only modify configuration layer settings."
            html-enable-lsp t
            web-fmt-tool 'web-beautify
            )
-     ipython-notebook
+     ;; ipython-notebook
      json
      (java :variables
            java-backend 'lsp)
@@ -86,6 +87,7 @@ This function should only modify configuration layer settings."
           org-ellipsis " ▼"
           org-superstar-headline-bullets-list '(9673 9675 "◉" "○")
           org-enable-hugo-support t
+          org-enable-roam-support t
           )
      pandoc
      (python :variables
@@ -93,7 +95,9 @@ This function should only modify configuration layer settings."
              python-formatter 'black
              python-format-on-save t
              python-sort-imports-on-save t
+             pyvenv-mode t
              pyvenv-tracking-mode t
+             python-test-runner 'pytest
              )
      rust
      (shell :variables
@@ -307,7 +311,8 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(doom-oceanic-next
+   dotspacemacs-themes '(doom-palenight
+                         doom-oceanic-next
                          doom-gruvbox
                          spacemacs-dark
                          spacemacs-light
@@ -322,7 +327,7 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
+   dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5 :height 50)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -495,15 +500,17 @@ It should only modify the values of Spacemacs settings."
    ;;   :size-limit-kb 1000)
    ;; When used in a plist, `visual' takes precedence over `relative'.
    ;; (default nil)
-   dotspacemacs-line-numbers '(:relative nil
-                                         :visual nil
-                                         :disabled-for-modes dired-mode
-                                         doc-view-mode
-                                         markdown-mode
-                                         org-mode
-                                         pdf-view-mode
-                                         text-mode
-                                         :size-limit-kb 1000)
+   dotspacemacs-line-numbers '(:relative t
+                               :visual t
+                               :disabled-for-modes dired-mode
+                               doc-view-mode
+                               markdown-mode
+                               org-mode
+                               pdf-view-mode
+                               text-mode
+                               :size-limit-kb 1000)
+   ;; dotspacemacs-line-numbers '(:t
+	 ;;                             :disabled-for-modes org-mode)
 
    ;; Code folding method. Possible values are `evil', `origami' and `vimish'.
    ;; (default 'evil)
@@ -824,7 +831,17 @@ before packages are loaded."
           whisper-language "en"
           whisper-translate nil))
 
+  ;; org-roam
+  (setq org-roam-completion-everywhere t)
+  (org-roam-db-autosync-enable)
 
+  (global-page-break-lines-mode -1)
+
+  (add-hook 'org-mode-hook 'display-line-numbers-mode)
+  (advice-add 'org-roam-buffer-persistent-redisplay :before
+              (lambda () (remove-hook 'org-mode-hook 'display-line-numbers-mode)))
+  (advice-add 'org-roam-buffer-persistent-redisplay :after
+              (lambda () (add-hook 'org-mode-hook 'display-line-numbers-mode)))
   ;; org-ai setup
   (use-package org-ai
     :ensure t
@@ -842,7 +859,7 @@ before packages are loaded."
     ;; only needed if you want speach input and output:
     (use-package greader :ensure)
     (require 'whisper)
-    (setq org-ai-talk-say-words-per-minute 210)
+    (setq org-ai-talk-say-words-per-minute 180)
     (setq org-ai-talk-say-voice "Karen")
 
     ;; german
@@ -921,8 +938,15 @@ If `DEVICE-NAME' is provided, it will be used instead of prompting the user."
   ;;python mode
   (add-hook 'python-mode-hook 'smartparens-mode)
   (add-hook 'python-mode-hook 'visual-line-mode)
+  (add-hook 'pyvenv-post-activate-hooks '(lambda () (setq python-shell-interpreter "python3")))
+  (add-hook 'pyvenv-post-deactivate-hooks '(lambda () (setq python-shell-interpreter "/Users/kaypro/.pyenv/shims/python")))
 
   ;; python-mode configuration to enable some modes
+
+
+  ;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+  ;; whisper, everything below this point is only needed if you want speech input
+
   (add-hook 'java-mode-hook 'smartparens-mode)
   (add-hook 'java-mode-hook 'visual-line-mode)
 
@@ -1090,19 +1114,21 @@ This function is called at the very end of Spacemacs initialization."
      (tramp-connection-local-default-system-profile
       (path-separator . ":")
       (null-device . "/dev/null"))))
+ '(custom-safe-themes
+   '("2dd4951e967990396142ec54d376cced3f135810b2b69920e77103e0bcedfba9" "e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2" "5f128efd37c6a87cd4ad8e8b7f2afaba425425524a68133ac0efd87291d05874" default))
  '(evil-esc-delay 0.3)
  '(org-agenda-block-separator 61)
  '(org-agenda-files
    '("~/Documents/agenda_files/Tasks.org" "~/Documents/agenda_files/Birthdays.org" "~/Documents/agenda_files/Habits.org" "~/Documents/agenda_files/Journal.org"))
  '(org-hugo-export-with-toc 2)
+ '(org-pomodoro-manual-break t)
  '(org-tag-faces '(("work" . "Cyan3") ("email" . "Cyan3")))
  '(org-todo-keyword-faces
    '(("TODO" . "yellow1")
      ("DONE" . "green1")
      ("NEXT" . "DeepPink")))
  '(package-selected-packages
-   '(ox-hugo tomelr writeroom-mode orgit-forge docker ansible-doc yasnippet-snippets evil-lion vimrc-mode pandoc-mode winum disaster helm-themes command-log-mode google-translate paradox treemacs-magit js2-refactor evil-iedit-state helm-org gendoxy elisp-def git-link indent-guide link-hint devdocs ace-jump-helm-line evil-easymotion org-superstar spacemacs-whitespace-cleanup mvn web-beautify org-pomodoro evil-textobj-line dockerfile-mode ron-mode flycheck-elsa evil-visual-mark-mode hide-comnt poetry inspector helm-c-yasnippet aggressive-indent which-key volatile-highlights elisp-slime-nav symon term-cursor auctex-latexmk groovy-mode scss-mode nameless highlight-numbers company-ansible holy-mode clean-aindent-mode slim-mode diminish blacken helm-company highlight-parentheses flycheck-ycmd drag-stuff esh-help string-inflection nodejs-repl org-mime js-doc pylookup unkillable-scratch org-projectile vi-tilde-fringe json-mode sass-mode expand-region helm-make uuidgen livid-mode treeview magic-latex-buffer evil-anzu vim-powerline info+ importmagic helm-rtags cargo company-ycmd fuzzy treemacs-projectile yaml-mode evil-unimpaired helm-pydoc emr lorem-ipsum fancy-battery flx-ido gh-md helm-mode-manager treemacs-evil company-math helm-projectile tagedit gitignore-templates pippel groovy-imports terminal-here evil-surround evil-lisp-state eval-sexp-fu prettier-js markdown-toc company-rtags keycast undo-tree evil-matchit emmet-mode org-contrib golden-ratio helm-git-grep auto-highlight-symbol help-fns+ treemacs-persp pug-mode ox-pandoc multi-term evil-visualstar org-download flycheck-rust pyenv-mode helm-purpose dotenv-mode ace-link json-reformat lsp-latex toc-org shell-pop dactyl-mode jinja2-mode sphinx-doc helm-ag smeargle toml-mode company-c-headers spacemacs-purpose-popwin org-wild-notifier hybrid-mode restart-emacs yapfify pytest flycheck-rtags evil-mc flycheck-pos-tip company-quickhelp ansible evil-goggles gnuplot google-c-style helm-ls-git lsp-ui highlight-indentation evil-numbers treemacs-icons-dired evil-tutor evil-exchange helm-descbinds npm-mode live-py-mode evil-args eshell-prompt-extras hungry-delete symbol-overlay evil-collection helm-css-scss lsp-origami pydoc doom-themes ws-butler dumb-jump flycheck-package space-doc company-web flyspell-correct-helm column-enforce-mode eshell-z maven-test-mode quickrun multi-line unicode-fonts open-junk-file unfill git-modes multi-vterm evil-org rainbow-delimiters hl-todo json-navigator persistent-scratch define-word pdf-view-restore helm-lsp company-auctex spaceline overseer macrostep evil-escape cpp-auto-include code-cells helm-xref ccls centered-cursor-mode evil-indent-plus ligature helm-swoop ein lsp-java auto-dictionary yatemplate pcre2el lsp-python-ms git-gutter-fringe evil-nerd-commenter org-cliplink lsp-pyright impatient-mode nose company-reftex cython-mode pipenv evil-tex auto-compile password-generator evil-cleverparens string-edit-at-point dired-quick-sort pip-requirements auto-yasnippet org-rich-yank ac-ispell popwin eyebrowse company-anaconda all-the-icons py-isort editorconfig xterm-color kaolin-themes web-mode mmm-mode org-present helm-org-rifle git-timemachine git-messenger browse-at-remote evil-evilified-state rust-mode mwim))
- '(python-shell-interpreter "/Users/kaypro/Documents/pybites_download/venv/bin/python"))
+   '(ox-hugo tomelr writeroom-mode orgit-forge docker ansible-doc yasnippet-snippets evil-lion vimrc-mode pandoc-mode winum disaster helm-themes command-log-mode google-translate paradox treemacs-magit js2-refactor evil-iedit-state helm-org gendoxy elisp-def git-link indent-guide link-hint devdocs ace-jump-helm-line evil-easymotion org-superstar spacemacs-whitespace-cleanup mvn web-beautify org-pomodoro evil-textobj-line dockerfile-mode ron-mode flycheck-elsa evil-visual-mark-mode hide-comnt poetry inspector helm-c-yasnippet aggressive-indent which-key volatile-highlights elisp-slime-nav symon term-cursor auctex-latexmk groovy-mode scss-mode nameless highlight-numbers company-ansible holy-mode clean-aindent-mode slim-mode diminish blacken helm-company highlight-parentheses flycheck-ycmd drag-stuff esh-help string-inflection nodejs-repl org-mime js-doc pylookup unkillable-scratch org-projectile vi-tilde-fringe json-mode sass-mode expand-region helm-make uuidgen livid-mode treeview magic-latex-buffer evil-anzu vim-powerline info+ importmagic helm-rtags cargo company-ycmd fuzzy treemacs-projectile yaml-mode evil-unimpaired helm-pydoc emr lorem-ipsum fancy-battery flx-ido gh-md helm-mode-manager treemacs-evil company-math helm-projectile tagedit gitignore-templates pippel groovy-imports terminal-here evil-surround evil-lisp-state eval-sexp-fu prettier-js markdown-toc company-rtags keycast undo-tree evil-matchit emmet-mode org-contrib golden-ratio helm-git-grep auto-highlight-symbol help-fns+ treemacs-persp pug-mode ox-pandoc multi-term evil-visualstar org-download flycheck-rust pyenv-mode helm-purpose dotenv-mode ace-link json-reformat lsp-latex toc-org shell-pop dactyl-mode jinja2-mode sphinx-doc helm-ag smeargle toml-mode company-c-headers spacemacs-purpose-popwin org-wild-notifier hybrid-mode restart-emacs yapfify pytest flycheck-rtags evil-mc flycheck-pos-tip company-quickhelp ansible evil-goggles gnuplot google-c-style helm-ls-git lsp-ui highlight-indentation evil-numbers treemacs-icons-dired evil-tutor evil-exchange helm-descbinds npm-mode live-py-mode evil-args eshell-prompt-extras hungry-delete symbol-overlay evil-collection helm-css-scss lsp-origami pydoc doom-themes ws-butler dumb-jump flycheck-package space-doc company-web flyspell-correct-helm column-enforce-mode eshell-z maven-test-mode quickrun multi-line unicode-fonts open-junk-file unfill git-modes multi-vterm evil-org rainbow-delimiters hl-todo json-navigator persistent-scratch define-word pdf-view-restore helm-lsp company-auctex spaceline overseer macrostep evil-escape cpp-auto-include code-cells helm-xref ccls centered-cursor-mode evil-indent-plus ligature helm-swoop ein lsp-java auto-dictionary yatemplate pcre2el lsp-python-ms git-gutter-fringe evil-nerd-commenter org-cliplink lsp-pyright impatient-mode nose company-reftex cython-mode pipenv evil-tex auto-compile password-generator evil-cleverparens string-edit-at-point dired-quick-sort pip-requirements auto-yasnippet org-rich-yank ac-ispell popwin eyebrowse company-anaconda all-the-icons py-isort editorconfig xterm-color kaolin-themes web-mode mmm-mode org-present helm-org-rifle git-timemachine git-messenger browse-at-remote evil-evilified-state rust-mode mwim)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

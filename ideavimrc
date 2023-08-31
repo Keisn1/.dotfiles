@@ -2,5 +2,12 @@ imap fd <Esc>
 set timeoutlen=300
 xnoremap fd <Esc>
 
+
+:nnoremap  <D-;> A #
+:inoremap  <D-;> <Esc>A #
 Plug 'tpope/vim-surround'
 set clipboard=unnamedplus
+
+:set relativenumber number
+set visualbell
+set noerrorbells
