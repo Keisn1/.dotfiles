@@ -833,7 +833,7 @@ before packages are loaded."
 
   ;; org-roam
   (setq org-roam-completion-everywhere t)
-  (org-roam-db-autosync-enable)
+  (add-hook 'org-roam-mode-hook 'org-roam-db-autosync-enable)
 
   (global-page-break-lines-mode -1)
 
@@ -842,6 +842,28 @@ before packages are loaded."
               (lambda () (remove-hook 'org-mode-hook 'display-line-numbers-mode)))
   (advice-add 'org-roam-buffer-persistent-redisplay :after
               (lambda () (add-hook 'org-mode-hook 'display-line-numbers-mode)))
+
+
+  ;; org-roam templates
+  (setq org-roam-capture-templates
+        '(("d" "default" plain
+           "%?"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+           :unnarrowed t)
+        ("l" "programming language" plain
+          "* Characteristics\n\n- Family: %?\n- Inspired by: \n\n* Reference:\n\n"
+          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+          :unnarrowed t)
+        ("b" "book notes" plain
+         "\n* Source\n\nAuthor; %^{Author}\nTitle: ${title}\nYear: %^{Year}\n\n* Summary\n\n%?"
+         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+         :unnarrowed t
+         )
+        ("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
+         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Project")
+         :unnarrowed t))
+   )
+
   ;; org-ai setup
   (use-package org-ai
     :ensure t
@@ -1115,8 +1137,9 @@ This function is called at the very end of Spacemacs initialization."
       (path-separator . ":")
       (null-device . "/dev/null"))))
  '(custom-safe-themes
-   '("2dd4951e967990396142ec54d376cced3f135810b2b69920e77103e0bcedfba9" "e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2" "5f128efd37c6a87cd4ad8e8b7f2afaba425425524a68133ac0efd87291d05874" default))
+   '("02f57ef0a20b7f61adce51445b68b2a7e832648ce2e7efb19d217b6454c1b644" "2dd4951e967990396142ec54d376cced3f135810b2b69920e77103e0bcedfba9" "e3daa8f18440301f3e54f2093fe15f4fe951986a8628e98dcd781efbec7a46f2" "5f128efd37c6a87cd4ad8e8b7f2afaba425425524a68133ac0efd87291d05874" default))
  '(evil-esc-delay 0.3)
+ '(magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
  '(org-agenda-block-separator 61)
  '(org-agenda-files
    '("~/Documents/agenda_files/Tasks.org" "~/Documents/agenda_files/Birthdays.org" "~/Documents/agenda_files/Habits.org" "~/Documents/agenda_files/Journal.org"))
@@ -1128,7 +1151,9 @@ This function is called at the very end of Spacemacs initialization."
      ("DONE" . "green1")
      ("NEXT" . "DeepPink")))
  '(package-selected-packages
-   '(ox-hugo tomelr writeroom-mode orgit-forge docker ansible-doc yasnippet-snippets evil-lion vimrc-mode pandoc-mode winum disaster helm-themes command-log-mode google-translate paradox treemacs-magit js2-refactor evil-iedit-state helm-org gendoxy elisp-def git-link indent-guide link-hint devdocs ace-jump-helm-line evil-easymotion org-superstar spacemacs-whitespace-cleanup mvn web-beautify org-pomodoro evil-textobj-line dockerfile-mode ron-mode flycheck-elsa evil-visual-mark-mode hide-comnt poetry inspector helm-c-yasnippet aggressive-indent which-key volatile-highlights elisp-slime-nav symon term-cursor auctex-latexmk groovy-mode scss-mode nameless highlight-numbers company-ansible holy-mode clean-aindent-mode slim-mode diminish blacken helm-company highlight-parentheses flycheck-ycmd drag-stuff esh-help string-inflection nodejs-repl org-mime js-doc pylookup unkillable-scratch org-projectile vi-tilde-fringe json-mode sass-mode expand-region helm-make uuidgen livid-mode treeview magic-latex-buffer evil-anzu vim-powerline info+ importmagic helm-rtags cargo company-ycmd fuzzy treemacs-projectile yaml-mode evil-unimpaired helm-pydoc emr lorem-ipsum fancy-battery flx-ido gh-md helm-mode-manager treemacs-evil company-math helm-projectile tagedit gitignore-templates pippel groovy-imports terminal-here evil-surround evil-lisp-state eval-sexp-fu prettier-js markdown-toc company-rtags keycast undo-tree evil-matchit emmet-mode org-contrib golden-ratio helm-git-grep auto-highlight-symbol help-fns+ treemacs-persp pug-mode ox-pandoc multi-term evil-visualstar org-download flycheck-rust pyenv-mode helm-purpose dotenv-mode ace-link json-reformat lsp-latex toc-org shell-pop dactyl-mode jinja2-mode sphinx-doc helm-ag smeargle toml-mode company-c-headers spacemacs-purpose-popwin org-wild-notifier hybrid-mode restart-emacs yapfify pytest flycheck-rtags evil-mc flycheck-pos-tip company-quickhelp ansible evil-goggles gnuplot google-c-style helm-ls-git lsp-ui highlight-indentation evil-numbers treemacs-icons-dired evil-tutor evil-exchange helm-descbinds npm-mode live-py-mode evil-args eshell-prompt-extras hungry-delete symbol-overlay evil-collection helm-css-scss lsp-origami pydoc doom-themes ws-butler dumb-jump flycheck-package space-doc company-web flyspell-correct-helm column-enforce-mode eshell-z maven-test-mode quickrun multi-line unicode-fonts open-junk-file unfill git-modes multi-vterm evil-org rainbow-delimiters hl-todo json-navigator persistent-scratch define-word pdf-view-restore helm-lsp company-auctex spaceline overseer macrostep evil-escape cpp-auto-include code-cells helm-xref ccls centered-cursor-mode evil-indent-plus ligature helm-swoop ein lsp-java auto-dictionary yatemplate pcre2el lsp-python-ms git-gutter-fringe evil-nerd-commenter org-cliplink lsp-pyright impatient-mode nose company-reftex cython-mode pipenv evil-tex auto-compile password-generator evil-cleverparens string-edit-at-point dired-quick-sort pip-requirements auto-yasnippet org-rich-yank ac-ispell popwin eyebrowse company-anaconda all-the-icons py-isort editorconfig xterm-color kaolin-themes web-mode mmm-mode org-present helm-org-rifle git-timemachine git-messenger browse-at-remote evil-evilified-state rust-mode mwim)))
+   '(ox-hugo tomelr writeroom-mode orgit-forge docker ansible-doc yasnippet-snippets evil-lion vimrc-mode pandoc-mode winum disaster helm-themes command-log-mode google-translate paradox treemacs-magit js2-refactor evil-iedit-state helm-org gendoxy elisp-def git-link indent-guide link-hint devdocs ace-jump-helm-line evil-easymotion org-superstar spacemacs-whitespace-cleanup mvn web-beautify org-pomodoro evil-textobj-line dockerfile-mode ron-mode flycheck-elsa evil-visual-mark-mode hide-comnt poetry inspector helm-c-yasnippet aggressive-indent which-key volatile-highlights elisp-slime-nav symon term-cursor auctex-latexmk groovy-mode scss-mode nameless highlight-numbers company-ansible holy-mode clean-aindent-mode slim-mode diminish blacken helm-company highlight-parentheses flycheck-ycmd drag-stuff esh-help string-inflection nodejs-repl org-mime js-doc pylookup unkillable-scratch org-projectile vi-tilde-fringe json-mode sass-mode expand-region helm-make uuidgen livid-mode treeview magic-latex-buffer evil-anzu vim-powerline info+ importmagic helm-rtags cargo company-ycmd fuzzy treemacs-projectile yaml-mode evil-unimpaired helm-pydoc emr lorem-ipsum fancy-battery flx-ido gh-md helm-mode-manager treemacs-evil company-math helm-projectile tagedit gitignore-templates pippel groovy-imports terminal-here evil-surround evil-lisp-state eval-sexp-fu prettier-js markdown-toc company-rtags keycast undo-tree evil-matchit emmet-mode org-contrib golden-ratio helm-git-grep auto-highlight-symbol help-fns+ treemacs-persp pug-mode ox-pandoc multi-term evil-visualstar org-download flycheck-rust pyenv-mode helm-purpose dotenv-mode ace-link json-reformat lsp-latex toc-org shell-pop dactyl-mode jinja2-mode sphinx-doc helm-ag smeargle toml-mode company-c-headers spacemacs-purpose-popwin org-wild-notifier hybrid-mode restart-emacs yapfify pytest flycheck-rtags evil-mc flycheck-pos-tip company-quickhelp ansible evil-goggles gnuplot google-c-style helm-ls-git lsp-ui highlight-indentation evil-numbers treemacs-icons-dired evil-tutor evil-exchange helm-descbinds npm-mode live-py-mode evil-args eshell-prompt-extras hungry-delete symbol-overlay evil-collection helm-css-scss lsp-origami pydoc doom-themes ws-butler dumb-jump flycheck-package space-doc company-web flyspell-correct-helm column-enforce-mode eshell-z maven-test-mode quickrun multi-line unicode-fonts open-junk-file unfill git-modes multi-vterm evil-org rainbow-delimiters hl-todo json-navigator persistent-scratch define-word pdf-view-restore helm-lsp company-auctex spaceline overseer macrostep evil-escape cpp-auto-include code-cells helm-xref ccls centered-cursor-mode evil-indent-plus ligature helm-swoop ein lsp-java auto-dictionary yatemplate pcre2el lsp-python-ms git-gutter-fringe evil-nerd-commenter org-cliplink lsp-pyright impatient-mode nose company-reftex cython-mode pipenv evil-tex auto-compile password-generator evil-cleverparens string-edit-at-point dired-quick-sort pip-requirements auto-yasnippet org-rich-yank ac-ispell popwin eyebrowse company-anaconda all-the-icons py-isort editorconfig xterm-color kaolin-themes web-mode mmm-mode org-present helm-org-rifle git-timemachine git-messenger browse-at-remote evil-evilified-state rust-mode mwim))
+ '(yas-snippet-dirs
+   '("/Users/kaypro/.dotfiles/emacs.d/snippets" "/Users/kaypro/.emacs.d/core/../private/snippets/" "/Users/kaypro/.emacs.d/layers/+completion/auto-completion/local/snippets" yasnippet-snippets-dir "/Users/kaypro/.emacs.d/elpa/29.0/develop/org-ai-20230820.1230/snippets/")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
