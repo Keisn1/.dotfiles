@@ -1,0 +1,74 @@
+#+title: Ubuntu Setup
+#+startup: overview
+#+PROPERTY: header-args:shell :tangle ~/.dotfiles/.ubuntu_setup.sh
+
+* Update
+#+begin_src shell
+# a comment
+sudo apt update && sudo apt upgrade
+#+end_src
+* Install git
+** Install
+#+begin_src shell
+sudo apt install git-all
+#+end_src
+** Configure
+#+begin_src shell
+git config --global user.name "Keisn1"
+git config --global user.email kay.freyer@icloud.com
+#+end_src
+* Download Repo
+#+begin_src shell
+git clone https://github.com/Keisn1/.dotfiles.git
+#+end_src
+* Setup ssh
+- ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
+  - save under .ssh/{username}{PC}{OS}_rsa
+  - add passphrase to lastPass {username}{PC}{OS}
+** Adding ssh_key to the ssh-agent
+#+begin_src shell
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/KayProAsusUbuntu_rsa
+#+end_src
+** Add pubic key to github
+- cat ~/.ssh/id_ed25519.pub
+- add ssh key on github
+* Install stow
+#+begin_src shell
+sudo apt-get -y install stow
+#+end_src
+* Codecs for audio, video playback, Microsoft fonts
+#+begin_src shell
+sudo apt install ubuntu-restricted-extras
+#+end_src
+* Gnome Tweaks and dconf
+#+begin_src shell
+sudo apt install gnome-tweaks dconf-editor
+#+end_src
+* Gnome Settings
+#+begin_src shell
+dconf load / < dconf-settings.ini
+#+end_src
+* Load profile with dconf
+#+begin_src shell
+# dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < ~/.dotfiles/terminal/profiles/ubuntu1.dconf
+#+end_src
+* Install Fonts
+#+begin_src shell
+FONT_VERSION=$(curl -s "https://api.github.com/repos/JetBrains/JetBrainsMono/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
+curl -sSLo jetbrains-mono.zip https://download.jetbrains.com/fonts/JetBrainsMono-$FONT_VERSION.zip
+unzip -qq jetbrains-mono.zip -d jetbrains-mono
+sudo mkdir ~/.local/share/fonts/jetbrains-mono-nerd/
+sudo mv jetbrains-mono/fonts/ttf/*.ttf ~/.local/share/fonts/jetbrains-mono-nerd/
+#+end_src
+
+* Python
+** Pyenv
+#+begin_src shell
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+pyenv install $(pyenv install --list | grep -v - | grep -v b | grep 3.11 | tail -n 1)
+#+end_src
+** Install Dev Requirements by default
+#+begin_src shell
+ pip install ~/.dotfiles/python/requirements-dev.txt
+#+end_src
