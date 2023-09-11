@@ -850,19 +850,22 @@ before packages are loaded."
            "%?"
            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
            :unnarrowed t)
-        ("l" "programming language" plain
-          "* Characteristics\n\n- Family: %?\n- Inspired by: \n\n* Reference:\n\n"
-          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-          :unnarrowed t)
-        ("b" "book notes" plain
-         "\n* Source\n\nAuthor; %^{Author}\nTitle: ${title}\nYear: %^{Year}\n\n* Summary\n\n%?"
-         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-         :unnarrowed t
-         )
-        ("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
-         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Project")
-         :unnarrowed t))
-   )
+          ("p" "python" plain (file "~/org-roam/Templates/PythonNoteTemplate.org")
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Python")
+           :unnarrowed t)
+          ("l" "programming language" plain
+           "* Characteristics\n\n- Family: %?\n- Inspired by: \n\n* Reference:\n\n"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+           :unnarrowed t)
+          ("b" "book notes" plain
+           "\n* Source\n\nAuthor; %^{Author}\nTitle: ${title}\nYear: %^{Year}\n\n* Summary\n\n%?"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+           :unnarrowed t
+           )
+          ("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Project")
+           :unnarrowed t))
+        )
 
   ;; org-ai setup
   (use-package org-ai
@@ -1144,7 +1147,21 @@ This function is called at the very end of Spacemacs initialization."
  '(org-agenda-files
    '("~/Documents/agenda_files/Tasks.org" "~/Documents/agenda_files/Birthdays.org" "~/Documents/agenda_files/Habits.org" "~/Documents/agenda_files/Journal.org"))
  '(org-hugo-export-with-toc 2)
+ '(org-pomodoro-finished-sound
+   "/Users/kaypro/.emacs.d/elpa/29.0/develop/org-pomodoro-20220318.1618/resources/achievement.wav")
+ '(org-pomodoro-killed-sound
+   /Users/kaypro/.emacs.d/elpa/29.0/develop/org-pomodoro-20220318.1618/resources/achievment.wav)
+ '(org-pomodoro-long-break-sound
+   "/Users/kaypro/.emacs.d/elpa/29.0/develop/org-pomodoro-20220318.1618/resources/mixkit-bell-gentle-alarm-notification-940.wav")
  '(org-pomodoro-manual-break t)
+ '(org-pomodoro-overtime-sound
+   "/Users/kaypro/.emacs.d/elpa/29.0/develop/org-pomodoro-20220318.1618/resources/achievement.wav")
+ '(org-pomodoro-short-break-sound
+   "/Users/kaypro/.emacs.d/elpa/29.0/develop/org-pomodoro-20220318.1618/resources/achievement.wav")
+ '(org-pomodoro-start-sound
+   "/Users/kaypro/.emacs.d/elpa/29.0/develop/org-pomodoro-20220318.1618/resources/achievement.wav")
+ '(org-pomodoro-ticking-sound
+   "/Users/kaypro/.emacs.d/elpa/29.0/develop/org-pomodoro-20220318.1618/resources/tick.wav")
  '(org-tag-faces '(("work" . "Cyan3") ("email" . "Cyan3")))
  '(org-todo-keyword-faces
    '(("TODO" . "yellow1")
