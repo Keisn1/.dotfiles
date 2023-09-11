@@ -1,0 +1,6 @@
+\.git
+.ubuntu_setup.sh
+terminal
+python
+gnome
+^/.*\.org
