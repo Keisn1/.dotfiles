@@ -20,6 +20,8 @@ unzip -qq jetbrains-mono.zip -d jetbrains-mono
 sudo mkdir ~/.local/share/fonts/
 sudo mkdir ~/.local/share/fonts/jetbrains-mono-nerd/
 sudo mv jetbrains-mono/fonts/ttf/*.ttf ~/.local/share/fonts/jetbrains-mono-nerd/
+rm -r jetbrains-mono
+rm jetbrains-mono.zip
 
 sudo apt install gnome-tweaks dconf-editor
 
@@ -33,7 +35,7 @@ PATH=$PATH:~/.config/emacs/bin
 doom install
 
 sudo apt install git-core zsh
-sh -c “$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 sudo apt install fonts-powerline
 git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/
 git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/
