@@ -31,7 +31,7 @@ sudo apt install gnome-tweaks dconf-editor
 #+end_src
 * Gnome Settings
 #+begin_src shell
-dconf load / < dconf-settings-asus-ubuntu.ini
+dconf load / < ~/.dotfiles/gnome/dconf-settings-asus-ubuntu.ini
 #+end_src
 * Load profile with dconf
 #+begin_src shell

@@ -12,7 +12,7 @@ sudo apt install ubuntu-restricted-extras
 
 sudo apt install gnome-tweaks dconf-editor
 
-dconf load / < dconf-settings-asus-ubuntu.ini
+dconf load / < ~/.dotfiles/gnome/dconf-settings-asus-ubuntu.ini
 
 dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < ~/.dotfiles/terminal/profiles/ubuntu1.dconf
 
