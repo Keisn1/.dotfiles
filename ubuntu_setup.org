@@ -6,6 +6,7 @@
 #+begin_src shell
 # a comment
 sudo apt update && sudo apt upgrade
+snap refresh
 #+end_src
 * Install git
 ** Install
@@ -54,6 +55,7 @@ dconf load / < ~/.dotfiles/gnome/dconf-settings-asus-ubuntu.ini
 dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < ~/.dotfiles/terminal/profiles/ubuntu1.dconf
 #+end_src
 * TODO Install Firefox
+- needs to be synced and setup search engines (right clicking on address bar)
 #+begin_src shell
 sudo snap install firefox
 #+end_src

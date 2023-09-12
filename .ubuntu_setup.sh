@@ -1,5 +1,6 @@
 # a comment
 sudo apt update && sudo apt upgrade
+snap refresh
 
 sudo apt install git-all
 
