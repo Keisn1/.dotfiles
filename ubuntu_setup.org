@@ -20,6 +20,10 @@ git config --global user.email kay.freyer@icloud.com
 * Download Repo
 #+begin_src shell
 git clone https://github.com/Keisn1/.dotfiles.git
+cd ~/.dotfiles
+git checkout ubuntu_asus
+git pull origin ubuntu_asus
+cd
 #+end_src
 * Codecs for audio, video playback, Microsoft fonts
 #+begin_src shell

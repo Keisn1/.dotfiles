@@ -7,6 +7,10 @@ git config --global user.name "Keisn1"
 git config --global user.email kay.freyer@icloud.com
 
 git clone https://github.com/Keisn1/.dotfiles.git
+cd ~/.dotfiles
+git checkout ubuntu_asus
+git pull origin ubuntu_asus
+cd
 
 sudo apt install ubuntu-restricted-extras
 
