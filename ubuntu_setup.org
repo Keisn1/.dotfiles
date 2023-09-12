@@ -33,10 +33,6 @@ ssh-add ~/.ssh/KayProAsusUbuntu_rsa
 ** Add pubic key to github
 - cat ~/.ssh/id_ed25519.pub
 - add ssh key on github
-* Install stow
-#+begin_src shell
-sudo apt-get -y install stow
-#+end_src
 * Codecs for audio, video playback, Microsoft fonts
 #+begin_src shell
 sudo apt install ubuntu-restricted-extras
@@ -47,11 +43,15 @@ sudo apt install gnome-tweaks dconf-editor
 #+end_src
 * Gnome Settings
 #+begin_src shell
-dconf load / < dconf-settings.ini
+dconf load / < dconf-settings-asus-ubuntu.ini
 #+end_src
 * Load profile with dconf
 #+begin_src shell
-# dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < ~/.dotfiles/terminal/profiles/ubuntu1.dconf
+dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < ~/.dotfiles/terminal/profiles/ubuntu1.dconf
+#+end_src
+* Install stow
+#+begin_src shell
+sudo apt-get -y install stow
 #+end_src
 * Install Fonts
 #+begin_src shell
