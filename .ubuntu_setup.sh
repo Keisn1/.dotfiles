@@ -94,4 +94,4 @@ sudo apt install \
     xz-utils \
     zlib1g-dev
 
-pip install ~/.dotfiles/python/requirements-dev.txt
+python3 -m pip install ~/.dotfiles/python/requirements-dev.txt

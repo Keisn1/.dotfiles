@@ -163,7 +163,7 @@ sudo apt install \
 #+end_src
 ** Install Dev Requirements by default
 #+begin_src shell
-pip install ~/.dotfiles/python/requirements-dev.txt
+python3 -m pip install ~/.dotfiles/python/requirements-dev.txt
 #+end_src
 * TODO Remarks
 ** Needed to set JetBrains in Terminal myself
