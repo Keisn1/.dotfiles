@@ -121,6 +121,39 @@ stow .
 #+begin_src shell
 doom sync
 #+end_src
+* Utilities
+** Ripgrep
+#+begin_src shell
+sudo apt install ripgrep
+#+end_src
+** Markdown
+#+begin_src shell
+sudo apt-get install markdown
+#+end_src
+** wl-clipboard
+#+begin_src shell
+sudo apt-get install wl-clipboard
+#+end_src
+** gnome-screenshot
+#+begin_src shell
+sudo apt-get install gnome-screenshot
+#+end_src
+** Graphviz
+#+begin_src shell
+sudo apt-get install graphviz
+#+end_src
+** shfmt
+#+begin_src shell
+sudo snap install shfmt
+#+end_src
+** ShellCheck
+#+begin_src shell
+sudo apt install shellcheck
+#+end_src
+** fd-find
+#+begin_src shell
+sudo apt install fd-find
+#+end_src
 * C compiler
 #+begin_src shell
 sudo apt install gcc g++
@@ -139,6 +172,7 @@ sudo apt install npm
 #+begin_src shell
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 pyenv install $(pyenv install --list | grep -v - | grep -v b | grep 3.11 | tail -n 1)
+pyenv global $(pyenv install --list | grep -v - | grep -v b | grep 3.11 | tail -n 1)
 #+end_src
 ** Python/pyenv requirements
 #+begin_src shell
@@ -163,7 +197,7 @@ sudo apt install \
 #+end_src
 ** Install Dev Requirements by default
 #+begin_src shell
-python3 -m pip install ~/.dotfiles/python/requirements-dev.txt
+pip install ~/.dotfiles/python/requirements-dev.txt
 #+end_src
 * TODO Remarks
 ** Needed to set JetBrains in Terminal myself

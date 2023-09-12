@@ -66,6 +66,22 @@ stow .
 
 doom sync
 
+sudo apt install ripgrep
+
+sudo apt-get install markdown
+
+sudo apt-get install wl-clipboard
+
+sudo apt-get install gnome-screenshot
+
+sudo apt-get install graphviz
+
+sudo snap install shfmt
+
+sudo apt install shellcheck
+
+sudo apt install fd-find
+
 sudo apt install gcc g++
 
 sudo apt install nodejs
@@ -74,6 +90,7 @@ sudo apt install npm
 
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 pyenv install $(pyenv install --list | grep -v - | grep -v b | grep 3.11 | tail -n 1)
+pyenv global $(pyenv install --list | grep -v - | grep -v b | grep 3.11 | tail -n 1)
 
 sudo apt install \
     build-essential \
@@ -94,4 +111,4 @@ sudo apt install \
     xz-utils \
     zlib1g-dev
 
-python3 -m pip install ~/.dotfiles/python/requirements-dev.txt
+pip install ~/.dotfiles/python/requirements-dev.txt
