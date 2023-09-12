@@ -43,6 +43,20 @@ git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 PATH=$PATH:~/.config/emacs/bin
 ~/.config/emacs/bin/doom install
 #+end_src
+* Setup ssh
+- ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
+  - save under .ssh/{username}{PC}{OS}_rsa
+  - add passphrase to lastPass {username}{PC}{OS}
+** Adding ssh_key to the ssh-agent
+#+begin_src shell
+sudo apt-get install keychain
+eval $(keychain --eval ~/.ssh/KayProAsusUbuntu_rsa)
+# eval "$(ssh-agent -s)"
+# ssh-add ~/.ssh/KayProAsusUbuntu_rsa
+#+end_src
+** Add pubic key to github
+- cat ~/.ssh/id_ed25519.pub
+- add ssh key on github
 * Install stow
 #+begin_src shell
 sudo apt-get -y install stow

@@ -8,9 +8,6 @@ git config --global user.email kay.freyer@icloud.com
 
 git clone https://github.com/Keisn1/.dotfiles.git
 
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/KayProAsusUbuntu_rsa
-
 sudo apt install ubuntu-restricted-extras
 
 sudo apt install gnome-tweaks dconf-editor
@@ -18,6 +15,15 @@ sudo apt install gnome-tweaks dconf-editor
 dconf load / < dconf-settings-asus-ubuntu.ini
 
 dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < ~/.dotfiles/terminal/profiles/ubuntu1.dconf
+
+git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
+PATH=$PATH:~/.config/emacs/bin
+~/.config/emacs/bin/doom install
+
+sudo apt-get install keychain
+eval $(keychain --eval ~/.ssh/KayProAsusUbuntu_rsa)
+# eval "$(ssh-agent -s)"
+# ssh-add ~/.ssh/KayProAsusUbuntu_rsa
 
 sudo apt-get -y install stow
 
