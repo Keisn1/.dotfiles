@@ -43,6 +43,8 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/p
 
 curl -sS https://starship.rs/install.sh | sh
 
+ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
+
 sudo apt-get install keychain
 eval $(keychain --eval ~/.ssh/KayProAsusUbuntu_rsa)
 # eval "$(ssh-agent -s)"

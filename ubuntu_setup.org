@@ -73,6 +73,10 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/p
 curl -sS https://starship.rs/install.sh | sh
 #+end_src
 * Setup ssh
+** Generate key
+#+begin_src shell
+ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
+#+end_src
 - ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
   - save under .ssh/{username}{PC}{OS}_rsa
   - add passphrase to lastPass {username}{PC}{OS}
