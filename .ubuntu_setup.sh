@@ -30,6 +30,8 @@ dconf load / < ~/.dotfiles/gnome/dconf-settings-asus-ubuntu.ini
 
 dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < ~/.dotfiles/terminal/profiles/ubuntu1.dconf
 
+sudo snap install firefox
+
 sudo apt install emacs          # no email configuration
 git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 PATH=$PATH:~/.config/emacs/bin
@@ -37,13 +39,21 @@ doom install
 
 sudo apt install git-core zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
 sudo apt install fonts-powerline
-git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 
 curl -sS https://starship.rs/install.sh | sh
 
+git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+
+git clone https://github.com/jeffreytse/zsh-vi-mode $ZSH_CUSTOM/plugins/zsh-vi-mode
+
 ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
+# - ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
+#   - save under .ssh/{username}{PC}{OS}_rsa
+#   - add passphrase to lastPass {username}{PC}{OS}
 
 sudo apt-get install keychain
 eval $(keychain --eval ~/.ssh/KayProAsusUbuntu_rsa)
@@ -52,6 +62,8 @@ eval $(keychain --eval ~/.ssh/KayProAsusUbuntu_rsa)
 
 sudo apt-get -y install stow
 stow .
+
+doom sync
 
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 pyenv install $(pyenv install --list | grep -v - | grep -v b | grep 3.11 | tail -n 1)

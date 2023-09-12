@@ -53,6 +53,10 @@ dconf load / < ~/.dotfiles/gnome/dconf-settings-asus-ubuntu.ini
 #+begin_src shell
 dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < ~/.dotfiles/terminal/profiles/ubuntu1.dconf
 #+end_src
+* TODO Install Firefox
+#+begin_src shell
+sudo snap install firefox
+#+end_src
 * Install Doom Emacs
 #+begin_src shell
 sudo apt install emacs          # no email configuration
@@ -64,18 +68,34 @@ doom install
 #+begin_src shell
 sudo apt install git-core zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+#+end_src
+** Fonts powerline
+#+begin_src shell
 sudo apt install fonts-powerline
-git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 #+end_src
 ** Starship
 #+begin_src shell
 curl -sS https://starship.rs/install.sh | sh
 #+end_src
+** zsh-syntax-highlighting
+#+begin_src shell
+git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+#+end_src
+** zsh-autosuggestions
+#+begin_src shell
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+#+end_src
+** zsh-vi-mode
+#+begin_src shell
+git clone https://github.com/jeffreytse/zsh-vi-mode $ZSH_CUSTOM/plugins/zsh-vi-mode
+#+end_src
 * Setup ssh
 ** Generate key
 #+begin_src shell
 ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
+# - ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
+#   - save under .ssh/{username}{PC}{OS}_rsa
+#   - add passphrase to lastPass {username}{PC}{OS}
 #+end_src
 - ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
   - save under .ssh/{username}{PC}{OS}_rsa
@@ -95,6 +115,10 @@ eval $(keychain --eval ~/.ssh/KayProAsusUbuntu_rsa)
 sudo apt-get -y install stow
 stow .
 #+end_src
+* Doom sync
+#+begin_src shell
+doom sync
+#+end_src
 * Python
 ** Pyenv
 #+begin_src shell
@@ -110,3 +134,5 @@ pyenv install $(pyenv install --list | grep -v - | grep -v b | grep 3.11 | tail 
 - because I didn't download the right Font (must be from nerd fonts)
 ** keychain not installed
 - havn't run it yet
+  -
+** Install zsh-vi-mode
