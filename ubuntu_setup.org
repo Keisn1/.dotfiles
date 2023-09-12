@@ -29,6 +29,15 @@ cd
 #+begin_src shell
 sudo apt install ubuntu-restricted-extras
 #+end_src
+* TODO Install Fonts
+#+begin_src shell
+FONT_VERSION=$(curl -s "https://api.github.com/repos/JetBrains/JetBrainsMono/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
+curl -sSLo jetbrains-mono.zip https://download.jetbrains.com/fonts/JetBrainsMono-$FONT_VERSION.zip
+unzip -qq jetbrains-mono.zip -d jetbrains-mono
+sudo mkdir ~/.local/share/fonts/
+sudo mkdir ~/.local/share/fonts/jetbrains-mono-nerd/
+sudo mv jetbrains-mono/fonts/ttf/*.ttf ~/.local/share/fonts/jetbrains-mono-nerd/
+#+end_src
 * Gnome Tweaks and dconf
 #+begin_src shell
 sudo apt install gnome-tweaks dconf-editor
@@ -43,9 +52,22 @@ dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d
 #+end_src
 * Install Doom Emacs
 #+begin_src shell
+sudo apt install emacs          # no email configuration
 git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 PATH=$PATH:~/.config/emacs/bin
-~/.config/emacs/bin/doom install
+doom install
+#+end_src
+* Oh-my-ysh
+#+begin_src shell
+sudo apt install git-core zsh
+sh -c “$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+sudo apt install fonts-powerline
+git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/
+#+end_src
+* Install stow
+#+begin_src shell
+sudo apt-get -y install stow
 #+end_src
 * Setup ssh
 - ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
@@ -61,19 +83,6 @@ eval $(keychain --eval ~/.ssh/KayProAsusUbuntu_rsa)
 ** Add pubic key to github
 - cat ~/.ssh/id_ed25519.pub
 - add ssh key on github
-* Install stow
-#+begin_src shell
-sudo apt-get -y install stow
-#+end_src
-* Install Fonts
-#+begin_src shell
-FONT_VERSION=$(curl -s "https://api.github.com/repos/JetBrains/JetBrainsMono/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
-curl -sSLo jetbrains-mono.zip https://download.jetbrains.com/fonts/JetBrainsMono-$FONT_VERSION.zip
-unzip -qq jetbrains-mono.zip -d jetbrains-mono
-sudo mkdir ~/.local/share/fonts/jetbrains-mono-nerd/
-sudo mv jetbrains-mono/fonts/ttf/*.ttf ~/.local/share/fonts/jetbrains-mono-nerd/
-#+end_src
-
 * Python
 ** Pyenv
 #+begin_src shell

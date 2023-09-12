@@ -14,28 +14,36 @@ cd
 
 sudo apt install ubuntu-restricted-extras
 
+FONT_VERSION=$(curl -s "https://api.github.com/repos/JetBrains/JetBrainsMono/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
+curl -sSLo jetbrains-mono.zip https://download.jetbrains.com/fonts/JetBrainsMono-$FONT_VERSION.zip
+unzip -qq jetbrains-mono.zip -d jetbrains-mono
+sudo mkdir ~/.local/share/fonts/
+sudo mkdir ~/.local/share/fonts/jetbrains-mono-nerd/
+sudo mv jetbrains-mono/fonts/ttf/*.ttf ~/.local/share/fonts/jetbrains-mono-nerd/
+
 sudo apt install gnome-tweaks dconf-editor
 
 dconf load / < ~/.dotfiles/gnome/dconf-settings-asus-ubuntu.ini
 
 dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < ~/.dotfiles/terminal/profiles/ubuntu1.dconf
 
+sudo apt install emacs          # no email configuration
 git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 PATH=$PATH:~/.config/emacs/bin
-~/.config/emacs/bin/doom install
+doom install
+
+sudo apt install git-core zsh
+sh -c “$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+sudo apt install fonts-powerline
+git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/
+
+sudo apt-get -y install stow
 
 sudo apt-get install keychain
 eval $(keychain --eval ~/.ssh/KayProAsusUbuntu_rsa)
 # eval "$(ssh-agent -s)"
 # ssh-add ~/.ssh/KayProAsusUbuntu_rsa
-
-sudo apt-get -y install stow
-
-FONT_VERSION=$(curl -s "https://api.github.com/repos/JetBrains/JetBrainsMono/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
-curl -sSLo jetbrains-mono.zip https://download.jetbrains.com/fonts/JetBrainsMono-$FONT_VERSION.zip
-unzip -qq jetbrains-mono.zip -d jetbrains-mono
-sudo mkdir ~/.local/share/fonts/jetbrains-mono-nerd/
-sudo mv jetbrains-mono/fonts/ttf/*.ttf ~/.local/share/fonts/jetbrains-mono-nerd/
 
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 pyenv install $(pyenv install --list | grep -v - | grep -v b | grep 3.11 | tail -n 1)
