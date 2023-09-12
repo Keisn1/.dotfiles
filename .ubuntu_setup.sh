@@ -41,13 +41,15 @@ sudo apt install fonts-powerline
 git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 
-sudo apt-get -y install stow
-stow .
+curl -sS https://starship.rs/install.sh | sh
 
 sudo apt-get install keychain
 eval $(keychain --eval ~/.ssh/KayProAsusUbuntu_rsa)
 # eval "$(ssh-agent -s)"
 # ssh-add ~/.ssh/KayProAsusUbuntu_rsa
+
+sudo apt-get -y install stow
+stow .
 
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 pyenv install $(pyenv install --list | grep -v - | grep -v b | grep 3.11 | tail -n 1)
