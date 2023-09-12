@@ -121,6 +121,19 @@ stow .
 #+begin_src shell
 doom sync
 #+end_src
+* C compiler
+#+begin_src shell
+sudo apt install gcc g++
+#+end_src
+* JavaScript
+** Node.js
+#+begin_src shell
+sudo apt install nodejs
+#+end_src
+** npm
+#+begin_src shell
+sudo apt install npm
+#+end_src
 * Python
 ** Pyenv
 #+begin_src shell

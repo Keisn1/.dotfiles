@@ -66,6 +66,12 @@ stow .
 
 doom sync
 
+sudo apt install gcc g++
+
+sudo apt install nodejs
+
+sudo apt install npm
+
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 pyenv install $(pyenv install --list | grep -v - | grep -v b | grep 3.11 | tail -n 1)
 
