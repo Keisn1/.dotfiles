@@ -14,14 +14,16 @@ cd
 
 sudo apt install ubuntu-restricted-extras
 
-FONT_VERSION=$(curl -s "https://api.github.com/repos/JetBrains/JetBrainsMono/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
-curl -sSLo jetbrains-mono.zip https://download.jetbrains.com/fonts/JetBrainsMono-$FONT_VERSION.zip
-unzip -qq jetbrains-mono.zip -d jetbrains-mono
+curl -OL https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip
+# FONT_VERSION=$(curl -s "https://api.github.com/repos/JetBrains/JetBrainsMono/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
+# curl -sSLo jetbrains-mono.zip https://download.jetbrains.com/fonts/JetBrainsMono-$FONT_VERSION.zip
+# unzip -qq jetbrains-mono.zip -d jetbrains-mono
+unzip -qq JetBrainsMono.zip -d jetbrains-mono-nerd
 sudo mkdir ~/.local/share/fonts/
 sudo mkdir ~/.local/share/fonts/jetbrains-mono-nerd/
 sudo mv jetbrains-mono/fonts/ttf/*.ttf ~/.local/share/fonts/jetbrains-mono-nerd/
-rm -r jetbrains-mono
-rm jetbrains-mono.zip
+rm -r jetbrains-mono-nerd
+rm JetBrainsMono.zip
 
 sudo apt install gnome-tweaks dconf-editor
 
@@ -41,6 +43,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/cust
 git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 
 sudo apt-get -y install stow
+stow .
 
 sudo apt-get install keychain
 eval $(keychain --eval ~/.ssh/KayProAsusUbuntu_rsa)
