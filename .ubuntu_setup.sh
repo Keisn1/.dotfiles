@@ -20,8 +20,7 @@ curl -OL https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBra
 # unzip -qq jetbrains-mono.zip -d jetbrains-mono
 unzip -qq JetBrainsMono.zip -d jetbrains-mono-nerd
 sudo mkdir ~/.local/share/fonts/
-sudo mkdir ~/.local/share/fonts/jetbrains-mono-nerd/
-sudo mv jetbrains-mono-nerd/fonts/ttf/*.ttf ~/.local/share/fonts/jetbrains-mono-nerd/
+sudo mv jetbrains-mono-nerd ~/.local/share/fonts
 rm -r jetbrains-mono-nerd
 rm JetBrainsMono.zip
 
