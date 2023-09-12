@@ -22,8 +22,8 @@ git config --global user.email kay.freyer@icloud.com
 #+begin_src shell
 git clone https://github.com/Keisn1/.dotfiles.git
 cd ~/.dotfiles
-git checkout ubuntu_asus
-git pull origin ubuntu_asus
+git checkout ubuntu_MacBookPro
+git pull origin ubuntu_MacBookPro
 cd
 #+end_src
 * Codecs for audio, video playback, Microsoft fonts
@@ -48,10 +48,12 @@ sudo apt install gnome-tweaks dconf-editor
 #+end_src
 * Gnome Settings
 #+begin_src shell
-dconf load / < ~/.dotfiles/gnome/dconf-settings-asus-ubuntu.ini
+# dconf dump / > ~/.dotfiles/gnome/dconf-settings-macbookpro-ubuntu.ini
+dconf load / <~/.dotfiles/gnome/dconf-settings-macbookpro-ubuntu.ini
 #+end_src
 * Load profile with dconf
 #+begin_src shell
+# dconf dump /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ > ~/.dotfiles/terminal/profiles/ubuntu1.dconf
 dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < ~/.dotfiles/terminal/profiles/ubuntu1.dconf
 #+end_src
 * TODO Install Firefox
@@ -105,7 +107,7 @@ ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
 ** Adding ssh_key to the ssh-agent
 #+begin_src shell
 sudo apt-get install keychain
-eval $(keychain --eval ~/.ssh/KayProAsusUbuntu_rsa)
+eval $(keychain --eval ~/.ssh/KayProMacBookProUbuntu_rsa)
 # eval "$(ssh-agent -s)"
 # ssh-add ~/.ssh/KayProAsusUbuntu_rsa
 #+end_src

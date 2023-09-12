@@ -1,4 +1,4 @@
-eval $(keychain --eval ~/.ssh/KayProAsusUbuntu_rsa)
+eval $(keychain --eval ~/.ssh/KayProMacBookProUbuntu_rsa)
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"

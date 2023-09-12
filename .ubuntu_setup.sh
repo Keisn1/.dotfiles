@@ -9,8 +9,8 @@ git config --global user.email kay.freyer@icloud.com
 
 git clone https://github.com/Keisn1/.dotfiles.git
 cd ~/.dotfiles
-git checkout ubuntu_asus
-git pull origin ubuntu_asus
+git checkout ubuntu_MacBookPro
+git pull origin ubuntu_MacBookPro
 cd
 
 sudo apt install ubuntu-restricted-extras
@@ -27,8 +27,10 @@ rm JetBrainsMono.zip
 
 sudo apt install gnome-tweaks dconf-editor
 
-dconf load / < ~/.dotfiles/gnome/dconf-settings-asus-ubuntu.ini
+# dconf dump / > ~/.dotfiles/gnome/dconf-settings-macbookpro-ubuntu.ini
+dconf load / <~/.dotfiles/gnome/dconf-settings-macbookpro-ubuntu.ini
 
+# dconf dump /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ > ~/.dotfiles/terminal/profiles/ubuntu1.dconf
 dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < ~/.dotfiles/terminal/profiles/ubuntu1.dconf
 
 sudo snap install firefox
@@ -57,7 +59,7 @@ ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
 #   - add passphrase to lastPass {username}{PC}{OS}
 
 sudo apt-get install keychain
-eval $(keychain --eval ~/.ssh/KayProAsusUbuntu_rsa)
+eval $(keychain --eval ~/.ssh/KayProMacBookProUbuntu_rsa)
 # eval "$(ssh-agent -s)"
 # ssh-add ~/.ssh/KayProAsusUbuntu_rsa
 

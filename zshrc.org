@@ -4,7 +4,7 @@
 
 * Adding ssh_key to the ssh-agent and handled by keychain
 #+begin_src shell
-eval $(keychain --eval ~/.ssh/KayProAsusUbuntu_rsa)
+eval $(keychain --eval ~/.ssh/KayProMacBookProUbuntu_rsa)
 #+end_src
 * Export Path to .oh-my-zsh
 #+begin_src shell
