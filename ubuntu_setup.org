@@ -129,12 +129,11 @@ pyenv install $(pyenv install --list | grep -v - | grep -v b | grep 3.11 | tail 
 #+end_src
 ** Install Dev Requirements by default
 #+begin_src shell
- pip install ~/.dotfiles/python/requirements-dev.txt
+pip install ~/.dotfiles/python/requirements-dev.txt
 #+end_src
 * TODO Remarks
 ** Needed to set JetBrains in Terminal myself
 - because I didn't download the right Font (must be from nerd fonts)
 ** keychain not installed
 - havn't run it yet
-  -
 ** Install zsh-vi-mode

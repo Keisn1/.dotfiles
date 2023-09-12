@@ -69,4 +69,4 @@ doom sync
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 pyenv install $(pyenv install --list | grep -v - | grep -v b | grep 3.11 | tail -n 1)
 
- pip install ~/.dotfiles/python/requirements-dev.txt
+pip install ~/.dotfiles/python/requirements-dev.txt
