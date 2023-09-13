@@ -1,10 +1,11 @@
 #+title: Zshrc
 #+STARTUP: overview
 #+PROPERTY: header-args:shell :tangle ~/.dotfiles/.zshrc :mkdirp yes
+#+INCLUDE: "~/.dotfiles/system_info.org"
 
 * Adding ssh_key to the ssh-agent and handled by keychain
-#+begin_src shell
-eval $(keychain --eval ~/.ssh/KayProAsusUbuntu_rsa)
+#+begin_src shell :noweb yes
+eval $(keychain --eval ~/.ssh/<<system_info.org:HOSTNAME()>>-<<system_info.org:OS()>>_rsa)
 #+end_src
 * Export Path to .oh-my-zsh
 #+begin_src shell

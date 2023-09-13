@@ -1,38 +1,8 @@
 #+title: Ubuntu Setup
 #+startup: overview
 #+PROPERTY: header-args:shell :tangle ~/.dotfiles/.ubuntu_setup.sh :mkdirp yes
+#+INCLUDE: "~/.dotfiles/system_info.org"
 
-* Output System variables
-#+NAME: OS
-#+begin_src emacs-lisp
-(defun display-linux-distribution ()
-  "Display the Linux distribution."
-  (interactive)
-  (let ((os-release-file "/etc/os-release"))
-    (if (file-readable-p os-release-file)
-        (with-temp-buffer
-          (insert-file-contents os-release-file)
-          (goto-char (point-min))
-          (let ((distribution nil))
-            (while (re-search-forward "^NAME=\"\\(.*\\)\"$" nil t)
-              (setq distribution (match-string 1)))
-            (if distribution
-                (message "%s" distribution)
-              (message "Linux Distribution: Unknown"))))
-      ((let ((macos-version (shell-command-to-string "sw_vers -productVersion"))))
-       (macos-version)
-       ))))
-
-(display-linux-distribution)
-#+end_src
-
-#+NAME: HOSTNAME
-#+begin_src emacs-lisp
-(system-name)
-#+end_src
-
-#+RESULTS:
-: kaypro-UX330UAK
 
 * Update
 #+begin_src shell
@@ -80,7 +50,7 @@ sudo apt install gnome-tweaks dconf-editor
 #+end_src
 * Gnome Settings
 #+begin_src shell :noweb yes
-dconf load / < ~/.dotfiles/gnome/dconf-settings-<<HOSTNAME()>>-<<OS()>>.ini
+dconf load / < ~/.dotfiles/gnome/dconf-settings-<<system_info.org:HOSTNAME()>>-<<system_info.org:OS()>>.ini
 #+end_src
 * Load profile with dconf
 #+begin_src shell
@@ -124,10 +94,10 @@ git clone https://github.com/jeffreytse/zsh-vi-mode $ZSH_CUSTOM/plugins/zsh-vi-m
 #+end_src
 * Setup ssh
 ** Generate key
-#+begin_src shell
+#+begin_src shell :noweb yes
 ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
 # - ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
-#   - save under .ssh/{username}{PC}{OS}_rsa
+#   - save under /home/kaypro/.ssh/<<system_info.org:HOSTNAME()>>-<<system_info.org:OS()>>_rsa
 #   - add passphrase to lastPass {username}{PC}{OS}
 #+end_src
 - ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
@@ -136,12 +106,10 @@ ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
 ** Adding ssh_key to the ssh-agent
 #+begin_src shell :noweb yes
 sudo apt-get install keychain
-eval $(keychain --eval ~/.ssh/<<HOSTNAME()>>-<<OS()>>_rsa)
+eval $(keychain --eval ~/.ssh/<<system_info.org:HOSTNAME()>>-<<system_info.org:OS()>>_rsa)
 # eval "$(ssh-agent -s)"
 # ssh-add ~/.ssh/KayProAsusUbuntu_rsa
 #+end_src
-
-
 ** Add pubic key to github
 - cat ~/.ssh/id_ed25519.pub
 - add ssh key on github

@@ -53,7 +53,7 @@ git clone https://github.com/jeffreytse/zsh-vi-mode $ZSH_CUSTOM/plugins/zsh-vi-m
 
 ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
 # - ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
-#   - save under .ssh/{username}{PC}{OS}_rsa
+#   - save under /home/kaypro/.ssh/kaypro-UX330UAK-Ubuntu_rsa
 #   - add passphrase to lastPass {username}{PC}{OS}
 
 sudo apt-get install keychain
