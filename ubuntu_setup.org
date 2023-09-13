@@ -1,7 +1,8 @@
 #+title: Ubuntu Setup
 #+startup: overview
-#+PROPERTY: header-args:shell :tangle ~/.dotfiles/.ubuntu_setup.sh :mkdirp yes
-#+INCLUDE: "~/.dotfiles/system_info.org"
+#+PROPERTY: header-args:shell :tangle $HOME/.dotfiles/.ubuntu_setup.sh :mkdirp yes
+#+INCLUDE: "$HOME/.dotfiles/system_info.org"
+
 
 * Update
 #+begin_src shell

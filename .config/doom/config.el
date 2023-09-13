@@ -30,10 +30,6 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(if (string= system-type "darwin")
- (setq mac-option-modifier 'super)
- (setq mac-command-modifier 'meta))
-
 (add-hook 'window-setup-hook #'toggle-frame-fullscreen)
 (setq default-frame-alist '((undecorated . t))) ; get rid of title bar
 

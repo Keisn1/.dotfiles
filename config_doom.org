@@ -36,12 +36,6 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 #+end_src
-* System specific
-#+begin_src emacs-lisp
-(if (string= system-type "darwin")
- (setq mac-option-modifier 'super)
- (setq mac-command-modifier 'meta))
-#+end_src
 * Appearance
 ** TODO Frame
 - need to check out how to Toggle Fullscreen when starting client
