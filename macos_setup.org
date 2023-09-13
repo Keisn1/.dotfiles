@@ -1,4 +1,5 @@
-#+title: Macos Setup
+#+title: Macos Setup (M1)
+#+startup: overview
 
 * Change keybehavior
 Change CapsLock to Control (keyboard ? keyboard shortcuts > Modifier Keys)
@@ -9,7 +10,7 @@ Change CapsLock to Control (keyboard ? keyboard shortcuts > Modifier Keys)
 #+end_src
 ** Add to PATH
 #+begin_src shell
-echo 'eval "(/opt/homebrew/bin/brew shellenv)"' >> /Users/$(whoami)/.zprofile
+echo 'eval "(/opt/homebrew/bin/brew shellenv)"' >> /Users/$(whoami)/.zshrc
 #+end_src
 * Setup ssh
 ** Generate key
@@ -63,7 +64,7 @@ brew install font-jetbrains-mono-nerd-font
 #+end_src
 * Install Emacs
 ** Dependencies
-*** riggrep and grep
+*** riggrep and grep (for doom already)
 **** ripgrep
 #+begin_src shell
 brew install rust
@@ -73,9 +74,9 @@ echo "export PATH=$PATH:/Users/kaypro/.cargo/bin" >> .zshrc
 **** grep
 #+begin_src shell
 brew install grep
-echo "if [ -d "$(brew --prefix)/opt/grep/libexec/gnubin" ]; then
+echo 'if [ -d "$(brew --prefix)/opt/grep/libexec/gnubin" ]; then
     PATH="$(brew --prefix)/opt/grep/libexec/gnubin:$PATH"
-fi" >> .zshrc
+fi' >> .zshrc
 #+end_src
 *** fd-find
 #+begin_src shell
@@ -85,13 +86,33 @@ brew install coreutils fd
 #+begin_src shell
 brew install coreutils fd
 #+end_src
-** Emacs-mac
+** Emacs-mac ( not good )
 #+begin_src shell
 brew tap railwaycat/emacsmacport
 brew install emacs-mac --with-modules
 ln -s /usr/local/opt/emacs-mac/Emacs.app /Applications/Emacs.app
 #+end_src
+** Emacs-plus
+#+begin_src shell
+brew tap d12frosted/emacs-plus
+brew install emacs-plus
+ln -s /opt/homebrew/opt/emacs-plus/Emacs.app /Applications/Emacs.app
+brew services start d12frosted/emacs-plus/emacs-plus@29
+#+end_src
 * Install Doom Emacs
+** Dependencies
+*** Markdown
+#+begin_src shell
+brew install markdown
+#+end_src
+*** fontconfig
+#+begin_src shell
+brew install fontconfig
+#+end_src
+*** ShellCheck
+#+begin_src shell
+brew install shellcheck
+#+end_src
 ** Install
 #+begin_src shell
 git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
@@ -107,17 +128,3 @@ doom sync
   #+begin_src shell
   doom doctor
   #+end_src
-* Utilities
-** Markdown
-#+begin_src shell
-brew install markdown
-#+end_src
-** fontconfig
-#+begin_src shell
-brew install fontconfig
-#+end_src
-** grep with support for PCRE lookaheads
-** ShellCheck
-#+begin_src shell
-sudo apt install shellcheck
-#+end_src

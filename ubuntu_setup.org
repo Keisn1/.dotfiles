@@ -1,7 +1,7 @@
 #+title: Ubuntu Setup
 #+startup: overview
-#+PROPERTY: header-args:shell :tangle ~/.dotfiles/.ubuntu_setup.sh :mkdirp yes
-#+INCLUDE: "~/.dotfiles/system_info.org"
+#+PROPERTY: header-args:shell :tangle $HOME/.dotfiles/.ubuntu_setup.sh :mkdirp yes
+#+INCLUDE: "$HOME/.dotfiles/system_info.org"
 
 
 * Update
@@ -24,12 +24,12 @@ ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
 ** Adding ssh_key to the ssh-agent
 #+begin_src shell :noweb yes
 sudo apt-get install keychain
-eval $(keychain --eval ~/.ssh/<<system_info.org:HOSTNAME()>>-<<system_info.org:OS()>>_rsa)
+eval $(keychain --eval $HOME/.ssh/<<system_info.org:HOSTNAME()>>-<<system_info.org:OS()>>_rsa)
 # eval "$(ssh-agent -s)"
-# ssh-add ~/.ssh/KayProAsusUbuntu_rsa
+# ssh-add $HOME/.ssh/KayProAsusUbuntu_rsa
 #+end_src
 ** Add pubic key to github
-- cat ~/.ssh/id_ed25519.pub
+- cat $HOME/.ssh/id_ed25519.pub
 - add ssh key on github
 * Install git
 ** Install
@@ -44,7 +44,7 @@ git config --global user.email kay.freyer@icloud.com
 * Download Repo
 #+begin_src shell
 git clone https://github.com/Keisn1/.dotfiles.git
-cd ~/.dotfiles
+cd $HOME/.dotfiles
 git checkout ubuntu_asus
 git pull origin ubuntu_asus
 cd
@@ -60,8 +60,8 @@ curl -OL https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBra
 # curl -sSLo jetbrains-mono.zip https://download.jetbrains.com/fonts/JetBrainsMono-$FONT_VERSION.zip
 # unzip -qq jetbrains-mono.zip -d jetbrains-mono
 unzip -qq JetBrainsMono.zip -d jetbrains-mono-nerd
-sudo mkdir ~/.local/share/fonts/
-sudo mv jetbrains-mono-nerd ~/.local/share/fonts
+sudo mkdir $HOME/.local/share/fonts/
+sudo mv jetbrains-mono-nerd $HOME/.local/share/fonts
 rm -r jetbrains-mono-nerd
 rm JetBrainsMono.zip
 #+end_src
@@ -71,11 +71,11 @@ sudo apt install gnome-tweaks dconf-editor
 #+end_src
 * Gnome Settings
 #+begin_src shell :noweb yes
-dconf load / < ~/.dotfiles/gnome/dconf-settings-<<system_info.org:HOSTNAME()>>-<<system_info.org:OS()>>.ini
+dconf load / < $HOME/.dotfiles/gnome/dconf-settings-<<system_info.org:HOSTNAME()>>-<<system_info.org:OS()>>.ini
 #+end_src
 * Load profile with dconf
 #+begin_src shell
-dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < ~/.dotfiles/terminal/profiles/ubuntu1.dconf
+dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < $HOME/.dotfiles/terminal/profiles/ubuntu1.dconf
 #+end_src
 * Install Firefox
 #+begin_src shell
@@ -84,8 +84,8 @@ sudo snap install firefox
 * Install Doom Emacs
 ** Install
 #+begin_src shell
-git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
-PATH=$PATH:~/.config/emacs/bin
+git clone --depth 1 https://github.com/doomemacs/doomemacs $HOME/.config/emacs
+PATH=$PATH:$HOME/.config/emacs/bin
 doom install
 #+end_src
 ** Sync
@@ -107,11 +107,11 @@ curl -sS https://starship.rs/install.sh | sh
 #+end_src
 ** zsh-syntax-highlighting
 #+begin_src shell
-git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-syntax-highlighting $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 #+end_src
 ** zsh-autosuggestions
 #+begin_src shell
-git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 #+end_src
 ** zsh-vi-mode
 #+begin_src shell
@@ -171,7 +171,7 @@ sudo apt install npm
 * Python
 ** Pyenv
 #+begin_src shell
-git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 pyenv install $(pyenv install --list | grep -v - | grep -v b | grep 3.11 | tail -n 1)
 pyenv global $(pyenv install --list | grep -v - | grep -v b | grep 3.11 | tail -n 1)
 #+end_src
@@ -198,7 +198,7 @@ sudo apt install \
 #+end_src
 ** Install Dev Requirements by default
 #+begin_src shell
-pip install ~/.dotfiles/python/requirements-dev.txt
+pip install $HOME/.dotfiles/python/requirements-dev.txt
 #+end_src
 * Install Lastpass cli
 #+begin_src shell
@@ -221,7 +221,7 @@ git clone git@github.com:lastpass/lastpass-cli.git
 git checkout 1.3.6
 cd lastPass-cli
 make
-PATH=$PATH:~/lastpass-cli/build/
+PATH=$PATH:$HOME/lastpass-cli/build/
 #+end_src
 * Installing qutebrowser
 ** Installing via virtualenv
