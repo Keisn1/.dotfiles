@@ -63,10 +63,27 @@ brew install font-jetbrains-mono-nerd-font
 #+end_src
 * Install Emacs
 ** Dependencies
+*** riggrep and grep
+**** ripgrep
 #+begin_src shell
-brew install git ripgrep
+brew install rust
+cargo install --features pcre2 ripgrep
+echo "export PATH=$PATH:/Users/kaypro/.cargo/bin" >> .zshrc
+#+end_src
+**** grep
+#+begin_src shell
+brew install grep
+echo "if [ -d "$(brew --prefix)/opt/grep/libexec/gnubin" ]; then
+    PATH="$(brew --prefix)/opt/grep/libexec/gnubin:$PATH"
+fi" >> .zshrc
+#+end_src
+*** fd-find
+#+begin_src shell
 brew install coreutils fd
-xcode-select --install
+#+end_src
+*** xcode-select
+#+begin_src shell
+brew install coreutils fd
 #+end_src
 ** Emacs-mac
 #+begin_src shell
@@ -75,8 +92,32 @@ brew install emacs-mac --with-modules
 ln -s /usr/local/opt/emacs-mac/Emacs.app /Applications/Emacs.app
 #+end_src
 * Install Doom Emacs
+** Install
 #+begin_src shell
 git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 PATH=$PATH:~/.config/emacs/bin
 doom install
+#+end_src
+** Sync
+#+begin_src shell
+doom sync
+#+end_src
+** Doctor
+- run doom doctor for missing dependencies
+  #+begin_src shell
+  doom doctor
+  #+end_src
+* Utilities
+** Markdown
+#+begin_src shell
+brew install markdown
+#+end_src
+** fontconfig
+#+begin_src shell
+brew install fontconfig
+#+end_src
+** grep with support for PCRE lookaheads
+** ShellCheck
+#+begin_src shell
+sudo apt install shellcheck
 #+end_src
