@@ -31,9 +31,9 @@
 ;; they are implemented.
 
 (add-hook 'window-setup-hook #'toggle-frame-fullscreen)
-(setq default-frame-alist '((undecorated . t)))
+(setq default-frame-alist '((undecorated . t))) ; get rid of title bar
 
-(setq doom-theme 'doom-palenight)
+(setq doom-theme 'doom-Iosvkem)
 
 ;; (all-the-icons-install-fonts t)
 ;; (nerd-icons-install-fonts)
@@ -117,10 +117,13 @@
 
 (add-hook! 'inferior-python-mode-hook #'visual-line-mode)
 
+(setq doom-localleader-key ",")
+
+(map!
+        :leader :desc "M-x" "SPC" 'execute-extended-command)
+
 (map!
         "M-y" 'consult-yank-from-kill-ring)
-
-(setq doom-localleader-key ",")
 
 (map! :after python
       :map python-mode-map
@@ -137,6 +140,3 @@
 
 (map!
         :leader :desc "doom dashboard" "b h" '+doom-dashboard/open)
-
-(map!
-        :leader :desc "M-x" "SPC" 'execute-extended-command)

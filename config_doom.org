@@ -41,12 +41,12 @@
 - need to check out how to Toggle Fullscreen when starting client
 #+begin_src emacs-lisp
 (add-hook 'window-setup-hook #'toggle-frame-fullscreen)
-(setq default-frame-alist '((undecorated . t)))
+(setq default-frame-alist '((undecorated . t))) ; get rid of title bar
 #+end_src
 ** Themes
 - choosing theme
 #+begin_src emacs-lisp
-(setq doom-theme 'doom-palenight)
+(setq doom-theme 'doom-Iosvkem)
 #+end_src
 - enabling bold and italic for the theme but may not be necessary
 #+begin_src emacs-lisp :tangle no
@@ -163,12 +163,8 @@
   (setq evil-escape-excluded-states '(normal multiedit emacs motion)))
 #+end_src
 * Python
-** TODO Init
+** Init
 - ~(python +lsp +pyright +pyenv)~
-- [ ] Installed all dev requirements and freezed them. I will put them into a dotfile
-- need to install npm
-- ~sudo apt install nodejs npm~
-
 * Which-key
 ** Delay
 #+begin_src emacs-lisp
@@ -193,13 +189,19 @@
 #+end_src
 * Keybindings
 ** Editor
+*** Localleader
+#+begin_src emacs-lisp
+(setq doom-localleader-key ",")
+#+end_src
+*** Double SPC M-x
+#+begin_src emacs-lisp
+(map!
+        :leader :desc "M-x" "SPC" 'execute-extended-command)
+#+end_src
+*** Consult
 #+begin_src emacs-lisp
 (map!
         "M-y" 'consult-yank-from-kill-ring)
-#+end_src
-** Localleader
-#+begin_src emacs-lisp
-(setq doom-localleader-key ",")
 #+end_src
 ** Python
 #+begin_src emacs-lisp
@@ -224,9 +226,4 @@
 #+begin_src emacs-lisp
 (map!
         :leader :desc "doom dashboard" "b h" '+doom-dashboard/open)
-#+end_src
-** MISC
-#+begin_src emacs-lisp
-(map!
-        :leader :desc "M-x" "SPC" 'execute-extended-command)
 #+end_src
