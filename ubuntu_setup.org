@@ -10,6 +10,27 @@
 sudo apt update && sudo apt upgrade
 snap refresh
 #+end_src
+* Setup ssh
+** Generate key
+#+begin_src shell :noweb yes
+ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
+# - ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
+#   - save under /home/kaypro/.ssh/<<system_info.org:HOSTNAME()>>-<<system_info.org:OS()>>_rsa
+#   - add passphrase to lastPass {username}{PC}{OS}
+#+end_src
+- ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
+  - save under .ssh/{username}{PC}{OS}_rsa
+  - add passphrase to lastPass {username}{PC}{OS}
+** Adding ssh_key to the ssh-agent
+#+begin_src shell :noweb yes
+sudo apt-get install keychain
+eval $(keychain --eval ~/.ssh/<<system_info.org:HOSTNAME()>>-<<system_info.org:OS()>>_rsa)
+# eval "$(ssh-agent -s)"
+# ssh-add ~/.ssh/KayProAsusUbuntu_rsa
+#+end_src
+** Add pubic key to github
+- cat ~/.ssh/id_ed25519.pub
+- add ssh key on github
 * Install git
 ** Install
 #+begin_src shell
@@ -61,11 +82,15 @@ dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d
 sudo snap install firefox
 #+end_src
 * Install Doom Emacs
+** Install
 #+begin_src shell
-sudo apt install emacs          # no email configuration
 git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 PATH=$PATH:~/.config/emacs/bin
 doom install
+#+end_src
+** Sync
+#+begin_src shell
+doom sync
 #+end_src
 * Oh-my-zsh
 #+begin_src shell
@@ -92,35 +117,10 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/p
 #+begin_src shell
 git clone https://github.com/jeffreytse/zsh-vi-mode $ZSH_CUSTOM/plugins/zsh-vi-mode
 #+end_src
-* Setup ssh
-** Generate key
-#+begin_src shell :noweb yes
-ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
-# - ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
-#   - save under /home/kaypro/.ssh/<<system_info.org:HOSTNAME()>>-<<system_info.org:OS()>>_rsa
-#   - add passphrase to lastPass {username}{PC}{OS}
-#+end_src
-- ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
-  - save under .ssh/{username}{PC}{OS}_rsa
-  - add passphrase to lastPass {username}{PC}{OS}
-** Adding ssh_key to the ssh-agent
-#+begin_src shell :noweb yes
-sudo apt-get install keychain
-eval $(keychain --eval ~/.ssh/<<system_info.org:HOSTNAME()>>-<<system_info.org:OS()>>_rsa)
-# eval "$(ssh-agent -s)"
-# ssh-add ~/.ssh/KayProAsusUbuntu_rsa
-#+end_src
-** Add pubic key to github
-- cat ~/.ssh/id_ed25519.pub
-- add ssh key on github
 * Install stow
 #+begin_src shell
 sudo apt-get -y install stow
 stow .
-#+end_src
-* Doom sync
-#+begin_src shell
-doom sync
 #+end_src
 * Utilities
 ** Ripgrep
