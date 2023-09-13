@@ -1,6 +1,6 @@
 #+TITLE: Config
 #+STARTUP: overview
-#+PROPERTY: header-args:emacs-lisp :tangle yes
+#+PROPERTY: header-args:emacs-lisp :tangle ~/.dotfiles/.config/doom/config.el
 
 * Tips
 #+begin_src emacs-lisp
@@ -145,7 +145,7 @@
 (defun efs/org-babel-tangle-config ()
   (if (or
       (string-equal (buffer-file-name)
-                      (expand-file-name "~/.dotfiles/.doom.d/config.org"))
+                      (expand-file-name "~/.dotfiles/config_doom.org"))
       (string-equal (buffer-file-name)
                       (expand-file-name "~/.dotfiles/zshrc.org"))
       (string-equal (buffer-file-name)
