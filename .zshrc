@@ -22,3 +22,5 @@ fi
 export PIPENV_VENV_IN_PROJECT=1
 
 PATH=$PATH:~/.dotfiles/bin
+
+alias lsla='ls -la'

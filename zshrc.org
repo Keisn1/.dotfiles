@@ -82,4 +82,8 @@ export PIPENV_VENV_IN_PROJECT=1
 #+begin_src shell
 PATH=$PATH:~/.dotfiles/bin
 #+end_src
-
+* Aliases
+** ls
+#+begin_src shell
+alias lsla='ls -la'
+#+end_src
