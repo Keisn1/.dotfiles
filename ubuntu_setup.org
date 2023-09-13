@@ -199,9 +199,3 @@ sudo apt install \
 #+begin_src shell
 pip install ~/.dotfiles/python/requirements-dev.txt
 #+end_src
-* TODO Remarks
-** Needed to set JetBrains in Terminal myself
-- because I didn't download the right Font (must be from nerd fonts)
-** keychain not installed
-- havn't run it yet
-** Install zsh-vi-mode
