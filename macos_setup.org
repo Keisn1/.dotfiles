@@ -50,11 +50,7 @@ git config --global user.email kay.freyer@icloud.com
 
 * Download Repo
 #+begin_src shell
-brew tap homebrew/cask-fonts
-brew install font-jetbrains-mono-nerd-font
-#+end_src
-#+begin_src shell
-git clone https://github.com/Keisn1/.dotfiles.git
+git clone git@github.com/Keisn1/.dotfiles.git
 cd ~/.dotfiles
 git checkout ubuntu_asus
 git pull origin ubuntu_asus
@@ -62,13 +58,25 @@ cd
 #+end_src
 * Install Fonts
 #+begin_src shell
-curl -OL https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip
-# FONT_VERSION=$(curl -s "https://api.github.com/repos/JetBrains/JetBrainsMono/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
-# curl -sSLo jetbrains-mono.zip https://download.jetbrains.com/fonts/JetBrainsMono-$FONT_VERSION.zip
-# unzip -qq jetbrains-mono.zip -d jetbrains-mono
-unzip -qq JetBrainsMono.zip -d jetbrains-mono-nerd
-sudo mkdir ~/.local/share/fonts/
-sudo mv jetbrains-mono-nerd ~/.local/share/fonts
-rm -r jetbrains-mono-nerd
-rm JetBrainsMono.zip
+brew tap homebrew/cask-fonts
+brew install font-jetbrains-mono-nerd-font
+#+end_src
+* Install Emacs
+** Dependencies
+#+begin_src shell
+brew install git ripgrep
+brew install coreutils fd
+xcode-select --install
+#+end_src
+** Emacs-mac
+#+begin_src shell
+brew tap railwaycat/emacsmacport
+brew install emacs-mac --with-modules
+ln -s /usr/local/opt/emacs-mac/Emacs.app /Applications/Emacs.app
+#+end_src
+* Install Doom Emacs
+#+begin_src shell
+git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
+PATH=$PATH:~/.config/emacs/bin
+doom install
 #+end_src
