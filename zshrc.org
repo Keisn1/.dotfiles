@@ -7,6 +7,10 @@
 #+begin_src shell :noweb yes
 eval $(keychain --eval ~/.ssh/<<system_info.org:HOSTNAME()>>-<<system_info.org:OS()>>_rsa)
 #+end_src
+* Export lpass to PATH
+#+begin_src shell
+export PATH=$PATH:~/lastpass-cli/build/
+#+end_src
 * Export Path to .oh-my-zsh
 #+begin_src shell
 # Path to your oh-my-zsh installation.
@@ -15,7 +19,7 @@ export ZSH="$HOME/.oh-my-zsh"
 
 * Add /emacs/bin to PATH
 #+begin_src shell
-PATH=$PATH:~/.config/emacs/bin
+export PATH=$PATH:~/.config/emacs/bin
 #+end_src
 * Set Theme
 ** Standard
