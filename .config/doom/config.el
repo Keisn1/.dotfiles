@@ -60,7 +60,15 @@
 (after! org
   ;; If you use `org' and don't want your org files in the default location below,
   ;; change `org-directory'. It must be set before org loads!
+  (setq org-log-done 1)
+  )
+
+(after! org
+  ;; If you use `org' and don't want your org files in the default location below,
+  ;; change `org-directory'. It must be set before org loads!
   (setq org-directory "~/org/"))
+
+(setq org-enable-notification t)
 
 (after! org
   (require 'org-tempo)
@@ -98,6 +106,8 @@
 (after! evil
   (setq evil-escape-key-sequence "fd")
   (setq evil-escape-excluded-states '(normal multiedit emacs motion)))
+
+(setq which-key-idle-delay 0.01)
 
 (add-hook! 'dired-mode-hook #'nerd-icons-dired-mode)
 

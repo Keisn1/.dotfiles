@@ -34,7 +34,7 @@ ZSH_THEME=""
 eval "$(starship init zsh)"
 #+end_src
 - update ~/.config/starship.toml
-  #+begin_comment :tangle yes
+  #+begin_comment
   add_newline = false
 
   [python]

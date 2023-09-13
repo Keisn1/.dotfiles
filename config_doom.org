@@ -92,7 +92,7 @@
 #+end_src
 * Org
 ** Org-log
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (after! org
   ;; If you use `org' and don't want your org files in the default location below,
   ;; change `org-directory'. It must be set before org loads!
@@ -107,7 +107,7 @@
   (setq org-directory "~/org/"))
 #+end_src
 ** ORG Pomodoro
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (setq org-enable-notification t)
 #+end_src
 ** Structure Templates
@@ -171,7 +171,7 @@
 
 * Which-key
 ** Delay
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (setq which-key-idle-delay 0.01)
 #+end_src
 * Dired
