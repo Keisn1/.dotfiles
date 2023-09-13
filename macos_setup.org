@@ -128,3 +128,62 @@ doom sync
   #+begin_src shell
   doom doctor
   #+end_src
+
+* Oh-my-zsh
+#+begin_src shell
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+#+end_src
+** Fonts powerline
+#+begin_src shell
+git clone https://github.com/powerline/fonts.git --depth=1
+./install.sh
+#+end_src
+** Starship
+#+begin_src shell
+curl -sS https://starship.rs/install.sh | sh
+#+end_src
+** zsh-syntax-highlighting
+#+begin_src shell
+git clone https://github.com/zsh-users/zsh-syntax-highlighting $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+#+end_src
+** zsh-autosuggestions
+#+begin_src shell
+git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+#+end_src
+** zsh-vi-mode
+#+begin_src shell
+git clone https://github.com/jeffreytse/zsh-vi-mode $ZSH_CUSTOM/plugins/zsh-vi-mode
+#+end_src
+* Install stow
+#+begin_src shell
+brew install stow
+stow .
+#+end_src
+
+* Utilities
+** shfmt
+#+begin_src shell
+brew install shfmt
+#+end_src
+** pngpaste
+#+begin_src shell
+brew install pngpaste
+#+end_src
+** Graphviz
+#+begin_src shell
+brew install graphviz
+#+end_src
+** ShellCheck
+#+begin_src shell
+brew install shellcheck
+#+end_src
+
+* JavaScript
+** Node.js
+#+begin_src ehell
+brew install node
+#+end_src
+* Install Lastpass cli
+#+begin_src shell
+brew install lastpass-cli
+#+end_src

@@ -17,14 +17,18 @@
             (if distribution
                 (message "%s" distribution)
               (message "Linux Distribution: Unknown"))))
-      ((let ((macos-version (shell-command-to-string "sw_vers -productVersion"))))
-       (macos-version)
-       ))))
+      (message "%s" system-type))))
 
 (display-linux-distribution)
 #+end_src
+
+#+RESULTS:
+: darwin
 
 #+NAME: HOSTNAME
 #+begin_src emacs-lisp
 (system-name)
 #+end_src
+
+#+RESULTS: HOSTNAME
+: Kays-Mac-mini.local
