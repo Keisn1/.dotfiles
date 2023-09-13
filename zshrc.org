@@ -1,6 +1,6 @@
 #+title: Zshrc
 #+STARTUP: overview
-#+PROPERTY: header-args:shell :tangle ~/.dotfiles/.zshrc
+#+PROPERTY: header-args:shell :tangle ~/.dotfiles/.zshrc :mkdirp yes
 
 * Adding ssh_key to the ssh-agent and handled by keychain
 #+begin_src shell
