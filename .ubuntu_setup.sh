@@ -27,7 +27,7 @@ rm JetBrainsMono.zip
 
 sudo apt install gnome-tweaks dconf-editor
 
-dconf load / < ~/.dotfiles/gnome/dconf-settings-asus-ubuntu.ini
+dconf load / < ~/.dotfiles/gnome/dconf-settings-kaypro-UX330UAK-Ubuntu.ini
 
 dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < ~/.dotfiles/terminal/profiles/ubuntu1.dconf
 
@@ -57,7 +57,7 @@ ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
 #   - add passphrase to lastPass {username}{PC}{OS}
 
 sudo apt-get install keychain
-eval $(keychain --eval ~/.ssh/KayProAsusUbuntu_rsa)
+eval $(keychain --eval ~/.ssh/kaypro-UX330UAK-Ubuntu_rsa)
 # eval "$(ssh-agent -s)"
 # ssh-add ~/.ssh/KayProAsusUbuntu_rsa
 

@@ -26,9 +26,13 @@
 (display-linux-distribution)
 #+end_src
 
-#+RESULTS: OS
-: Ubuntu
+#+NAME: HOSTNAME
+#+begin_src emacs-lisp
+(system-name)
+#+end_src
 
+#+RESULTS:
+: kaypro-UX330UAK
 
 * Update
 #+begin_src shell
@@ -75,15 +79,14 @@ rm JetBrainsMono.zip
 sudo apt install gnome-tweaks dconf-editor
 #+end_src
 * Gnome Settings
-#+begin_src shell
-dconf load / < ~/.dotfiles/gnome/dconf-settings-asus-ubuntu.ini
+#+begin_src shell :noweb yes
+dconf load / < ~/.dotfiles/gnome/dconf-settings-<<HOSTNAME()>>-<<OS()>>.ini
 #+end_src
 * Load profile with dconf
 #+begin_src shell
 dconf load /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/ < ~/.dotfiles/terminal/profiles/ubuntu1.dconf
 #+end_src
-* TODO Install Firefox
-- needs to be synced and setup search engines (right clicking on address bar)
+* Install Firefox
 #+begin_src shell
 sudo snap install firefox
 #+end_src
@@ -131,12 +134,14 @@ ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
   - save under .ssh/{username}{PC}{OS}_rsa
   - add passphrase to lastPass {username}{PC}{OS}
 ** Adding ssh_key to the ssh-agent
-#+begin_src shell
+#+begin_src shell :noweb yes
 sudo apt-get install keychain
-eval $(keychain --eval ~/.ssh/KayProAsusUbuntu_rsa)
+eval $(keychain --eval ~/.ssh/<<HOSTNAME()>>-<<OS()>>_rsa)
 # eval "$(ssh-agent -s)"
 # ssh-add ~/.ssh/KayProAsusUbuntu_rsa
 #+end_src
+
+
 ** Add pubic key to github
 - cat ~/.ssh/id_ed25519.pub
 - add ssh key on github
@@ -226,4 +231,9 @@ sudo apt install \
 ** Install Dev Requirements by default
 #+begin_src shell
 pip install ~/.dotfiles/python/requirements-dev.txt
+#+end_src
+* Installing qutebrowser
+** Installing via virtualenv
+#+begin_src shell
+
 #+end_src
