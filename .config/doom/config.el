@@ -38,10 +38,14 @@
 ;; (all-the-icons-install-fonts t)
 ;; (nerd-icons-install-fonts)
 
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 20)
-      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 18)
-      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 24)
-      )
+(if (string= (system-name) "kaypro-MacBookPro")
+    (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 27)
+      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 27)
+      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 40)))
+(if (string= (system-name) "kaypro-UX330UAK")
+    (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 20)
+      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 20)
+      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 24)))
 
 (custom-set-faces!
   '(font-lock-comment-face :slant italic)
