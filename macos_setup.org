@@ -1,0 +1,74 @@
+#+title: Macos Setup
+
+* Change keybehavior
+Change CapsLock to Control (keyboard ? keyboard shortcuts > Modifier Keys)
+* Install Homebrew
+** Install
+#+begin_src shell
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+#+end_src
+** Add to PATH
+#+begin_src shell
+echo 'eval "(/opt/homebrew/bin/brew shellenv)"' >> /Users/$(whoami)/.zprofile
+#+end_src
+* Setup ssh
+** Generate key
+#+begin_src shell :noweb yes
+ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
+# - ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
+#   - save under /Users/kaypro/.ssh/<<system_info.org:HOSTNAME_mac()>>-<<system_info.org:OS()>>_rsa
+#   - add passphrase to lastPass {username}{PC}{OS}
+#+end_src
+- ssh-keygen -t ed25519 -C "kay.freyer@icloud.com"
+  - save under .ssh/{username}{PC}{OS}_rsa
+  - add passphrase to lastPass {username}{PC}{OS}
+** Adding ssh_key to the ssh-agent
+#+begin_src shell :noweb yes
+ssh-add --apple-use-keychain /Users/kaypro/.ssh/<<system_info.org:HOSTNAME_mac()>>-<<system_info.org:OS()>>_rsa
+touch .ssh/config
+echo "Host *
+    UseKeychain yes
+    AddKeysToAgent yes
+    IdentityFile ~/.ssh/<<system_info.org:HOSTNAME_mac()>>-<<system_info.org:OS()>>_rsa" >> .ssh/config
+#+end_src
+** Add pubic key to github
+- cat ~/.ssh/id_ed25519.pub
+- add ssh key on github
+* Install Git
+#+begin_src shell
+brew install git
+#+end_src
+** Install
+#+begin_src shell
+brew install git
+#+end_src
+** Configure
+#+begin_src shell
+git config --global user.name "Keisn1"
+git config --global user.email kay.freyer@icloud.com
+#+end_src
+
+* Download Repo
+#+begin_src shell
+brew tap homebrew/cask-fonts
+brew install font-jetbrains-mono-nerd-font
+#+end_src
+#+begin_src shell
+git clone https://github.com/Keisn1/.dotfiles.git
+cd ~/.dotfiles
+git checkout ubuntu_asus
+git pull origin ubuntu_asus
+cd
+#+end_src
+* Install Fonts
+#+begin_src shell
+curl -OL https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip
+# FONT_VERSION=$(curl -s "https://api.github.com/repos/JetBrains/JetBrainsMono/releases/latest" | grep -Po '"tag_name": "v\K[0-9.]+')
+# curl -sSLo jetbrains-mono.zip https://download.jetbrains.com/fonts/JetBrainsMono-$FONT_VERSION.zip
+# unzip -qq jetbrains-mono.zip -d jetbrains-mono
+unzip -qq JetBrainsMono.zip -d jetbrains-mono-nerd
+sudo mkdir ~/.local/share/fonts/
+sudo mv jetbrains-mono-nerd ~/.local/share/fonts
+rm -r jetbrains-mono-nerd
+rm JetBrainsMono.zip
+#+end_src
