@@ -24,3 +24,7 @@ export PIPENV_VENV_IN_PROJECT=1
 PATH=$PATH:~/.dotfiles/bin
 
 alias lsla='ls -la'
+
+alias eclient='emacsclient'
+alias edaemon='emacs --bg-daemon'
+alias kedaemon='eclient -e "(kill-emacs)"'

@@ -87,3 +87,9 @@ PATH=$PATH:~/.dotfiles/bin
 #+begin_src shell
 alias lsla='ls -la'
 #+end_src
+** emacs
+#+begin_src shell
+alias eclient='emacsclient'
+alias edaemon='emacs --bg-daemon'
+alias kedaemon='eclient -e "(kill-emacs)"'
+#+end_src
