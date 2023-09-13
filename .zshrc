@@ -25,6 +25,6 @@ PATH=$PATH:~/.dotfiles/bin
 
 alias lsla='ls -la'
 
-alias eclient='emacsclient'
+alias eclient='emacsclient -c'
 alias edaemon='emacs --bg-daemon'
 alias kedaemon='eclient -e "(kill-emacs)"'
