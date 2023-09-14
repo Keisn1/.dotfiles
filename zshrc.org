@@ -5,16 +5,12 @@
 
 * Adding ssh_key to the ssh-agent and handled by keychain
 #+begin_src shell :noweb yes
-eval $(keychain --eval $HOME/.ssh/<<system_info.org:HOSTNAME()>>-<<system_info.org:OS()>>_rsa)
-#+end_src
-* MacMini Specific
-#+begin_src shell
-if [ "$(hostname)" = "Kays-Mac-Mini" ]; then
-    eval "(/opt/homebrew/bin/brew shellenv)"
-    export PATH=$PATH:$HOME/.cargo/bin
+if [ "$(hostname)" = "Kays-Mac-mini.local" ]; then
     if [ -d "$(brew --prefix)/opt/grep/libexec/gnubin" ]; then
         export PATH="$(brew --prefix)/opt/grep/libexec/gnubin:$PATH"
     fi
+else
+    eval $(keychain --eval $HOME/.ssh/<<system_info.org:HOSTNAME()>>-<<system_info.org:OS()>>_rsa)
 fi
 #+end_src
 * Export lpass to PATH
