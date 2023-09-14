@@ -1,0 +1,72 @@
+#+title: Installing Sway
+#+startup: overview
+
+* Sway on Ubuntu
+following [[https://llandy3d.github.io/sway-on-ubuntu/][Sway on Ubuntu]]
+** Introduction
+Should be good for intel cards
+** Build wl roots
+*** Dependencies
+#+begin_src shell
+sudo apt install build-essential
+sudo apt install git
+sudo apt install python3-pip
+#+end_src
+**** Meson
+#+begin_src shell
+pip3 install --user meson==0.55.3
+export PATH=$HOME/.local/bin:$PATH
+#+end_src
+**** Direct dependencies of wlroots
+#+begin_src shell
+sudo apt install wayland-protocols \
+libwayland-dev \
+libegl1-mesa-dev \
+libgles2-mesa-dev \
+libdrm-dev \
+libgbm-dev \
+libinput-dev \
+libxkbcommon-dev \
+libgudev-1.0-dev \
+libpixman-1-dev \
+libsystemd-dev \
+cmake \
+libpng-dev \
+libavutil-dev \
+libavcodec-dev \
+libavformat-dev \
+ninja-build \
+meson
+#+end_src
+**** Only necessary for X11 but highly encouraged to install
+#+begin_src shell
+sudo apt install libxcb-composite0-dev \
+        libxcb-icccm4-dev \
+        libxcb-image0-dev \
+        libxcb-render0-dev \
+        libxcb-xfixes0-dev \
+        libxkbcommon-dev \
+        libxcb-xinput-dev \
+        libx11-xcb-dev
+#+end_src
+*** Build and Install
+**** Cloning the repo
+#+begin_src shell
+mkdir ~/sway-build
+cd ~/sway-build
+git clone https://github.com/swaywm/wlroots.git
+cd wlroots
+git checkout 0.12.0
+#+end_src
+**** Building Sway
+#+begin_src shell
+meson build
+ninja -C build
+#+end_src
+**** TODO Ninja -C build fails with avcodec_clase implicite fucntion declaration (MacBookPro Ubuntu23.4)
+* Qtile Ubuntu
+#+begin_src shell
+pip install xcffib
+pip install qtile
+# pip install git+https://github.com/qtile/qtile@master
+#+end_src

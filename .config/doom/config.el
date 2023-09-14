@@ -37,13 +37,13 @@
 (add-hook 'window-setup-hook #'toggle-frame-fullscreen)
 (setq default-frame-alist '((undecorated . t))) ; get rid of title bar
 
-(setq doom-theme 'doom-Iosvkem)
+(setq doom-theme 'doom-palenight)
 
 ;; (all-the-icons-install-fonts t)
 ;; (nerd-icons-install-fonts)
 
 (if (string= (system-name) "kaypro-MacBookPro")
-    (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 27)
+    (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 19)
       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 27)
       doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 40)))
 
