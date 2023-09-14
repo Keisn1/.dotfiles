@@ -46,6 +46,12 @@
     (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 27)
       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 27)
       doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 40)))
+
+(if (string= (system-name) "Kays-Mac-mini.local")
+    (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15)
+      doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 15)
+      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 40)))
+
 (if (string= (system-name) "kaypro-UX330UAK")
     (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 20)
       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 20)
