@@ -9,6 +9,7 @@
 sudo apt update && sudo apt upgrade
 snap refresh
 #+end_src
+
 * Setup ssh
 ** Generate key
 #+begin_src shell :noweb yes
@@ -226,4 +227,8 @@ PATH=$PATH:$HOME/lastpass-cli/build/
 ** Installing via virtualenv
 #+begin_src shell
 
+#+end_src
+* Install mpv
+#+begin_src shell
+sudo apt install mpv
 #+end_src
