@@ -40,6 +40,7 @@ ZSH_THEME="robbyrussell"
 - download
   sh -c "$(curl -fsSL https://starship.rs/install.sh)"
 #+begin_src shell
+export STARSHIP_CONFIG=~/.config/starship/starship.toml
 ZSH_THEME=""
 #Star Ship
 eval "$(starship init zsh)"

@@ -117,6 +117,10 @@ git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.oh-my-zsh/cust
 #+begin_src shell
 git clone https://github.com/jeffreytse/zsh-vi-mode $ZSH_CUSTOM/plugins/zsh-vi-mode
 #+end_src
+* Vi
+#+begin_src shell
+sudo apt install vim
+#+end_src
 * Install stow
 #+begin_src shell
 sudo apt-get -y install stow
@@ -255,4 +259,9 @@ Keywords=wm;tiling" | sudo tee /usr/share/xsessions/qtile.desktop
 #+begin_src shell
 sudo apt update
 sudo apt install awesome
+#+end_src
+* Gogh-Go
+#+begin_src shell
+sudo apt-get install dconf-cli uuid-runtime
+bash -c "$(wget -qO- https://git.io/vQgMr)"
 #+end_src

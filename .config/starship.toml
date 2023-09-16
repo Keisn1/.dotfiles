@@ -1,4 +1,0 @@
-add_newline = false
-
-[python]
-format = 'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
