@@ -1,0 +1,120 @@
+[window]
+opacity = 1
+# decorations = "Full"
+startup_mode = "Fullscreen"
+
+  [window.padding]
+  x = 10
+  y = 10
+
+  [window.class]
+  instance = "Alacritty"
+  general = "Alacritty"
+
+[scrolling]
+history = 10_000
+multiplier = 3
+
+[selection]
+save_to_clipboard = false
+
+[shell]
+program = "/usr/bin/zsh"
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Super|Shift"
+action = "SpawnNewInstance"
+
+[font]
+size = 19
+
+  [font.normal]
+  family = "JetBrainsMonoNL Nerd Font"
+  style = "Regular"
+
+  [font.bold]
+  family = "JetBrainsMonoNL Nerd Font"
+  style = "Bold"
+
+  [font.italic]
+  family = "JetBrainsMonoNL Nerd Font"
+  style = "Italic"
+
+  [font.bold_italic]
+  family = "JetBrainsMonoNL Nerd Font"
+  style = "Bold Italic"
+
+[colors]
+indexed_colors = []
+draw_bold_text_with_bright_colors = true
+
+[colors.bright]
+black = "#686868"
+blue = "#57C7FF"
+cyan = "#9AEDFE"
+green = "#5AF78E"
+magenta = "#FF6AC1"
+red = "#FF5C57"
+white = "#EFF0EB"
+yellow = "#F3F99D"
+
+[colors.cursor]
+cursor = "CellForeground"
+text = "CellBackground"
+
+[colors.dim]
+black = "#131415"
+blue = "#556a7d"
+cyan = "#5b7d78"
+green = "#777c44"
+magenta = "#75617b"
+red = "#864343"
+white = "#828482"
+yellow = "#9e824c"
+
+[colors.footer_bar]
+background = "#c5c8c6"
+foreground = "#1d1f21"
+
+[colors.hints.end]
+background = "#1d1f21"
+foreground = "#e9ff5e"
+
+[colors.hints.start]
+background = "#e9ff5e"
+foreground = "#1d1f21"
+
+[colors.line_indicator]
+background = "None"
+foreground = "None"
+
+[colors.normal]
+black = "#282A36"
+blue = "#57C7FF"
+cyan = "#9AEDFE"
+green = "#5AF78E"
+magenta = "#FF6AC1"
+red = "#FF5C57"
+white = "#F1F1F0"
+yellow = "#F3F99D"
+
+[colors.primary]
+background = "#282A36"
+foreground = "#EFF0EB"
+
+[colors.search.focused_match]
+background = "#000000"
+foreground = "#ffffff"
+
+[colors.search.matches]
+background = "#ffffff"
+foreground = "#000000"
+
+[colors.selection]
+background = "CellForeground"
+text = "CellBackground"
+
+[colors.vi_mode_cursor]
+cursor = "CellForeground"
+text = "CellBackground"

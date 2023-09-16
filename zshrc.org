@@ -32,6 +32,10 @@ export ZSH="$HOME/.oh-my-zsh"
 #+begin_src shell
 export PATH=$PATH:$HOME/.config/emacs/bin
 #+end_src
+* Add rust to PATH
+#+begin_src shell
+source "$HOME/.cargo/env"
+#+end_src
 * Set Theme
 ** Standard
 #+begin_src shell :tangle no
