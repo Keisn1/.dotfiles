@@ -230,7 +230,11 @@ PATH=$PATH:$HOME/lastpass-cli/build/
 * Installing qutebrowser
 ** Installing via virtualenv
 #+begin_src shell
-
+apt install qutebrowser
+#+end_src
+** gvim for configuration
+#+begin_src shell
+sudo apt install vim-gtk3
 #+end_src
 * Install mpv
 #+begin_src shell

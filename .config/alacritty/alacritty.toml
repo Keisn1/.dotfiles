@@ -23,7 +23,7 @@ program = "/usr/bin/zsh"
 
 [[keyboard.bindings]]
 key = "Return"
-mods = "Super|Shift"
+mods = "Alt|Control"
 action = "SpawnNewInstance"
 
 [font]
