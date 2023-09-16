@@ -1,8 +1,13 @@
 #+title: Zshrc
 #+STARTUP: overview
-#+PROPERTY: header-args:shell :tangle ~/.dotfiles/.zshrc :mkdirp yes
+#+PROPERTY: header-args:shell :tangle ~/.dotfiles/.zsh/.zshrc :mkdirp yes
 #+INCLUDE: "~/.dotfiles/system_info.org"
 
+
+* add to fpath
+#+begin_src shell
+fpath+=${ZDOTDIR:-~}/.zsh_functions
+#+end_src
 * Adding ssh_key to the ssh-agent and handled by keychain
 #+begin_src shell :noweb yes
 if [ "$(hostname)" = "Kays-Mac-mini.local" ]; then
@@ -52,7 +57,6 @@ eval "$(starship init zsh)"
   [python]
   format = 'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
   #+end_comment
-
 * Plugins
 ** git
 ** colored-man-pages
