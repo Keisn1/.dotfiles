@@ -34,7 +34,9 @@
  (setq mac-option-modifier 'super)
  (setq mac-command-modifier 'meta))
 
-(add-hook 'window-setup-hook #'toggle-frame-fullscreen)
+(setq doom-private-dir "/home/kaypro/.dotfiles/")
+
+;; (add-hook 'window-setup-hook #'toggle-frame-fullscreen)
 (setq default-frame-alist '((undecorated . t))) ; get rid of title bar
 
 (setq doom-theme 'doom-palenight)

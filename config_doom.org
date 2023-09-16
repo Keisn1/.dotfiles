@@ -42,11 +42,17 @@
  (setq mac-option-modifier 'super)
  (setq mac-command-modifier 'meta))
 #+end_src
+* Dashboard
+** Private configuration directory
+#+begin_src emacs-lisp
+(setq doom-private-dir "/home/kaypro/.dotfiles/")
+#+end_src
+
 * Appearance
 ** TODO Frame
 - need to check out how to Toggle Fullscreen when starting client
 #+begin_src emacs-lisp
-(add-hook 'window-setup-hook #'toggle-frame-fullscreen)
+;; (add-hook 'window-setup-hook #'toggle-frame-fullscreen)
 (setq default-frame-alist '((undecorated . t))) ; get rid of title bar
 #+end_src
 ** Themes
