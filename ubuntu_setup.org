@@ -232,3 +232,22 @@ PATH=$PATH:$HOME/lastpass-cli/build/
 #+begin_src shell
 sudo apt install mpv
 #+end_src
+* Install qtile
+#+begin_src shell
+
+# Update system
+sudo apt-get update
+
+sudo apt-get install -y python3-cffi libpangocairo-1.0-0 --reinstall
+
+pip3 install xcffib==0.12.1
+
+pip install git+https://github.com/qtile/qtile
+
+echo "[Desktop Entry]
+Name=Qtile
+Comment=Qtile Session
+Exec=/home/kaypro/.pyenv/versions/3.11.5/bin/qtile start
+Type=Application
+Keywords=wm;tiling" | sudo tee /usr/share/xsessions/qtile.desktop
+#+end_src
