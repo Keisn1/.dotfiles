@@ -251,3 +251,8 @@ Exec=/home/kaypro/.pyenv/versions/3.11.5/bin/qtile start
 Type=Application
 Keywords=wm;tiling" | sudo tee /usr/share/xsessions/qtile.desktop
 #+end_src
+* Installing awesome
+#+begin_src shell
+sudo apt update
+sudo apt install awesome
+#+end_src
