@@ -27,7 +27,7 @@ from libqtile import bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
-from libqtile import hook
+from libqtile import hook, qtile
 import subprocess
 import platform
 
@@ -131,6 +131,7 @@ group_names = [
 
 groups = [Group(name, **kwargs) for name, kwargs, _ in group_names]
 
+
 for i, (name, _, key) in enumerate(group_names, 1):
     keys.extend(
         [
@@ -204,8 +205,8 @@ screens = [
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-                widget.TextBox("Screen2", name="Screen2"),
-                widget.TextBox("Screen2", foreground="#d75f5f"),
+                widget.TextBox("Screen3", name="Screen3"),
+                widget.TextBox("Screen3", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
                 widget.Systray(),
@@ -231,7 +232,6 @@ screens = [
                 widget.Prompt(),
                 widget.WindowName(),
                 widget.TextBox("Screen1", name="Screen1"),
-                widget.TextBox("screen1", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
                 widget.Systray(),
@@ -263,7 +263,6 @@ screens = [
                     name_transform=lambda name: name.upper(),
                 ),
                 widget.TextBox("Screen3", name="Screen3"),
-                widget.TextBox("Screen3", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
                 widget.Systray(),
@@ -340,6 +339,17 @@ wmname = "LG3D"
 @hook.subscribe.startup_once
 def startup_once():
     subprocess.run("/home/kaypro/.config/qtile/autostart_once.sh")
+
+    # Set initial groups
+    if len(qtile.screens) > 1:
+        qtile.groups_map["SYS"].cmd_toscreen(1, toggle=False)
+        qtile.groups_map["WWW"].cmd_toscreen(0, toggle=True)
+        qtile.groups_map["DEV"].cmd_toscreen(2, toggle=False)
+
+
+@hook.subscribe.shutdown
+def startup_once():
+    subprocess.run("/home/kaypro/.config/qtile/shutdown.sh")
 
 
 if __name__ in ["config", "__main__"]:
