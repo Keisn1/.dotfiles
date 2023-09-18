@@ -10,11 +10,8 @@ fpath+=${ZDOTDIR:-~}/.zsh_functions
 #+end_src
 * Adding ssh_key to the ssh-agent and handled by keychain
 #+begin_src shell :noweb yes
-if ps -p $SSH_AGENT_PID > /dev/null
+if  ! ps -p $SSH_AGENT_PID > /dev/null
 then
-   echo "ssh-agent is already running"
-   # Do something knowing the pid exists, i.e. the process with $PID is running
-else
     eval $(keychain --eval $HOME/.ssh/<<system_info.org:HOSTNAME()>>-<<system_info.org:OS()>>_rsa)
 fi
 #+end_src
