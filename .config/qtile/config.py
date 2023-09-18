@@ -28,8 +28,12 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile import hook, qtile
+
+from libqtile.command.client import CommandClient
+
 import subprocess
-import platform
+from libqtile.command.client import InteractiveCommandClient
+
 
 mod = "mod4"
 terminal = guess_terminal()
@@ -121,10 +125,10 @@ keys = [
 
 
 group_names = [
-    ("SYS", {"layout": "columns"}, "s"),
-    ("WWW", {"layout": "columns"}, "i"),
     ("DEV", {"layout": "columns"}, "d"),
-    ("ORG", {"layout": "columns"}, "o"),
+    ("WWW", {"layout": "columns"}, "i"),
+    ("ORG", {"layout": "monadtall"}, "o"),
+    ("SYS", {"layout": "monadtall"}, "s"),
     ("VID", {"layout": "columns"}, "v"),
     ("CHAT", {"layout": "columns"}, "c"),
 ]
@@ -161,21 +165,23 @@ for i, (name, _, key) in enumerate(group_names, 1):
     )
 
 
+layout_theme = {
+    "border_focus": "#c792ea",
+    "border_normal": "#4c566a",
+    "border_width": 2,
+    "margin_on_single": 8,
+    "margin": 4,
+}
+
+
 layouts = [
-    layout.Columns(
-        border_focus="#5e81ac",
-        border_normal="#4c566a",
-        border_width=4,
-        margin_on_single=10,
-    ),
-    layout.Max(
-        margin=10,
-    )
+    layout.Columns(**layout_theme),
+    # layout.Max(**layout_theme)
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-    # layout.MonadTall(),
+    layout.MonadTall(),
     # layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
@@ -185,62 +191,132 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="sans",
+    font="JetBrainsMonoNL Nerd Font",
     fontsize=12,
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
 
+
+def get_cur_grp_name():
+    client = InteractiveCommandClient()
+    return client.group.info()["name"]
+
+
+date_command = ["/usr/bin/date", "+%a %D"]
+
+
+def get_date():
+    return "📆 " + subprocess.check_output(date_command).decode("utf-8").strip()
+
+
+def get_time():
+    return (
+        " ⏰ "
+        + subprocess.check_output(["/usr/bin/date", "+%I:%M %p"])
+        .decode("utf-8")
+        .strip()
+    )
+
+
+def get_datetime():
+    return get_date() + get_time()
+
+
 screens = [
     Screen(
-        bottom=bar.Bar(
+        top=bar.Bar(
             [
-                widget.CurrentLayout(),
-                widget.GroupBox(),
-                widget.Prompt(),
-                widget.WindowName(),
-                widget.Chord(
-                    chords_colors={
-                        "launch": ("#ff0000", "#ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
+                widget.Sep(size_percent=0.05),
+                widget.CurrentLayoutIcon(
+                    scale=0.9,
+                    foreground="EFEFEF",
+                    padding=3,
                 ),
-                widget.TextBox("Screen3", name="Screen3"),
-                widget.TextBox("Screen3", foreground="#d75f5f"),
-                # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-                # widget.StatusNotifier(),
+                # widget.GenPollText(
+                #     func=get_cur_grp_name,
+                #     update_interval=0.5,
+                #     foreground="EFEFEF",
+                #     padding=1,
+                # ),
+                widget.GroupBox(
+                    active="F6F6F6",
+                    inactive="968F92",
+                    this_current_screen_border="#bc8f8f",
+                    this_screen_border="#bc8f8f",
+                    highlight_method="default",
+                    highlight_color=["1A2024", "060A0F"],
+                    fontsize=12,
+                    margin=3,
+                ),
+                widget.Prompt(
+                    fontsize=12,
+                    cursor_color="FFFFFF",
+                    foreground="FDF3A9",
+                    background="271B1B",
+                ),
+                widget.WindowName(
+                    foreground="F6F6F6",
+                ),
+                widget.GenPollText(
+                    func=get_datetime,
+                    update_interval=1,
+                    foreground="F6F6F6",
+                ),
                 widget.Systray(),
-                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
-                widget.QuickExit(),
+                widget.Sep(size_percent=0.05),
             ],
-            24,
-            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+            28,
+            background=["1A2024", "060A0F"],
+            opacity=0.90,
         ),
         wallpaper="~/.wallpapers/pexels-eberhard-grossgasteiger-640781.jpg",
         wallpaper_mode="stretch",
-        # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
-        # By default we handle these events delayed to already improve performance, however your system might still be struggling
-        # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
-        # x11_drag_polling_rate = 60,
     ),
     Screen(
-        bottom=bar.Bar(
+        top=bar.Bar(
             [
-                widget.CurrentLayout(),
-                widget.GroupBox(),
-                widget.Prompt(),
-                widget.WindowName(),
-                widget.TextBox("Screen1", name="Screen1"),
-                # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-                # widget.StatusNotifier(),
-                widget.Systray(),
-                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
-                widget.QuickExit(),
+                widget.Sep(size_percent=0.05),
+                widget.CurrentLayoutIcon(
+                    scale=0.9,
+                    foreground="EFEFEF",
+                    padding=3,
+                ),
+                # widget.GenPollText(
+                #     func=get_cur_grp_name,
+                #     update_interval=0.5,
+                #     foreground="EFEFEF",
+                #     padding=1,
+                # ),
+                widget.GroupBox(
+                    active="F6F6F6",
+                    inactive="968F92",
+                    this_current_screen_border="#bc8f8f",
+                    this_screen_border="#bc8f8f",
+                    highlight_method="default",
+                    highlight_color=["1A2024", "060A0F"],
+                    fontsize=12,
+                    margin=3,
+                ),
+                widget.Prompt(
+                    fontsize=12,
+                    cursor_color="FFFFFF",
+                    foreground="FDF3A9",
+                    background="271B1B",
+                ),
+                widget.WindowName(
+                    foreground="F6F6F6",
+                ),
+                widget.GenPollText(
+                    func=get_datetime,
+                    update_interval=1,
+                    foreground="F6F6F6",
+                ),
+                widget.Sep(size_percent=0.05),
             ],
-            24,
-            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+            28,
+            background=["1A2024", "060A0F"],
+            opacity=0.90,
         ),
         wallpaper="~/.wallpapers/pexels-eberhard-grossgasteiger-1366919.jpg",
         wallpaper_mode="stretch",
@@ -250,35 +326,52 @@ screens = [
         # x11_drag_polling_rate = 60,
     ),
     Screen(
-        bottom=bar.Bar(
+        top=bar.Bar(
             [
-                widget.CurrentLayout(),
-                widget.GroupBox(),
-                widget.Prompt(),
-                widget.WindowName(),
-                widget.Chord(
-                    chords_colors={
-                        "launch": ("#ff0000", "#ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
+                widget.Sep(size_percent=0.05),
+                widget.CurrentLayoutIcon(
+                    scale=0.9,
+                    foreground="EFEFEF",
+                    padding=3,
                 ),
-                widget.TextBox("Screen3", name="Screen3"),
-                # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-                # widget.StatusNotifier(),
-                widget.Systray(),
-                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
-                widget.QuickExit(),
+                # widget.GenPollText(
+                #     func=get_cur_grp_name,
+                #     update_interval=0.5,
+                #     foreground="EFEFEF",
+                #     padding=1,
+                # ),
+                widget.GroupBox(
+                    active="F6F6F6",
+                    inactive="968F92",
+                    this_current_screen_border="#bc8f8f",
+                    this_screen_border="#bc8f8f",
+                    highlight_method="default",
+                    highlight_color=["1A2024", "060A0F"],
+                    fontsize=12,
+                    margin=3,
+                ),
+                widget.Prompt(
+                    fontsize=12,
+                    cursor_color="FFFFFF",
+                    foreground="FDF3A9",
+                    background="271B1B",
+                ),
+                widget.WindowName(
+                    foreground="F6F6F6",
+                ),
+                widget.GenPollText(
+                    func=get_datetime,
+                    update_interval=1,
+                    foreground="F6F6F6",
+                ),
+                widget.Sep(size_percent=0.05),
             ],
-            24,
-            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+            28,
+            background=["1A2024", "060A0F"],
+            opacity=0.90,
         ),
         wallpaper="~/.wallpapers/pexels-eberhard-grossgasteiger-640781.jpg",
         wallpaper_mode="stretch",
-        # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
-        # By default we handle these events delayed to already improve performance, however your system might still be struggling
-        # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
-        # x11_drag_polling_rate = 60,
     ),
 ]
 
@@ -342,13 +435,13 @@ def startup_once():
 
     # Set initial groups
     if len(qtile.screens) > 1:
-        qtile.groups_map["SYS"].cmd_toscreen(1, toggle=False)
-        qtile.groups_map["WWW"].cmd_toscreen(0, toggle=True)
-        qtile.groups_map["DEV"].cmd_toscreen(2, toggle=False)
+        qtile.groups_map["DEV"].cmd_toscreen(1, toggle=False)
+        qtile.groups_map["WWW"].cmd_toscreen(0, toggle=False)
+        qtile.groups_map["ORG"].cmd_toscreen(2, toggle=False)
 
 
 @hook.subscribe.shutdown
-def startup_once():
+def shutdown():
     subprocess.run("/home/kaypro/.config/qtile/shutdown.sh")
 
 

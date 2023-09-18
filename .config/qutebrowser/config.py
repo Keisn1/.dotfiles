@@ -195,11 +195,20 @@ c.zoom.default = "125%"
 # Type: Bool
 c.colors.webpage.darkmode.enabled = True
 
+# tab colors
+c.colors.tabs.selected.even.bg = "#bc8f8f"
+c.colors.tabs.selected.odd.bg = "#bc8f8f"
+
+c.colors.tabs.even.bg = "#696969"
+c.colors.tabs.odd.bg = "#696969"
+
 # Bindings for normal mode
-config.bind("<Ctrl+l>gh", "open github.com")
-config.bind("<Ctrl+l>yt", "open youtube.com")
+config.bind("<Ctrl+l>gh", "open -t github.com")
+config.bind("<Ctrl+l>yt", "open -t youtube.com")
 config.bind("M", "hint links spawn mpv {hint-url}")
 config.bind("Z", "hint links spawn yt-dlp {hint-url}")
+config.bind("J", "tab-prev")
+config.bind("K", "tab-next")
 
 # Bindings for command mode
 config.bind("<Ctrl+j>", "completion-item-focus --history next", mode="command")
