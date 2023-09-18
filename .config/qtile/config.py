@@ -1,30 +1,3 @@
-import subprocess
-import os
-from libqtile import hook
-
-
-@hook.subscribe.startup
-def dbus_register():
-    id = os.environ.get("DESKTOP_AUTOSTART_ID")
-    if not id:
-        return
-    subprocess.Popen(
-        [
-            "dbus-send",
-            "--session",
-            "--print-reply",
-            "--dest=org.gnome.SessionManager",
-            "/org/gnome/SessionManager",
-            "org.gnome.SessionManager.RegisterClient",
-            "string:qtile",
-            "string:" + id,
-        ]
-    )
-
-
-#!/usr/bin/env python3
-
-# Copyright (c) 2010 Aldo Cortesi
 # Copyright (c) 2010, 2014 dequis
 # Copyright (c) 2012 Randall Ma
 # Copyright (c) 2012-2014 Tycho Andersen
@@ -33,7 +6,7 @@ def dbus_register():
 # Copyright (c) 2013 Tao Sauvage
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
-
+# of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
@@ -54,11 +27,31 @@ from libqtile import bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+from libqtile import hook
+import subprocess
+import platform
 
 mod = "mod4"
 terminal = guess_terminal()
+# xrandr --output DP-2-2 --primary --mode 1920x1080 --output DP-2-1 --mode 1920x1080 --right-of DP-2-2 --output DP-1 --mode 1920x1200 --left-of DP-2-2
 
 subprocess.run(["setxkbmap", "-option", "ctrl:nocaps"])
+
+# check for number of monitors
+st = subprocess.check_output(["xrandr", "--listactivemonitors"], encoding="UTF-8")
+num_of_monitors = int(st.split("\n")[0][-1])
+
+if num_of_monitors == 3:
+    subprocess.run(["xrandr", "--output", "DP-2", "--rotate", "left"])
+    subprocess.run(["xrandr", "--output", "DP-1-1", "--primary", "--mode", "1920x1080"])
+    subprocess.run(
+        ["xrandr", "--output", "DP-1-2", "--mode", "1920x1080", "--right-of", "DP-1-1"]
+    )
+    subprocess.run(
+        ["xrandr", "--output", "DP-2", "--mode", "1920x1200", "--left-of", "DP-1-1"]
+    )
+
+
 keys = [
     # A list of available commands that can be bound to keys can be found
     # at https://docs.qtile.org/en/latest/manual/config/lazy.html
@@ -104,40 +97,77 @@ keys = [
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
+    Key(
+        [mod],
+        "f",
+        lazy.window.toggle_fullscreen(),
+        desc="Toggle fullscreen on the focused window",
+    ),
+    Key(
+        [mod],
+        "t",
+        lazy.window.toggle_floating(),
+        desc="Toggle floating on the focused window",
+    ),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    Key([mod, "Control"], "n", lazy.prev_screen(), desc="Move to next Screen"),
+    Key([mod, "Control"], "p", lazy.next_screen(), desc="Move to next Screen"),
+    Key([mod], "1", lazy.to_screen(1), desc="left screen"),
+    Key([mod], "2", lazy.to_screen(0), desc="middle screen"),
+    Key([mod], "3", lazy.to_screen(2), desc="right screen"),
 ]
 
-groups = [Group(i) for i in "123456789"]
 
-for i in groups:
+group_names = [
+    ("SYS", {"layout": "columns"}, "s"),
+    ("WWW", {"layout": "columns"}, "i"),
+    ("DEV", {"layout": "columns"}, "d"),
+    ("ORG", {"layout": "columns"}, "o"),
+    ("VID", {"layout": "columns"}, "v"),
+    ("CHAT", {"layout": "columns"}, "c"),
+]
+
+groups = [Group(name, **kwargs) for name, kwargs, _ in group_names]
+
+for i, (name, _, key) in enumerate(group_names, 1):
     keys.extend(
         [
             # mod1 + letter of group = switch to group
             Key(
                 [mod],
-                i.name,
-                lazy.group[i.name].toscreen(),
-                desc="Switch to group {}".format(i.name),
+                key,
+                lazy.group[name].toscreen(),
+                desc="Switch to group {}".format(name),
             ),
             # mod1 + shift + letter of group = switch to & move focused window to group
-            Key(
-                [mod, "shift"],
-                i.name,
-                lazy.window.togroup(i.name, switch_group=True),
-                desc="Switch to & move focused window to group {}".format(i.name),
-            ),
+            # Key(
+            #     [mod, "shift"],
+            #     str(i),
+            #     lazy.window.togroup(name, switch_group=True),
+            #     desc="Switch to & move focused window to group {}".format(name),
+            # ),
             # Or, use below if you prefer not to switch to that group.
             # # mod1 + shift + letter of group = move focused window to group
-            # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-            #     desc="move focused window to group {}".format(i.name)),
+            Key(
+                [mod, "shift"],
+                key,
+                lazy.window.togroup(name),
+                desc="move focused window to group {}".format(name),
+            ),
         ]
     )
 
+
 layouts = [
-    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
-    layout.Max(),
+    layout.Columns(
+        border_focus="#5e81ac",
+        border_normal="#4c566a",
+        border_width=4,
+        margin_on_single=10,
+    ),
+    layout.Max()
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -172,8 +202,8 @@ screens = [
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-                widget.TextBox("default config", name="default"),
-                widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
+                widget.TextBox("Screen2", name="Screen2"),
+                widget.TextBox("Screen2", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
                 widget.Systray(),
@@ -184,6 +214,70 @@ screens = [
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
+        wallpaper="~/.wallpapers/pexels-eberhard-grossgasteiger-640781.jpg",
+        wallpaper_mode="stretch",
+        # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
+        # By default we handle these events delayed to already improve performance, however your system might still be struggling
+        # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
+        # x11_drag_polling_rate = 60,
+    ),
+    Screen(
+        bottom=bar.Bar(
+            [
+                widget.CurrentLayout(),
+                widget.GroupBox(),
+                widget.Prompt(),
+                widget.WindowName(),
+                widget.TextBox("Screen1", name="Screen1"),
+                widget.TextBox("screen1", foreground="#d75f5f"),
+                # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
+                # widget.StatusNotifier(),
+                widget.Systray(),
+                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
+                widget.QuickExit(),
+            ],
+            24,
+            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
+            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+        ),
+        wallpaper="~/.wallpapers/pexels-eberhard-grossgasteiger-1366919.jpg",
+        wallpaper_mode="stretch",
+        # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
+        # By default we handle these events delayed to already improve performance, however your system might still be struggling
+        # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
+        # x11_drag_polling_rate = 60,
+    ),
+    Screen(
+        bottom=bar.Bar(
+            [
+                widget.CurrentLayout(),
+                widget.GroupBox(),
+                widget.Prompt(),
+                widget.WindowName(),
+                widget.Chord(
+                    chords_colors={
+                        "launch": ("#ff0000", "#ffffff"),
+                    },
+                    name_transform=lambda name: name.upper(),
+                ),
+                widget.TextBox("Screen3", name="Screen3"),
+                widget.TextBox("Screen3", foreground="#d75f5f"),
+                # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
+                # widget.StatusNotifier(),
+                widget.Systray(),
+                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
+                widget.QuickExit(),
+            ],
+            24,
+            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
+            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+        ),
+        wallpaper="~/.wallpapers/pexels-eberhard-grossgasteiger-640781.jpg",
+        wallpaper_mode="stretch",
+        # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
+        # By default we handle these events delayed to already improve performance, however your system might still be struggling
+        # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
+        # x11_drag_polling_rate = 60,
     ),
 ]
 
@@ -205,6 +299,7 @@ dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
 follow_mouse_focus = True
 bring_front_click = False
+floats_kept_above = True
 cursor_warp = False
 floating_layout = layout.Floating(
     float_rules=[
@@ -238,3 +333,12 @@ wl_input_rules = None
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
+
+
+@hook.subscribe.startup_once
+def startup_once():
+    subprocess.run("/home/kaypro/.config/qtile/autostart_once.sh")
+
+
+if __name__ in ["config", "__main__"]:
+    auto_fullscreen = False

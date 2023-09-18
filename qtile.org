@@ -3,3 +3,20 @@
 * Keybindings
 * Workspaces
 * Homerow keybindings
+* Xorg
+- Goal is to have a dynamic setup dependent on environment (How many monitors, which machine etc.)
+** First solution (Run subprocess commands to xrandr)
+- The DisplayPorts should stay the same in between sessions but I honestly don't know for sure yet
+  - I switched cable once and it behave as expected
+#+begin_src python
+subprocess.run(["setxkbmap", "-option", "ctrl:nocaps"])
+subprocess.run(["xrandr", "--output", "DP-2", "--rotate", "left"])
+subprocess.run(["xrandr", "--output", "DP-1-1", "--primary", "--mode", "1920x1080"])
+subprocess.run(
+    ["xrandr", "--output", "DP-1-2", "--mode", "1920x1080", "--right-of", "DP-1-1"]
+)
+subprocess.run(
+    ["xrandr", "--output", "DP-2", "--mode", "1920x1200", "--left-of", "DP-1-1"]
+)
+#+end_src
+** Second solution (python-xlib)

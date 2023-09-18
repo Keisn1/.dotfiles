@@ -195,9 +195,12 @@ c.zoom.default = "125%"
 # Type: Bool
 c.colors.webpage.darkmode.enabled = True
 
+# Bindings for normal mode
+config.bind("<Ctrl+l>gh", "open github.com")
+config.bind("<Ctrl+l>yt", "open youtube.com")
+config.bind("M", "hint links spawn mpv {hint-url}")
+config.bind("Z", "hint links spawn yt-dlp {hint-url}")
+
 # Bindings for command mode
 config.bind("<Ctrl+j>", "completion-item-focus --history next", mode="command")
 config.bind("<Ctrl+k>", "completion-item-focus --history prev", mode="command")
-
-config.bind("M", "hint links spawn mpv {hint-url}")
-config.bind("Z", "hint links spawn yt-dlp {hint-url}")
