@@ -127,8 +127,8 @@ keys = [
 group_names = [
     ("DEV", {"layout": "columns"}, "d"),
     ("WWW", {"layout": "columns"}, "i"),
-    ("ORG", {"layout": "monadtall"}, "o"),
-    ("SYS", {"layout": "monadtall"}, "s"),
+    ("ORG", {"layout": "columns"}, "o"),
+    ("SYS", {"layout": "columns"}, "s"),
     ("VID", {"layout": "columns"}, "v"),
     ("CHAT", {"layout": "columns"}, "c"),
 ]
@@ -181,7 +181,7 @@ layouts = [
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-    layout.MonadTall(**layout_theme),
+    # layout.MonadTall(**layout_theme),
     # layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile()

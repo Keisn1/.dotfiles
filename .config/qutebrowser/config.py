@@ -200,7 +200,7 @@ c.colors.tabs.selected.even.bg = "#bc8f8f"
 c.colors.tabs.selected.odd.bg = "#bc8f8f"
 
 c.colors.tabs.even.bg = "#696969"
-c.colors.tabs.odd.bg = "#696969"
+c.colors.tabs.odd.bg = "#000000"
 
 # Bindings for normal mode
 config.bind("<Ctrl+l>gh", "open -t github.com")
@@ -223,4 +223,12 @@ config.set(
 config.set(
     "fileselect.multiple_files.command",
     ["alacritty", "--class", "ranger,ranger", "-e", "ranger", "--choosefiles", "{}"],
+)
+
+config.set(
+    "url.searchengines",
+    {
+        "DEFAULT": "https://duckduckgo.com/?q={}",
+        "yt": "youtube.com/results?search_query={}",
+    },
 )
