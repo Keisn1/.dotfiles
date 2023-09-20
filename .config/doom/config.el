@@ -39,7 +39,7 @@
 ;; (add-hook 'window-setup-hook #'toggle-frame-fullscreen)
 (setq default-frame-alist '((undecorated . t))) ; get rid of title bar
 
-(setq doom-theme 'doom-palenight)
+(setq doom-theme 'doom-dracula)
 
 ;; (all-the-icons-install-fonts t)
 ;; (nerd-icons-install-fonts)
@@ -133,13 +133,18 @@
 ;; (add-hook! 'dired-omit-mode-hook (add-to-list 'dired-omit-extensions '".bashrc"))
 ;; (add-hook! 'dired-omit-mode-hook (add-to-list 'dired-omit-extensions '".zshrc"))
 ;; (setq dired-omit-files "\\`[.]?#\\|\\`[.][.]?\\'\\|^\\..+$\\|^__pycache__$\\|,")
+;; (setq 'dired-omit-files "\\`[.]?#\\|\\`[.][.]?\\'")
+(setq dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^\\..*$")
 
 (add-hook! 'inferior-python-mode-hook #'visual-line-mode)
 
-(setq doom-localleader-key ",")
+;; (setq doom-localleader-key ",")
 
 (map!
         :leader :desc "M-x" "SPC" 'execute-extended-command)
+
+(map!
+        :leader :desc "Shell-command" "!" 'shell-command)
 
 (map!
         "M-y" 'consult-yank-from-kill-ring)
@@ -149,7 +154,7 @@
       :localleader
       :prefix ("e" . "pipenv"))
 
-(map!
+(map!   :mode dired-mode
         :leader "f j" 'dired-jump)
 
 (map!

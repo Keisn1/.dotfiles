@@ -315,3 +315,8 @@ cd installs
 ./atom.sh
 ./dracula.sh
 #+end_src
+* Install JRE
+was already install
+#+begin_src shell
+sudo apt install default-jre
+#+end_src

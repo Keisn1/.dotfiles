@@ -169,22 +169,22 @@ layout_theme = {
     "border_focus": "#c792ea",
     "border_normal": "#4c566a",
     "border_width": 2,
-    "margin_on_single": 8,
+    "margin_on_single": 4,
     "margin": 4,
 }
 
 
 layouts = [
-    layout.Columns(**layout_theme),
-    # layout.Max(**layout_theme)
+    layout.Columns(**layout_theme, border_on_single=True),
+    layout.Max(**layout_theme),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-    layout.MonadTall(),
+    layout.MonadTall(**layout_theme),
     # layout.MonadWide(),
     # layout.RatioTile(),
-    # layout.Tile(),
+    # layout.Tile()
     # layout.TreeTab(),
     # layout.VerticalTile(),
     # layout.Zoomy(),
@@ -231,7 +231,6 @@ screens = [
                 widget.CurrentLayoutIcon(
                     scale=0.9,
                     foreground="EFEFEF",
-                    padding=3,
                 ),
                 # widget.GenPollText(
                 #     func=get_cur_grp_name,
@@ -280,7 +279,6 @@ screens = [
                 widget.CurrentLayoutIcon(
                     scale=0.9,
                     foreground="EFEFEF",
-                    padding=3,
                 ),
                 # widget.GenPollText(
                 #     func=get_cur_grp_name,
@@ -332,7 +330,6 @@ screens = [
                 widget.CurrentLayoutIcon(
                     scale=0.9,
                     foreground="EFEFEF",
-                    padding=3,
                 ),
                 # widget.GenPollText(
                 #     func=get_cur_grp_name,

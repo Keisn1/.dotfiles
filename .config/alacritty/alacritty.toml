@@ -1,18 +1,16 @@
 [window]
-# opacity = 0.9
-# decorations = "Full"
 startup_mode = "Maximized"
 
-  [window.padding]
-  x = 10
-  y = 10
+[window.padding]
+x = 10
+y = 10
 
-  [window.class]
-  instance = "Alacritty"
-  general = "Alacritty"
+[window.class]
+instance = "Alacritty"
+general = "Alacritty"
 
 [scrolling]
-history = 10_000
+history = 10000
 multiplier = 3
 
 [selection]
@@ -21,43 +19,43 @@ save_to_clipboard = false
 [shell]
 program = "/usr/bin/zsh"
 
-[[keyboard.bindings]]
-key = "Return"
-mods = "Alt|Control"
-action = "SpawnNewInstance"
+[keyboard]
+bindings = [
+    { key = "Return", mods = "Alt|Control", action = "SpawnNewInstance" },
+]
 
 [font]
 size = 16
 
-  [font.normal]
-  family = "JetBrainsMonoNL Nerd Font"
-  style = "Regular"
+[font.normal]
+family = "JetBrainsMonoNL Nerd Font"
+style = "Regular"
 
-  [font.bold]
-  family = "JetBrainsMonoNL Nerd Font"
-  style = "Bold"
+[font.bold]
+family = "JetBrainsMonoNL Nerd Font"
+style = "Bold"
 
-  [font.italic]
-  family = "JetBrainsMonoNL Nerd Font"
-  style = "Italic"
+[font.italic]
+family = "JetBrainsMonoNL Nerd Font"
+style = "Italic"
 
-  [font.bold_italic]
-  family = "JetBrainsMonoNL Nerd Font"
-  style = "Bold Italic"
+[font.bold_italic]
+family = "JetBrainsMonoNL Nerd Font"
+style = "Bold Italic"
 
 [colors]
 indexed_colors = []
 draw_bold_text_with_bright_colors = true
 
 [colors.bright]
-black = "#686868"
-blue = "#57C7FF"
-cyan = "#9AEDFE"
-green = "#5AF78E"
-magenta = "#FF6AC1"
-red = "#FF5C57"
-white = "#EFF0EB"
-yellow = "#F3F99D"
+black = "#000000"
+blue = "#8BE9FD"
+cyan = "#FF79C6"
+green = "#50FA7B"
+magenta = "#BD93F9"
+red = "#FF5555"
+white = "#FFFFFF"
+yellow = "#FFB86C"
 
 [colors.cursor]
 cursor = "CellForeground"
@@ -90,18 +88,18 @@ background = "None"
 foreground = "None"
 
 [colors.normal]
-black = "#282A36"
-blue = "#57C7FF"
-cyan = "#9AEDFE"
-green = "#5AF78E"
-magenta = "#FF6AC1"
-red = "#FF5C57"
-white = "#F1F1F0"
-yellow = "#F3F99D"
+black = "#44475A"
+blue = "#8BE9FD"
+cyan = "#FF79C6"
+green = "#50FA7B"
+magenta = "#BD93F9"
+red = "#FF5555"
+white = "#f8f8f2"
+yellow = "#FFB86C"
 
 [colors.primary]
 background = "#282A36"
-foreground = "#EFF0EB"
+foreground = "#f8f8f2"
 
 [colors.search.focused_match]
 background = "#000000"

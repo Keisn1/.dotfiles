@@ -58,7 +58,7 @@
 ** Themes
 - choosing theme
 #+begin_src emacs-lisp
-(setq doom-theme 'doom-palenight)
+(setq doom-theme 'doom-dracula)
 #+end_src
 - enabling bold and italic for the theme but may not be necessary
 #+begin_src emacs-lisp :tangle no
@@ -208,22 +208,30 @@
 ;; (add-hook! 'dired-omit-mode-hook (add-to-list 'dired-omit-extensions '".bashrc"))
 ;; (add-hook! 'dired-omit-mode-hook (add-to-list 'dired-omit-extensions '".zshrc"))
 ;; (setq dired-omit-files "\\`[.]?#\\|\\`[.][.]?\\'\\|^\\..+$\\|^__pycache__$\\|,")
+;; (setq 'dired-omit-files "\\`[.]?#\\|\\`[.][.]?\\'")
+(setq dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^\\..*$")
 #+end_src
+
 * Python
 ** Visual line mode in inferior python mode
 #+begin_src emacs-lisp
 (add-hook! 'inferior-python-mode-hook #'visual-line-mode)
 #+end_src
 * Keybindings
-** Editor
+** General
 *** Localleader
 #+begin_src emacs-lisp
-(setq doom-localleader-key ",")
+;; (setq doom-localleader-key ",")
 #+end_src
 *** Double SPC M-x
 #+begin_src emacs-lisp
 (map!
         :leader :desc "M-x" "SPC" 'execute-extended-command)
+#+end_src
+*** Shell-command
+#+begin_src emacs-lisp
+(map!
+        :leader :desc "Shell-command" "!" 'shell-command)
 #+end_src
 *** Consult
 #+begin_src emacs-lisp
@@ -239,7 +247,7 @@
 #+end_src
 ** Dired
 #+begin_src emacs-lisp
-(map!
+(map!   :mode dired-mode
         :leader "f j" 'dired-jump)
 #+end_src
 ** Windows
@@ -253,4 +261,11 @@
 #+begin_src emacs-lisp
 (map!
         :leader :desc "doom dashboard" "b h" '+doom-dashboard/open)
+#+end_src
+* pdf-tools
+#+begin_src shell
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get pdf-tools
+M-x pdf-tools-install
 #+end_src
