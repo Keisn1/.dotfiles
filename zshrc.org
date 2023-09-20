@@ -10,14 +10,10 @@ fpath+=${ZDOTDIR:-~}/.zsh_functions
 #+end_src
 * Adding ssh_key to the ssh-agent and handled by keychain
 #+begin_src shell :noweb yes
-if ! [ $(SSH_AGENT_PID) ]; then
+if ! [ $(echo $SSH_AGENT_PID | wc -w) -gt 0 ] ; then
     eval $(ssh-agent -s)
     eval $(keychain --eval $HOME/.ssh/kaypro-MacBookPro-Ubuntu_rsa)
 fi
-# if ! [ $(ps ax | grep ssh-agent | wc -l) -gt 0 ]; then
-#     eval $(ssh-agent -s)
-#     eval $(keychain --eval $HOME/.ssh/kaypro-MacBookPro-Ubuntu_rsa)
-# fi
 #+end_src
 * Export lpass to PATH
 #+begin_src shell
