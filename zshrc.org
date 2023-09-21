@@ -49,6 +49,10 @@ fi
 #+begin_src shell
 export PATH=$PATH:$HOME/programs/lastpass-cli/build/
 #+end_src
+* Export .local/bin to Path
+#+begin_src shell
+PATH=$PATH:/home/kaypro/.local/bin
+#+end_src
 * Export Path to .oh-my-zsh
 #+begin_src shell
 # Path to your oh-my-zsh installation.
