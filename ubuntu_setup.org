@@ -172,6 +172,10 @@ sudo apt install nodejs
 #+begin_src shell
 sudo apt install npm
 #+end_src
+* Install pipx
+#+begin_src shell
+sudo apt install pipx
+#+end_src
 * Python
 ** Pyenv
 #+begin_src shell
@@ -267,6 +271,10 @@ Keywords=wm;tiling" | sudo tee /usr/share/xsessions/qtile.desktop
 #+begin_src shell
 sudo apt update
 sudo apt install awesome
+#+end_src
+* Install rust
+#+begin_src shell
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 #+end_src
 * Alacritty
 #+begin_src shell
