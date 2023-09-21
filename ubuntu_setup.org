@@ -320,3 +320,8 @@ was already install
 #+begin_src shell
 sudo apt install default-jre
 #+end_src
+* Alsa
+#+begin_src shell
+sudo apt install alsa-utils
+sudo apt-get install mediainfo
+#+end_src

@@ -85,9 +85,42 @@
 (after! org
   ;; If you use `org' and don't want your org files in the default location below,
   ;; change `org-directory'. It must be set before org loads!
-  (setq org-directory "~/org/"))
+  (setq org-directory "~/org-files/"))
 
-(setq org-enable-notification t)
+(setq org-agenda-files
+      '("~/Documents/org_files/agenda-files/Tasks.org" "~/Documents/org-files/agenda_files/Habits.org"))
+
+(defun set-pomodoro-length (minutes)
+  "Set the org-pomodoro-length variable to the specified value in MINUTES."
+  (interactive "nEnter pomodoro length in minutes: ")
+  (setq org-pomodoro-length minutes)
+  (message "org-pomodoro-length set to %d minutes." minutes))
+
+(custom-set-variables
+ '(org-enable-notification t)
+ '(org-pomodoro-manual-break t)
+
+ '(org-pomodoro-start-sound-p t)
+ '(org-pomodoro-start-sound
+   "~/.dotfiles/resources/sounds/pomodoro/achievement.wav")
+ '(org-pomodoro-finished-sound-p t)
+ '(org-pomodoro-finished-sound
+   "~/.dotfiles/resources/sounds/pomodoro/arcade-score-interface.wav")
+ '(org-pomodoro-killed-sound-p t)
+ '(org-pomodoro-killed-sound
+   "~/.dotfiles/resources/sounds/pomodoro/alert-bells-echo.wav")
+ '(org-pomodoro-short-break-sound-p t)
+ '(org-pomodoro-short-break-sound
+   "~/.dotfiles/resources/sounds/pomodoro/attention-bell-ring.wav")
+ '(org-pomodoro-long-break-sound-p t)
+ '(org-pomodoro-long-break-sound
+   "~/.dotfiles/resources/sounds/pomodoro/bell-gentle-alarm.wav")
+ '(org-pomodoro-overtime-sound-p t)
+ '(org-pomodoro-overtime-sound
+   "~/.dotfiles/resources/sounds/pomodoro/airport.wav")
+ '(org-pomodoro-ticking-sound-p t)
+ '(org-pomodoro-ticking-sound
+   "~/.dotfiles/resources/sounds/pomodoro/tick.wav"))
 
 (after! org
   (require 'org-tempo)
@@ -156,6 +189,9 @@
 
 (map!   :mode dired-mode
         :leader "f j" 'dired-jump)
+
+(map!   :mode org-mode
+        :leader "m v p" 'set-pomodoro-length)
 
 (map!
         :leader "w /" 'evil-window-vsplit

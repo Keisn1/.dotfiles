@@ -269,7 +269,7 @@ screens = [
             background=["1A2024", "060A0F"],
             opacity=0.90,
         ),
-        wallpaper="~/.wallpapers/pexels-eberhard-grossgasteiger-640781.jpg",
+        wallpaper="~/.dotfiles/resources/wallpapers/pexels-eberhard-grossgasteiger-640781.jpg",
         wallpaper_mode="stretch",
     ),
     Screen(
@@ -316,7 +316,7 @@ screens = [
             background=["1A2024", "060A0F"],
             opacity=0.90,
         ),
-        wallpaper="~/.wallpapers/pexels-eberhard-grossgasteiger-1366919.jpg",
+        wallpaper="~/.dotfiles/resources/wallpapers/pexels-eberhard-grossgasteiger-1366919.jpg",
         wallpaper_mode="stretch",
         # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
         # By default we handle these events delayed to already improve performance, however your system might still be struggling
@@ -367,7 +367,7 @@ screens = [
             background=["1A2024", "060A0F"],
             opacity=0.90,
         ),
-        wallpaper="~/.wallpapers/pexels-eberhard-grossgasteiger-640781.jpg",
+        wallpaper="~/.dotfiles/resources/wallpapers/pexels-eberhard-grossgasteiger-640781.jpg",
         wallpaper_mode="stretch",
     ),
 ]
