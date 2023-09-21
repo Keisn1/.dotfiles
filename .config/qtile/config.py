@@ -40,6 +40,10 @@ terminal = guess_terminal()
 # xrandr --output DP-2-2 --primary --mode 1920x1080 --output DP-2-1 --mode 1920x1080 --right-of DP-2-2 --output DP-1 --mode 1920x1200 --left-of DP-2-2
 
 subprocess.run(["setxkbmap", "-option", "ctrl:nocaps"])
+hostname = subprocess.check_output(["hostname"], encoding="UTF-8").strip()
+
+if hostname == "kaypro-UX330UAK":
+    subprocess.run(["setxkbmap", "-option", "altwin:swap_alt_win"])
 
 # check for number of monitors
 st = subprocess.check_output(["xrandr", "--listactivemonitors"], encoding="UTF-8")
@@ -223,154 +227,206 @@ def get_datetime():
     return get_date() + get_time()
 
 
-screens = [
-    Screen(
-        top=bar.Bar(
-            [
-                widget.Sep(size_percent=0.05),
-                widget.CurrentLayoutIcon(
-                    scale=0.9,
-                    foreground="EFEFEF",
-                ),
-                # widget.GenPollText(
-                #     func=get_cur_grp_name,
-                #     update_interval=0.5,
-                #     foreground="EFEFEF",
-                #     padding=1,
-                # ),
-                widget.GroupBox(
-                    active="F6F6F6",
-                    inactive="968F92",
-                    this_current_screen_border="#bc8f8f",
-                    this_screen_border="#bc8f8f",
-                    highlight_method="default",
-                    highlight_color=["1A2024", "060A0F"],
-                    fontsize=12,
-                    margin=3,
-                ),
-                widget.Prompt(
-                    fontsize=12,
-                    cursor_color="FFFFFF",
-                    foreground="FDF3A9",
-                    background="271B1B",
-                ),
-                widget.WindowName(
-                    foreground="F6F6F6",
-                ),
-                widget.GenPollText(
-                    func=get_datetime,
-                    update_interval=1,
-                    foreground="F6F6F6",
-                ),
-                widget.Systray(),
-                widget.Sep(size_percent=0.05),
-            ],
-            28,
-            background=["1A2024", "060A0F"],
-            opacity=0.90,
+if num_of_monitors == 3:
+    screens = [
+        Screen(
+            top=bar.Bar(
+                [
+                    widget.Sep(size_percent=0.05),
+                    widget.CurrentLayoutIcon(
+                        scale=0.9,
+                        foreground="EFEFEF",
+                    ),
+                    # widget.GenPollText(
+                    #     func=get_cur_grp_name,
+                    #     update_interval=0.5,
+                    #     foreground="EFEFEF",
+                    #     padding=1,
+                    # ),
+                    widget.GroupBox(
+                        active="F6F6F6",
+                        inactive="968F92",
+                        this_current_screen_border="#bc8f8f",
+                        this_screen_border="#bc8f8f",
+                        highlight_method="default",
+                        highlight_color=["1A2024", "060A0F"],
+                        fontsize=12,
+                        margin=3,
+                    ),
+                    widget.Prompt(
+                        fontsize=12,
+                        cursor_color="FFFFFF",
+                        foreground="FDF3A9",
+                        background="271B1B",
+                    ),
+                    widget.WindowName(
+                        foreground="F6F6F6",
+                    ),
+                    widget.GenPollText(
+                        func=get_datetime,
+                        update_interval=1,
+                        foreground="F6F6F6",
+                    ),
+                    widget.Systray(),
+                    widget.Sep(size_percent=0.05),
+                ],
+                28,
+                background=["1A2024", "060A0F"],
+                opacity=0.90,
+            ),
+            wallpaper="~/.dotfiles/resources/wallpapers/pexels-eberhard-grossgasteiger-640781.jpg",
+            wallpaper_mode="stretch",
         ),
-        wallpaper="~/.dotfiles/resources/wallpapers/pexels-eberhard-grossgasteiger-640781.jpg",
-        wallpaper_mode="stretch",
-    ),
-    Screen(
-        top=bar.Bar(
-            [
-                widget.Sep(size_percent=0.05),
-                widget.CurrentLayoutIcon(
-                    scale=0.9,
-                    foreground="EFEFEF",
-                ),
-                # widget.GenPollText(
-                #     func=get_cur_grp_name,
-                #     update_interval=0.5,
-                #     foreground="EFEFEF",
-                #     padding=1,
-                # ),
-                widget.GroupBox(
-                    active="F6F6F6",
-                    inactive="968F92",
-                    this_current_screen_border="#bc8f8f",
-                    this_screen_border="#bc8f8f",
-                    highlight_method="default",
-                    highlight_color=["1A2024", "060A0F"],
-                    fontsize=12,
-                    margin=3,
-                ),
-                widget.Prompt(
-                    fontsize=12,
-                    cursor_color="FFFFFF",
-                    foreground="FDF3A9",
-                    background="271B1B",
-                ),
-                widget.WindowName(
-                    foreground="F6F6F6",
-                ),
-                widget.GenPollText(
-                    func=get_datetime,
-                    update_interval=1,
-                    foreground="F6F6F6",
-                ),
-                widget.Sep(size_percent=0.05),
-            ],
-            28,
-            background=["1A2024", "060A0F"],
-            opacity=0.90,
+        Screen(
+            top=bar.Bar(
+                [
+                    widget.Sep(size_percent=0.05),
+                    widget.CurrentLayoutIcon(
+                        scale=0.9,
+                        foreground="EFEFEF",
+                    ),
+                    # widget.GenPollText(
+                    #     func=get_cur_grp_name,
+                    #     update_interval=0.5,
+                    #     foreground="EFEFEF",
+                    #     padding=1,
+                    # ),
+                    widget.GroupBox(
+                        active="F6F6F6",
+                        inactive="968F92",
+                        this_current_screen_border="#bc8f8f",
+                        this_screen_border="#bc8f8f",
+                        highlight_method="default",
+                        highlight_color=["1A2024", "060A0F"],
+                        fontsize=12,
+                        margin=3,
+                    ),
+                    widget.Prompt(
+                        fontsize=12,
+                        cursor_color="FFFFFF",
+                        foreground="FDF3A9",
+                        background="271B1B",
+                    ),
+                    widget.WindowName(
+                        foreground="F6F6F6",
+                    ),
+                    widget.GenPollText(
+                        func=get_datetime,
+                        update_interval=1,
+                        foreground="F6F6F6",
+                    ),
+                    widget.Sep(size_percent=0.05),
+                ],
+                28,
+                background=["1A2024", "060A0F"],
+                opacity=0.90,
+            ),
+            wallpaper="~/.dotfiles/resources/wallpapers/pexels-eberhard-grossgasteiger-1366919.jpg",
+            wallpaper_mode="stretch",
+            # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
+            # By default we handle these events delayed to already improve performance, however your system might still be struggling
+            # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
+            # x11_drag_polling_rate = 60,
         ),
-        wallpaper="~/.dotfiles/resources/wallpapers/pexels-eberhard-grossgasteiger-1366919.jpg",
-        wallpaper_mode="stretch",
-        # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
-        # By default we handle these events delayed to already improve performance, however your system might still be struggling
-        # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
-        # x11_drag_polling_rate = 60,
-    ),
-    Screen(
-        top=bar.Bar(
-            [
-                widget.Sep(size_percent=0.05),
-                widget.CurrentLayoutIcon(
-                    scale=0.9,
-                    foreground="EFEFEF",
-                ),
-                # widget.GenPollText(
-                #     func=get_cur_grp_name,
-                #     update_interval=0.5,
-                #     foreground="EFEFEF",
-                #     padding=1,
-                # ),
-                widget.GroupBox(
-                    active="F6F6F6",
-                    inactive="968F92",
-                    this_current_screen_border="#bc8f8f",
-                    this_screen_border="#bc8f8f",
-                    highlight_method="default",
-                    highlight_color=["1A2024", "060A0F"],
-                    fontsize=12,
-                    margin=3,
-                ),
-                widget.Prompt(
-                    fontsize=12,
-                    cursor_color="FFFFFF",
-                    foreground="FDF3A9",
-                    background="271B1B",
-                ),
-                widget.WindowName(
-                    foreground="F6F6F6",
-                ),
-                widget.GenPollText(
-                    func=get_datetime,
-                    update_interval=1,
-                    foreground="F6F6F6",
-                ),
-                widget.Sep(size_percent=0.05),
-            ],
-            28,
-            background=["1A2024", "060A0F"],
-            opacity=0.90,
+        Screen(
+            top=bar.Bar(
+                [
+                    widget.Sep(size_percent=0.05),
+                    widget.CurrentLayoutIcon(
+                        scale=0.9,
+                        foreground="EFEFEF",
+                    ),
+                    # widget.GenPollText(
+                    #     func=get_cur_grp_name,
+                    #     update_interval=0.5,
+                    #     foreground="EFEFEF",
+                    #     padding=1,
+                    # ),
+                    widget.GroupBox(
+                        active="F6F6F6",
+                        inactive="968F92",
+                        this_current_screen_border="#bc8f8f",
+                        this_screen_border="#bc8f8f",
+                        highlight_method="default",
+                        highlight_color=["1A2024", "060A0F"],
+                        fontsize=12,
+                        margin=3,
+                    ),
+                    widget.Prompt(
+                        fontsize=12,
+                        cursor_color="FFFFFF",
+                        foreground="FDF3A9",
+                        background="271B1B",
+                    ),
+                    widget.WindowName(
+                        foreground="F6F6F6",
+                    ),
+                    widget.GenPollText(
+                        func=get_datetime,
+                        update_interval=1,
+                        foreground="F6F6F6",
+                    ),
+                    widget.Sep(size_percent=0.05),
+                ],
+                28,
+                background=["1A2024", "060A0F"],
+                opacity=0.90,
+            ),
+            wallpaper="~/.dotfiles/resources/wallpapers/pexels-eberhard-grossgasteiger-640781.jpg",
+            wallpaper_mode="stretch",
         ),
-        wallpaper="~/.dotfiles/resources/wallpapers/pexels-eberhard-grossgasteiger-640781.jpg",
-        wallpaper_mode="stretch",
-    ),
-]
+    ]
+else:
+    screens = [
+        Screen(
+            top=bar.Bar(
+                [
+                    widget.Sep(size_percent=0.05),
+                    widget.CurrentLayoutIcon(
+                        scale=0.9,
+                        foreground="EFEFEF",
+                    ),
+                    # widget.GenPollText(
+                    #     func=get_cur_grp_name,
+                    #     update_interval=0.5,
+                    #     foreground="EFEFEF",
+                    #     padding=1,
+                    # ),
+                    widget.GroupBox(
+                        active="F6F6F6",
+                        inactive="968F92",
+                        this_current_screen_border="#bc8f8f",
+                        this_screen_border="#bc8f8f",
+                        highlight_method="default",
+                        highlight_color=["1A2024", "060A0F"],
+                        fontsize=12,
+                        margin=3,
+                    ),
+                    widget.Prompt(
+                        fontsize=12,
+                        cursor_color="FFFFFF",
+                        foreground="FDF3A9",
+                        background="271B1B",
+                    ),
+                    widget.WindowName(
+                        foreground="F6F6F6",
+                    ),
+                    widget.GenPollText(
+                        func=get_datetime,
+                        update_interval=1,
+                        foreground="F6F6F6",
+                    ),
+                    widget.Systray(),
+                    widget.Sep(size_percent=0.05),
+                ],
+                28,
+                background=["1A2024", "060A0F"],
+                opacity=0.90,
+            ),
+            wallpaper="~/.dotfiles/resources/wallpapers/pexels-eberhard-grossgasteiger-640781.jpg",
+            wallpaper_mode="stretch",
+        )
+    ]
 
 # Drag floating layouts.
 mouse = [
