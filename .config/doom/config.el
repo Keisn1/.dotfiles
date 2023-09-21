@@ -161,13 +161,14 @@
 (advice-add 'org-roam-buffer-persistent-redisplay :after
             (lambda () (add-hook 'org-mode-hook 'display-line-numbers-mode)))
 
+
 (after! org-roam
   (custom-set-variables
    '(org-roam-directory "~/org-files/roam/")
    '(org-roam-completion-everywhere t)
    '(org-roam-capture-templates
      '(("d" "default" plain
-        "%?"
+        "Author: %^{Author} %?"
         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
         :unnarrowed t)
        ("y" "python" plain (file "~/.dotfiles/resources/templates/org-roam/PythonNoteTemplate.org")
