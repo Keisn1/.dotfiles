@@ -25,7 +25,7 @@ if [ "$?" = 2 ]; then
         # Start agent and store agent connection info.
         (umask 066; ssh-agent > ~/.ssh-agent)
         eval "$(<~/.ssh-agent)" >/dev/null
-        eval $(keychain --eval $HOME/.ssh/kaypro-MacBookPro-Ubuntu_rsa)
+        eval $(keychain --eval $HOME/.ssh/<<system_info.org:HOSTNAME()>>-<<system_info.org:OS()>>_rsa)
     fi
 fi
 
