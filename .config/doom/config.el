@@ -196,11 +196,13 @@
 
 (add-hook! 'dired-mode-hook #'nerd-icons-dired-mode)
 
+(after! dired-mode
+  (setq dired-omit-mode nil)
+  (setq dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^\\..*$"))
 ;; (add-hook! 'dired-omit-mode-hook (add-to-list 'dired-omit-extensions '".bashrc"))
 ;; (add-hook! 'dired-omit-mode-hook (add-to-list 'dired-omit-extensions '".zshrc"))
 ;; (setq dired-omit-files "\\`[.]?#\\|\\`[.][.]?\\'\\|^\\..+$\\|^__pycache__$\\|,")
 ;; (setq 'dired-omit-files "\\`[.]?#\\|\\`[.][.]?\\'")
-(setq dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^\\..*$")
 
 (add-hook! 'inferior-python-mode-hook #'visual-line-mode)
 
