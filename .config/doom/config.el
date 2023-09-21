@@ -155,6 +155,38 @@
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 
+(add-hook! 'org-roam-mode-hook #'org-roam-db-autosync-enable)
+(advice-add 'org-roam-buffer-persistent-redisplay :before
+            (lambda () (remove-hook 'org-mode-hook 'display-line-numbers-mode)))
+(advice-add 'org-roam-buffer-persistent-redisplay :after
+            (lambda () (add-hook 'org-mode-hook 'display-line-numbers-mode)))
+
+(after! org-roam
+  (custom-set-variables
+   '(org-roam-directory "~/org-files/roam/")
+   '(org-roam-completion-everywhere t)
+   '(org-roam-capture-templates
+     '(("d" "default" plain
+        "%?"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+        :unnarrowed t)
+       ("y" "python" plain (file "~/.dotfiles/resources/templates/org-roam/PythonNoteTemplate.org")
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Python")
+        :unnarrowed t)
+       ("l" "programming language" plain
+        "* Characteristics\n\n- Family: %?\n- Inspired by: \n\n* Reference:\n\n"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+        :unnarrowed t)
+       ("b" "book notes" plain
+        "\n* Source\n\nAuthor: %^{Author}\nTitle: ${title}\nDate: %U\nFormat Date: %<%Y-%m-%d %H:%M>\nYear: %^{Year}\n\n* Summary\n\n%?"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+        :unnarrowed t
+        )
+       ("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Project")
+        :unnarrowed t))
+     )))
+
 (after! evil
   (setq evil-escape-key-sequence "fd")
   (setq evil-escape-excluded-states '(normal multiedit emacs motion)))

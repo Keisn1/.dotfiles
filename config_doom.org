@@ -138,7 +138,7 @@
 (setq org-agenda-files
       '("~/Documents/org_files/agenda-files/Tasks.org" "~/Documents/org-files/agenda_files/Habits.org"))
 #+end_src
-** TODO Org-Pomodoro
+** Org-Pomodoro
 #+begin_src emacs-lisp
 (defun set-pomodoro-length (minutes)
   "Set the org-pomodoro-length variable to the specified value in MINUTES."
@@ -202,6 +202,9 @@
 *** TODO My Pretty Symbols
 #+begin_src emacs-lisp
 #+end_src
+*** Line numbers
+(add-hook! 'org-mode-hook #'display-line-numbers-mode)
+
 ** Auto-tangle Configuration Files
 #+begin_src emacs-lisp
 (defun efs/org-babel-tangle-config ()
@@ -217,6 +220,40 @@
       (org-babel-tangle))))
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
+#+end_src
+* Org-roam
+#+begin_src emacs-lisp
+(add-hook! 'org-roam-mode-hook #'org-roam-db-autosync-enable)
+(advice-add 'org-roam-buffer-persistent-redisplay :before
+            (lambda () (remove-hook 'org-mode-hook 'display-line-numbers-mode)))
+(advice-add 'org-roam-buffer-persistent-redisplay :after
+            (lambda () (add-hook 'org-mode-hook 'display-line-numbers-mode)))
+
+(after! org-roam
+  (custom-set-variables
+   '(org-roam-directory "~/org-files/roam/")
+   '(org-roam-completion-everywhere t)
+   '(org-roam-capture-templates
+     '(("d" "default" plain
+        "%?"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+        :unnarrowed t)
+       ("y" "python" plain (file "~/.dotfiles/resources/templates/org-roam/PythonNoteTemplate.org")
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Python")
+        :unnarrowed t)
+       ("l" "programming language" plain
+        "* Characteristics\n\n- Family: %?\n- Inspired by: \n\n* Reference:\n\n"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+        :unnarrowed t)
+       ("b" "book notes" plain
+        "\n* Source\n\nAuthor: %^{Author}\nTitle: ${title}\nDate: %U\nFormat Date: %<%Y-%m-%d %H:%M>\nYear: %^{Year}\n\n* Summary\n\n%?"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+        :unnarrowed t
+        )
+       ("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Project")
+        :unnarrowed t))
+     )))
 #+end_src
 * Evil
 #+begin_src emacs-lisp
