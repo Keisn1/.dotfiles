@@ -493,9 +493,16 @@ def startup_once():
         qtile.groups_map["ORG"].cmd_toscreen(2, toggle=False)
 
 
-# @hook.subscribe.shutdown
-# def shutdown():
-#     subprocess.run("/home/kaypro/.config/qtile/shutdown.sh")
+@hook.subscribe.shutdown
+def shutdown():
+    subprocess.run("/home/kaypro/.config/qtile/shutdown.sh")
+
+
+@hook.subscribe.suspend
+def lock_on_sleep():
+    # Run screen locker
+    subprocess.run("/home/kaypro/.config/qtile/shutdown.sh")
+    # qtile.spawn("/path/to/screen_locker")
 
 
 if __name__ in ["config", "__main__"]:

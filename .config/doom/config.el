@@ -237,3 +237,6 @@
 
 (map!
         :leader :desc "doom dashboard" "b h" '+doom-dashboard/open)
+
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "qutebrowser")
