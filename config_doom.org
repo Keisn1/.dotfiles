@@ -49,7 +49,7 @@
 #+end_src
 
 * Appearance
-** TODO Frame
+** Frame
 - need to check out how to Toggle Fullscreen when starting client
 #+begin_src emacs-lisp
 ;; (add-hook 'window-setup-hook #'toggle-frame-fullscreen)
@@ -114,8 +114,12 @@
 #+end_src
 ** Opacity
 #+begin_src emacs-lisp
-(set-frame-parameter (selected-frame) 'alpha '(95 95))
-(add-to-list 'default-frame-alist '(alpha . 95))
+;; (set-frame-parameter (selected-frame) 'alpha '(92 92))
+;; (add-to-list 'default-frame-alist '(alpha . 92))
+#+end_src
+** Modeline
+#+begin_src emacs-lisp
+(setq doom-modeline-buffer-file-name-style 'truncate-upto-project)
 #+end_src
 * Org
 ** Org-log

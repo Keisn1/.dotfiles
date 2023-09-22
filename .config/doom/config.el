@@ -73,8 +73,10 @@
 (setq display-line-numbers-type 'relative)
 (setq global-visual-line-mode t)
 
-(set-frame-parameter (selected-frame) 'alpha '(95 95))
-(add-to-list 'default-frame-alist '(alpha . 95))
+;; (set-frame-parameter (selected-frame) 'alpha '(92 92))
+;; (add-to-list 'default-frame-alist '(alpha . 92))
+
+(setq doom-modeline-buffer-file-name-style 'truncate-upto-project)
 
 (after! org
   ;; If you use `org' and don't want your org files in the default location below,
