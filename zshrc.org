@@ -95,13 +95,13 @@ eval "$(starship init zsh)"
 * Plugins
 ** git
 ** colored-man-pages
-** zsh-syntax highlighting
-- need to be cloned into .oh-my-zsh/custom/plugins
-- https://github.com/zsh-users/zsh-syntax-highlighting
-
+** zsh-history-substring-search
 ** zsh-autosuggestions
 - need to be cloned into .oh-my-zsh/custom/plugins
 - https://github.com/zsh-users/zsh-autosuggestions
+** zsh-syntax highlighting
+- need to be cloned into .oh-my-zsh/custom/plugins
+- https://github.com/zsh-users/zsh-syntax-highlighting
 ** Vi-mode
 - git clone https://github.com/jeffreytse/zsh-vi-mode $ZSH_CUSTOM/plugins/zsh-vi-mode
   into custom plugins
@@ -110,11 +110,7 @@ eval "$(starship init zsh)"
 https://engineeringfordatascience.com/posts/configure_terminal_for_data_science_with_oh_my_zsh/
 ** Code
 #+begin_src shell
-plugins=(git colored-man-pages zsh-syntax-highlighting zsh-autosuggestions zsh-vi-mode)
-#+end_src
-* Source Oh-my-zsh
-#+begin_src shell
-source $ZSH/oh-my-zsh.sh
+plugins=(git colored-man-pages  zsh-autosuggestions zsh-vi-mode)
 #+end_src
 * Setup Python
 ** Pyenv
@@ -148,4 +144,13 @@ alias kedaemon='eclient -e "(kill-emacs)"'
 #+begin_src shell
 alias r='ranger'
 alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
+#+end_src
+* Last commands
+#+begin_src shell
+source $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#+end_src
+
+* Source Oh-my-zsh
+#+begin_src shell
+source $ZSH/oh-my-zsh.sh
 #+end_src
