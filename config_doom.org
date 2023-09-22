@@ -354,3 +354,12 @@ sudo apt-get upgrade
 sudo apt-get pdf-tools
 M-x pdf-tools-install
 #+end_src
+* BrowseUrl
+#+begin_src emacs-lisp
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "qutebrowser")
+#+end_src
+* Set Sqlite program
+#+begin_src elisp
+(setq sql-sqlite-program "/usr/bin/sqlite3")
+#+end_src

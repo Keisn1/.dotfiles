@@ -340,4 +340,7 @@ Xtoolkit support
 - sudo apt-get install build-essential texinfo libx11-dev libxpm-dev libjpeg-dev libpng-dev libgif-dev libtiff-dev libgtk2.0-dev libncurses-dev automake autoconf
 For native compilation
 - sudo apt-get -y install libgccjit-12-dev
-
+* Install sqlite
+#+begin_src shell
+sudo apt install sqlite3
+#+end_src
