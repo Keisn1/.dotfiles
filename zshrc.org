@@ -4,6 +4,10 @@
 #+INCLUDE: "~/.dotfiles/system_info.org"
 
 
+* Export XDG_CONFIG_HOME
+#+begin_src shell
+export XDG_CONFIG_HOME="$HOME/.config"
+#+end_src
 * add to fpath
 #+begin_src shell
 fpath+=${ZDOTDIR:-~}/.zsh_functions

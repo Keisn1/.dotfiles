@@ -192,7 +192,8 @@
 
 (after! evil
   (setq evil-escape-key-sequence "fd")
-  (setq evil-escape-excluded-states '(normal multiedit emacs motion)))
+  (setq evil-escape-excluded-states '(normal multiedit emacs motion))
+  (modify-syntax-entry ?_ "w"))
 
 (setq which-key-idle-delay 0.01)
 
@@ -207,6 +208,9 @@
 ;; (setq 'dired-omit-files "\\`[.]?#\\|\\`[.][.]?\\'")
 
 (add-hook! 'inferior-python-mode-hook #'visual-line-mode)
+
+(after! python
+  (setq python-pytest-executable "python3 -m pytest"))
 
 ;; (setq doom-localleader-key ",")
 
@@ -224,8 +228,27 @@
       :localleader
       :prefix ("e" . "pipenv"))
 
+(map! :leader
+      :prefix ("j" . "harpoon")
+      "m" 'harpoon-quick-menu-hydra
+      "e" 'harpoon-toggle-quick-menu
+      "f" 'harpoon-toggle-file
+      "a" 'harpoon-add-file
+      "c" 'harpoon-clear
+      "g" 'harpoon-go-to-1
+      "h" 'harpoon-go-to-2
+      "j" 'harpoon-go-to-3
+      "k" 'harpoon-go-to-4
+      "l" 'harpoon-go-to-5
+      "k" 'harpoon-go-to-6
+      )
+
 (map!   :mode dired-mode
         :leader "f j" 'dired-jump)
+
+(map! :leader
+      :prefix "w"
+      "C-h" 'nil)
 
 (map!   :mode org-mode
         :leader "m v p" 'set-pomodoro-length)

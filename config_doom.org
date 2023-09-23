@@ -261,10 +261,13 @@
      )))
 #+end_src
 * Evil
+
 #+begin_src emacs-lisp
 (after! evil
   (setq evil-escape-key-sequence "fd")
-  (setq evil-escape-excluded-states '(normal multiedit emacs motion)))
+  (setq evil-escape-excluded-states '(normal multiedit emacs motion))
+  (modify-syntax-entry ?_ "w"))
+
 #+end_src
 * Python
 ** Init
@@ -296,6 +299,11 @@
 #+begin_src emacs-lisp
 (add-hook! 'inferior-python-mode-hook #'visual-line-mode)
 #+end_src
+** Python-pytest
+#+begin_src emacs-lisp
+(after! python
+  (setq python-pytest-executable "python3 -m pytest"))
+#+end_src
 * Keybindings
 ** General
 *** Localleader
@@ -324,10 +332,33 @@
       :localleader
       :prefix ("e" . "pipenv"))
 #+end_src
+** Harpoon
+#+begin_src emacs-lisp
+(map! :leader
+      :prefix ("j" . "harpoon")
+      "m" 'harpoon-quick-menu-hydra
+      "e" 'harpoon-toggle-quick-menu
+      "f" 'harpoon-toggle-file
+      "a" 'harpoon-add-file
+      "c" 'harpoon-clear
+      "g" 'harpoon-go-to-1
+      "h" 'harpoon-go-to-2
+      "j" 'harpoon-go-to-3
+      "k" 'harpoon-go-to-4
+      "l" 'harpoon-go-to-5
+      "k" 'harpoon-go-to-6
+      )
+#+end_src
 ** Dired
 #+begin_src emacs-lisp
 (map!   :mode dired-mode
         :leader "f j" 'dired-jump)
+#+end_src
+** Evil
+#+begin_src emacs-lisp
+(map! :leader
+      :prefix "w"
+      "C-h" 'nil)
 #+end_src
 ** Org
 *** Pomodoro
@@ -363,3 +394,4 @@ M-x pdf-tools-install
 #+begin_src elisp
 (setq sql-sqlite-program "/usr/bin/sqlite3")
 #+end_src
+adsf_asd-asdf
