@@ -129,12 +129,10 @@ keys = [
 
 
 group_names = [
-    ("DEV", {"layout": "columns"}, "d"),
-    ("WWW", {"layout": "columns"}, "i"),
-    ("ORG", {"layout": "columns"}, "o"),
-    ("SYS", {"layout": "columns"}, "s"),
-    ("VID", {"layout": "columns"}, "v"),
-    ("CHAT", {"layout": "columns"}, "c"),
+    ("Emacs", {"layout": "max"}, "e"),
+    ("Browser", {"layout": "max"}, "b"),
+    ("Terminal", {"layout": "max"}, "t"),
+    ("Chat", {"layout": "max"}, "c"),
 ]
 
 groups = [Group(name, **kwargs) for name, kwargs, _ in group_names]
@@ -488,9 +486,9 @@ def startup_once():
 
     # Set initial groups
     if len(qtile.screens) > 1:
-        qtile.groups_map["DEV"].cmd_toscreen(1, toggle=False)
-        qtile.groups_map["WWW"].cmd_toscreen(0, toggle=False)
-        qtile.groups_map["ORG"].cmd_toscreen(2, toggle=False)
+        qtile.groups_map["Emacs"].cmd_toscreen(1, toggle=False)
+        qtile.groups_map["Browser"].cmd_toscreen(0, toggle=False)
+        qtile.groups_map["Terminal"].cmd_toscreen(2, toggle=False)
 
 
 @hook.subscribe.shutdown

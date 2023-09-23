@@ -129,6 +129,10 @@ export PIPENV_VENV_IN_PROJECT=1
 #+begin_src shell
 PATH=$PATH:$HOME/.dotfiles/bin
 #+end_src
+* fzf
+#+begin_src shell
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh ]
+#+end_src
 * Aliases
 ** ls
 #+begin_src shell

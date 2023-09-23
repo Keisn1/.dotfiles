@@ -344,3 +344,12 @@ For native compilation
 #+begin_src shell
 sudo apt install sqlite3
 #+end_src
+* Install tmux
+#+begin_src shell
+sudo apt install tmux
+#+end_src
+* Install fzf
+#+begin_src shell
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+#+end_src
