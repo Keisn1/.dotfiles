@@ -95,7 +95,17 @@
   (setq org-directory "~/org-files/"))
 
 (setq org-agenda-files
-      '("~/Documents/org_files/agenda-files/Tasks.org" "~/Documents/org-files/agenda_files/Habits.org"))
+      '("~/org_files/agenda-files/Habits.org"))
+
+(setq org-tag-alist
+      '((:startgroup)
+                                        ; Put mutually exclusive tags here
+        (:endgroup)
+        ("work" . ?w)
+        ("email" . ?e)
+        ("config" . ?c)
+        ("private" . ?p)
+        ("idea" . ?i)))
 
 (defun set-pomodoro-length (minutes)
   "Set the org-pomodoro-length variable to the specified value in MINUTES."
@@ -199,7 +209,13 @@
         '(("d" "default" entry "* %<%I:%M %p>: %?"
            :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
 
-
+;; Bind this to C-c n I
+(defun org-roam-node-insert-immediate (arg &rest args)
+  (interactive "P")
+  (let ((args (cons arg args))
+        (org-roam-capture-templates (list (append (car org-roam-capture-templates)
+                                                  '(:immediate-finish t)))))
+    (apply #'org-roam-node-insert args)))
 
 (after! evil
   (setq evil-escape-key-sequence "fd")
@@ -263,6 +279,9 @@
 
 (map!   :mode org-mode
         :leader "m v p" 'set-pomodoro-length)
+
+(map!   :mode org-mode
+        :leader "n r I" 'org-roam-node-insert-immediate)
 
 (map!
         :leader "w /" 'evil-window-vsplit
