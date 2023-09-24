@@ -81,12 +81,6 @@
 (after! org
   ;; If you use `org' and don't want your org files in the default location below,
   ;; change `org-directory'. It must be set before org loads!
-  (setq org-log-done 1)
-  )
-
-(after! org
-  ;; If you use `org' and don't want your org files in the default location below,
-  ;; change `org-directory'. It must be set before org loads!
   (setq org-directory "~/org-files/")
   (setq org-roam-directory "~/org-files/roam/")
   (setq org-attach-directory "~/org-files/.attach")
@@ -95,7 +89,7 @@
   (setq org-directory "~/org-files/"))
 
 (setq org-agenda-files
-      '("~/org_files/agenda-files/Habits.org"))
+      '("~/org-files/agenda-files/Habits.org" "~/org-files/agenda-files/Tasks.org"))
 
 (setq org-tag-alist
       '((:startgroup)
@@ -106,6 +100,29 @@
         ("config" . ?c)
         ("private" . ?p)
         ("idea" . ?i)))
+
+(setq org-refile-targets
+      '(("Archive.org" :maxlevel . 1)
+        ("Tasks.org" :maxlevel . 1)))
+;; Save Org buffers after refiling!
+(advice-add 'org-refile :after #'(lambda (&rest _) (org-save-all-org-buffers)))
+;; (advice-add 'org-refile :after 'org-save-all-org-buffers)
+
+;; (setq org-agenda-start-with-log-mode t)
+(setq org-agenda-custom-commands
+      '(("d" "Dashboard"
+         ((agenda "" ((org-deadline-warning-days 7)))
+          (todo "NEXT"
+                ((org-agenda-overriding-header "Next Tasks")))
+          (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
+
+        ("n" "Next Tasks"
+         ((todo "NEXT"
+                ((org-agenda-overriding-header "Next Tasks")))))))
+
+(after! org
+  (add-to-list 'org-modules 'org-habit)
+  (setq org-agenda-show-future-repeats nil))
 
 (defun set-pomodoro-length (minutes)
   "Set the org-pomodoro-length variable to the specified value in MINUTES."
@@ -217,6 +234,24 @@
                                                   '(:immediate-finish t)))))
     (apply #'org-roam-node-insert args)))
 
+(setq org-gtd-update-ack "3.0.0")
+(use-package! org-gtd
+  :after org
+  :config
+  (setq org-edna-use-inheritance t)
+  (org-edna-mode)
+  (add-to-list 'org-gtd-organize-hooks 'org-set-effort)
+  (add-to-list 'org-gtd-organize-hooks 'org-priority)
+  (map! :leader
+        (:prefix ("d" . "org-gtd")
+         :desc "Capture"        "c"  #'org-gtd-capture
+         :desc "Engage"         "e"  #'org-gtd-engage
+         :desc "Process inbox"  "p"  #'org-gtd-process-inbox
+         :desc "Show all next"  "n"  #'org-gtd-show-all-next
+         :desc "Stuck projects" "s"  #'org-gtd-review-stuck-projects))
+  (map! :map org-gtd-clarify-map
+        :desc "Organize this item" "C-c c" #'org-gtd-organize))
+
 (after! evil
   (setq evil-escape-key-sequence "fd")
   (setq evil-escape-excluded-states '(normal multiedit emacs motion))
@@ -273,9 +308,7 @@
 (map!   :mode dired-mode
         :leader "f j" 'dired-jump)
 
-(map! :leader
-      :prefix "w"
-      "C-h" 'nil)
+
 
 (map!   :mode org-mode
         :leader "m v p" 'set-pomodoro-length)

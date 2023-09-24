@@ -122,14 +122,6 @@
 (setq doom-modeline-buffer-file-name-style 'truncate-upto-project)
 #+end_src
 * Org
-** Org-log
-#+begin_src emacs-lisp
-(after! org
-  ;; If you use `org' and don't want your org files in the default location below,
-  ;; change `org-directory'. It must be set before org loads!
-  (setq org-log-done 1)
-  )
-#+end_src
 ** Org-Directories
 #+begin_src emacs-lisp
 (after! org
@@ -146,7 +138,7 @@
 *** Agenda files
 #+begin_src emacs-lisp
 (setq org-agenda-files
-      '("~/org_files/agenda-files/Habits.org"))
+      '("~/org-files/agenda-files/Habits.org" "~/org-files/agenda-files/Tasks.org"))
 #+end_src
 *** Tags
 #+begin_src emacs-lisp
@@ -160,7 +152,35 @@
         ("private" . ?p)
         ("idea" . ?i)))
 #+end_src
+*** Refile Targets
+#+begin_src emacs-lisp
+(setq org-refile-targets
+      '(("Archive.org" :maxlevel . 1)
+        ("Tasks.org" :maxlevel . 1)))
+;; Save Org buffers after refiling!
+(advice-add 'org-refile :after #'(lambda (&rest _) (org-save-all-org-buffers)))
+;; (advice-add 'org-refile :after 'org-save-all-org-buffers)
+#+end_src
+*** Layout
+#+begin_src emacs-lisp
+;; (setq org-agenda-start-with-log-mode t)
+(setq org-agenda-custom-commands
+      '(("d" "Dashboard"
+         ((agenda "" ((org-deadline-warning-days 7)))
+          (todo "NEXT"
+                ((org-agenda-overriding-header "Next Tasks")))
+          (tags-todo "agenda/ACTIVE" ((org-agenda-overriding-header "Active Projects")))))
 
+        ("n" "Next Tasks"
+         ((todo "NEXT"
+                ((org-agenda-overriding-header "Next Tasks")))))))
+#+end_src
+
+#+begin_src emacs-lisp
+(after! org
+  (add-to-list 'org-modules 'org-habit)
+  (setq org-agenda-show-future-repeats nil))
+#+end_src
 ** Org-Pomodoro
 #+begin_src emacs-lisp
 (defun set-pomodoro-length (minutes)
@@ -303,6 +323,26 @@
     (apply #'org-roam-node-insert args)))
 #+end_src
 ***
+* Org-gtd
+#+begin_src emacs-lisp
+(setq org-gtd-update-ack "3.0.0")
+(use-package! org-gtd
+  :after org
+  :config
+  (setq org-edna-use-inheritance t)
+  (org-edna-mode)
+  (add-to-list 'org-gtd-organize-hooks 'org-set-effort)
+  (add-to-list 'org-gtd-organize-hooks 'org-priority)
+  (map! :leader
+        (:prefix ("d" . "org-gtd")
+         :desc "Capture"        "c"  #'org-gtd-capture
+         :desc "Engage"         "e"  #'org-gtd-engage
+         :desc "Process inbox"  "p"  #'org-gtd-process-inbox
+         :desc "Show all next"  "n"  #'org-gtd-show-all-next
+         :desc "Stuck projects" "s"  #'org-gtd-review-stuck-projects))
+  (map! :map org-gtd-clarify-map
+        :desc "Organize this item" "C-c c" #'org-gtd-organize))
+#+end_src
 * Evil
 
 #+begin_src emacs-lisp
@@ -399,9 +439,6 @@
 #+end_src
 ** Evil
 #+begin_src emacs-lisp
-(map! :leader
-      :prefix "w"
-      "C-h" 'nil)
 #+end_src
 ** Org
 *** Pomodoro
