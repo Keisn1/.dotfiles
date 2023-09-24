@@ -87,6 +87,11 @@
 (after! org
   ;; If you use `org' and don't want your org files in the default location below,
   ;; change `org-directory'. It must be set before org loads!
+  (setq org-directory "~/org-files/")
+  (setq org-roam-directory "~/org-files/roam/")
+  (setq org-attach-directory "~/org-files/.attach")
+  (setq +org-capture-journal-file "~/org-files/journal/journal.org")
+  (setq org-directory "~/org-files/")
   (setq org-directory "~/org-files/"))
 
 (setq org-agenda-files
@@ -157,38 +162,44 @@
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 
+(after! org
+  (setq org-roam-completion-everywhere t))
+
 (add-hook! 'org-roam-mode-hook #'org-roam-db-autosync-enable)
+
 (advice-add 'org-roam-buffer-persistent-redisplay :before
             (lambda () (remove-hook 'org-mode-hook 'display-line-numbers-mode)))
 (advice-add 'org-roam-buffer-persistent-redisplay :after
             (lambda () (add-hook 'org-mode-hook 'display-line-numbers-mode)))
 
+(after! org
+  (setq org-roam-capture-templates
+        '(("d" "default" plain "%?"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                              "#+title: ${title}\n#+date: %U\n")
+           :unnarrowed t)
+          ("y" "python" plain (file "~/.dotfiles/resources/templates/org-roam/PythonNoteTemplate.org")
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Python")
+           :unnarrowed t)
+          ("l" "programming language" plain
+           "* Characteristics\n\n- Family: %?\n- Inspired by: \n\n* Reference:\n\n"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+           :unnarrowed t)
+          ("b" "book notes" plain
+           "\n* Source\n\nAuthor: %^{Author}\nTitle: ${title}\nDate: %U\nFormat Date: %<%Y-%m-%d %H:%M>\nYear: %^{Year}\n\n* Summary\n\n%?"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+           :unnarrowed t
+           )
+          ("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Project")
+           :unnarrowed t))))
 
-(after! org-roam
-  (custom-set-variables
-   '(org-roam-directory "~/org-files/roam/")
-   '(org-roam-completion-everywhere t)
-   '(org-roam-capture-templates
-     '(("d" "default" plain
-        "Author: %^{Author} %?"
-        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-        :unnarrowed t)
-       ("y" "python" plain (file "~/.dotfiles/resources/templates/org-roam/PythonNoteTemplate.org")
-        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Python")
-        :unnarrowed t)
-       ("l" "programming language" plain
-        "* Characteristics\n\n- Family: %?\n- Inspired by: \n\n* Reference:\n\n"
-        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-        :unnarrowed t)
-       ("b" "book notes" plain
-        "\n* Source\n\nAuthor: %^{Author}\nTitle: ${title}\nDate: %U\nFormat Date: %<%Y-%m-%d %H:%M>\nYear: %^{Year}\n\n* Summary\n\n%?"
-        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-        :unnarrowed t
-        )
-       ("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
-        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Project")
-        :unnarrowed t))
-     )))
+(after! org
+  (setq org-roam-dailies-capture-templates
+        '(("d" "default" entry "* %<%I:%M %p>: %?"
+           :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
+
+
 
 (after! evil
   (setq evil-escape-key-sequence "fd")

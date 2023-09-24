@@ -130,7 +130,7 @@ keys = [
 
 group_names = [
     ("Emacs", {"layout": "max"}, "e"),
-    ("Browser", {"layout": "max"}, "b"),
+    ("Browser", {"layout": "max"}, "i"),
     ("Terminal", {"layout": "max"}, "t"),
     ("Chat", {"layout": "max"}, "c"),
 ]
@@ -260,6 +260,7 @@ if num_of_monitors == 3:
                     widget.WindowName(
                         foreground="F6F6F6",
                     ),
+                    widget.Battery(charge_char="󱐌", low_percentage=0.25),
                     widget.GenPollText(
                         func=get_datetime,
                         update_interval=1,
