@@ -85,7 +85,7 @@
   (setq org-attach-directory "~/org-files/.attach"))
 
 (setq org-agenda-files
-      '("~/org/Habits.org" "~/org/Tasks.org"))
+      '("~/org/Habits.org" "~/org/todo.org"))
 
 (setq org-tag-alist
       '((:startgroup)
@@ -99,7 +99,7 @@
 
 (setq org-refile-targets
       '(("Archive.org" :maxlevel . 1)
-        ("Tasks.org" :maxlevel . 1)))
+        ("todo.org" :maxlevel . 2)))
 ;; Save Org buffers after refiling!
 (advice-add 'org-refile :after #'(lambda (&rest _) (org-save-all-org-buffers)))
 ;; (advice-add 'org-refile :after 'org-save-all-org-buffers)
