@@ -81,15 +81,11 @@
 (after! org
   ;; If you use `org' and don't want your org files in the default location below,
   ;; change `org-directory'. It must be set before org loads!
-  (setq org-directory "~/org-files/")
-  (setq org-roam-directory "~/org-files/roam/")
-  (setq org-attach-directory "~/org-files/.attach")
-  (setq +org-capture-journal-file "~/org-files/journal/journal.org")
-  (setq org-directory "~/org-files/")
-  (setq org-directory "~/org-files/"))
+  (setq org-directory "~/org/")
+  (setq org-attach-directory "~/org-files/.attach"))
 
 (setq org-agenda-files
-      '("~/org-files/agenda-files/Habits.org" "~/org-files/agenda-files/Tasks.org"))
+      '("~/org/Habits.org" "~/org/Tasks.org"))
 
 (setq org-tag-alist
       '((:startgroup)
@@ -123,6 +119,8 @@
 (after! org
   (add-to-list 'org-modules 'org-habit)
   (setq org-agenda-show-future-repeats nil))
+
+;; (setq +org-capture-todo-file)
 
 (defun set-pomodoro-length (minutes)
   "Set the org-pomodoro-length variable to the specified value in MINUTES."
@@ -189,6 +187,8 @@
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 
+(setq org-roam-directory "~/roam/")
+
 (after! org
   (setq org-roam-completion-everywhere t))
 
@@ -240,6 +240,7 @@
   :config
   (setq org-edna-use-inheritance t)
   (org-edna-mode)
+  (setq org-gtd-directory "~/gtd")
   (add-to-list 'org-gtd-organize-hooks 'org-set-effort)
   (add-to-list 'org-gtd-organize-hooks 'org-priority)
   (map! :leader
@@ -351,3 +352,6 @@ information retrieved from files created by the keychain script."
 
 ;;; _
 (provide 'keychain-environment)
+
+(after! rust
+  (setq lsp-rust-server 'rust-analyzer))
