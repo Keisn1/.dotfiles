@@ -31,8 +31,8 @@
 ;; they are implemented.
 
 (if (string= system-type "darwin")
- (setq mac-option-modifier 'super)
- (setq mac-command-modifier 'meta))
+    (setq mac-option-modifier 'super)
+  (setq mac-command-modifier 'meta))
 
 (setq doom-private-dir "/home/kaypro/.dotfiles/")
 
@@ -46,18 +46,18 @@
 
 (if (string= (system-name) "kaypro-MacBookPro")
     (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 19)
-      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 27)
-      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 40)))
+          doom-variable-pitch-font (font-spec :family "Ubuntu" :size 27)
+          doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 40)))
 
 (if (string= (system-name) "Kays-Mac-mini.local")
     (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15)
-      doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 15)
-      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 40)))
+          doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 15)
+          doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 40)))
 
 (if (string= (system-name) "kaypro-UX330UAK")
     (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 20)
-      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 20)
-      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 24)))
+          doom-variable-pitch-font (font-spec :family "Ubuntu" :size 20)
+          doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 24)))
 
 (custom-set-faces!
   '(font-lock-comment-face :slant italic)
@@ -128,31 +128,29 @@
   (setq org-pomodoro-length minutes)
   (message "org-pomodoro-length set to %d minutes." minutes))
 
-(custom-set-variables
- '(org-enable-notification t)
- '(org-pomodoro-manual-break t)
-
- '(org-pomodoro-start-sound-p t)
- '(org-pomodoro-start-sound
-   "~/.dotfiles/resources/sounds/pomodoro/achievement.wav")
- '(org-pomodoro-finished-sound-p t)
- '(org-pomodoro-finished-sound
-   "~/.dotfiles/resources/sounds/pomodoro/arcade-score-interface.wav")
- '(org-pomodoro-killed-sound-p t)
- '(org-pomodoro-killed-sound
-   "~/.dotfiles/resources/sounds/pomodoro/alert-bells-echo.wav")
- '(org-pomodoro-short-break-sound-p t)
- '(org-pomodoro-short-break-sound
-   "~/.dotfiles/resources/sounds/pomodoro/attention-bell-ring.wav")
- '(org-pomodoro-long-break-sound-p t)
- '(org-pomodoro-long-break-sound
-   "~/.dotfiles/resources/sounds/pomodoro/bell-gentle-alarm.wav")
- '(org-pomodoro-overtime-sound-p t)
- '(org-pomodoro-overtime-sound
-   "~/.dotfiles/resources/sounds/pomodoro/airport.wav")
- '(org-pomodoro-ticking-sound-p t)
- '(org-pomodoro-ticking-sound
-   "~/.dotfiles/resources/sounds/pomodoro/tick.wav"))
+(setq org-enable-notification t)
+(setq org-pomodoro-manual-break t)
+(setq org-pomodoro-start-sound-p t)
+(setq org-pomodoro-start-sound
+      "~/.dotfiles/resources/sounds/pomodoro/achievement.wav")
+(setq org-pomodoro-finished-sound-p t)
+(setq org-pomodoro-finished-sound
+      "~/.dotfiles/resources/sounds/pomodoro/arcade-score-interface.wav")
+(setq org-pomodoro-killed-sound-p t)
+(setq org-pomodoro-killed-sound
+      "~/.dotfiles/resources/sounds/pomodoro/alert-bells-echo.wav")
+(setq org-pomodoro-short-break-sound-p t)
+(setq org-pomodoro-short-break-sound
+      "~/.dotfiles/resources/sounds/pomodoro/attention-bell-ding.wav")
+(setq org-pomodoro-long-break-sound-p t)
+(setq org-pomodoro-long-break-sound
+      "~/.dotfiles/resources/sounds/pomodoro/bell-gentle-alarm.wav")
+(setq org-pomodoro-overtime-sound-p t)
+(setq org-pomodoro-overtime-sound
+      "~/.dotfiles/resources/sounds/pomodoro/airport.wav")
+(setq org-pomodoro-ticking-sound-p t)
+(setq org-pomodoro-ticking-sound
+      "~/.dotfiles/resources/sounds/pomodoro/tick.wav")
 
 (after! org
   (require 'org-tempo)
@@ -175,15 +173,15 @@
 
 (defun efs/org-babel-tangle-config ()
   (if (or
-      (string-equal (buffer-file-name)
-                      (expand-file-name "~/.dotfiles/config_doom.org"))
-      (string-equal (buffer-file-name)
-                      (expand-file-name "~/.dotfiles/zshrc.org"))
-      (string-equal (buffer-file-name)
-                      (expand-file-name "~/.dotfiles/ubuntu_setup.org")))
-    ;; dynamic scoping to the rescue
-    (let ((org-confirm-babel-evaluate nil))
-      (org-babel-tangle))))
+       (string-equal (buffer-file-name)
+                     (expand-file-name "~/.dotfiles/config_doom.org"))
+       (string-equal (buffer-file-name)
+                     (expand-file-name "~/.dotfiles/zshrc.org"))
+       (string-equal (buffer-file-name)
+                     (expand-file-name "~/.dotfiles/ubuntu_setup.org")))
+      ;; dynamic scoping to the rescue
+      (let ((org-confirm-babel-evaluate nil))
+        (org-babel-tangle))))
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 
@@ -239,8 +237,9 @@
   :after org
   :config
   (setq org-edna-use-inheritance t)
-  (org-edna-mode)
   (setq org-gtd-directory "~/gtd")
+  (setq org-gtd-engage-prefix-width 20)
+  (org-edna-mode)
   (add-to-list 'org-gtd-organize-hooks 'org-set-effort)
   (add-to-list 'org-gtd-organize-hooks 'org-priority)
   (map! :leader
@@ -278,13 +277,13 @@
 ;; (setq doom-localleader-key ",")
 
 (map!
-        :leader :desc "M-x" "SPC" 'execute-extended-command)
+ :leader :desc "M-x" "SPC" 'execute-extended-command)
 
 (map!
-        :leader :desc "Shell-command" "!" 'shell-command)
+ :leader :desc "Shell-command" "!" 'shell-command)
 
 (map!
-        "M-y" 'consult-yank-from-kill-ring)
+ "M-y" 'consult-yank-from-kill-ring)
 
 (map! :after python
       :map python-mode-map
@@ -318,12 +317,13 @@
         :leader "n r I" 'org-roam-node-insert-immediate)
 
 (map!
-        :leader "w /" 'evil-window-vsplit
-        :leader "w -" 'evil-window-split
-        :map evil-window-map "c-n" #'which-key-show-next-page-cycle)
+ :leader "w /" 'evil-window-vsplit
+ :leader "w -" 'evil-window-split
+ :map evil-window-map "c-n" #'which-key-show-next-page-cycle)
 
 (map!
-        :leader :desc "doom dashboard" "b h" '+doom-dashboard/open)
+ :leader :desc "buffer new window" "b w" 'switch-to-buffer-other-window
+ :leader :desc "doom dashboard" "b h" '+doom-dashboard/open)
 
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "qutebrowser")

@@ -1,0 +1,6 @@
+# key: figure
+# name: <figure>...</figure>
+# --
+<figure>
+  $0
+</figure>
