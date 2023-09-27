@@ -1,0 +1,18 @@
+#+title: Crafted Emacs Config
+#+STARTUP: overview
+#+PROPERTY: header-args:emacs-lisp :tangle ~/.dotfiles/.config/crafted-emacs-config/config.el
+
+#+begin_src emacs-lisp
+(require 'crafted-evil)
+(require 'crafted-defaults)
+(require 'crafted-completion)
+(require 'crafted-editing)
+(require 'crafted-ide)
+(require 'crafted-org)
+(require 'crafted-pdf-reader)
+(require 'crafted-project)
+(require 'crafted-python)
+(require 'crafted-startup)
+(require 'crafted-windows)
+(require 'crafted-workspaces)
+#+end_src
