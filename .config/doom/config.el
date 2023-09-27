@@ -31,8 +31,8 @@
 ;; they are implemented.
 
 (if (string= system-type "darwin")
-    (setq mac-option-modifier 'super)
-  (setq mac-command-modifier 'meta))
+ (setq mac-option-modifier 'super)
+ (setq mac-command-modifier 'meta))
 
 (setq doom-private-dir "/home/kaypro/.dotfiles/")
 
@@ -46,18 +46,18 @@
 
 (if (string= (system-name) "kaypro-MacBookPro")
     (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 19)
-          doom-variable-pitch-font (font-spec :family "Ubuntu" :size 27)
-          doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 40)))
+      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 27)
+      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 40)))
 
 (if (string= (system-name) "Kays-Mac-mini.local")
     (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15)
-          doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 15)
-          doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 40)))
+      doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 15)
+      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 40)))
 
 (if (string= (system-name) "kaypro-UX330UAK")
     (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 20)
-          doom-variable-pitch-font (font-spec :family "Ubuntu" :size 20)
-          doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 24)))
+      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 20)
+      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 24)))
 
 (custom-set-faces!
   '(font-lock-comment-face :slant italic)
@@ -173,15 +173,15 @@
 
 (defun efs/org-babel-tangle-config ()
   (if (or
-       (string-equal (buffer-file-name)
-                     (expand-file-name "~/.dotfiles/config_doom.org"))
-       (string-equal (buffer-file-name)
-                     (expand-file-name "~/.dotfiles/zshrc.org"))
-       (string-equal (buffer-file-name)
-                     (expand-file-name "~/.dotfiles/ubuntu_setup.org")))
-      ;; dynamic scoping to the rescue
-      (let ((org-confirm-babel-evaluate nil))
-        (org-babel-tangle))))
+      (string-equal (buffer-file-name)
+                      (expand-file-name "~/.dotfiles/config_doom.org"))
+      (string-equal (buffer-file-name)
+                      (expand-file-name "~/.dotfiles/zshrc.org"))
+      (string-equal (buffer-file-name)
+                      (expand-file-name "~/.dotfiles/ubuntu_setup.org")))
+    ;; dynamic scoping to the rescue
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 
@@ -277,13 +277,13 @@
 ;; (setq doom-localleader-key ",")
 
 (map!
- :leader :desc "M-x" "SPC" 'execute-extended-command)
+        :leader :desc "M-x" "SPC" 'execute-extended-command)
 
 (map!
- :leader :desc "Shell-command" "!" 'shell-command)
+        :leader :desc "Shell-command" "!" 'shell-command)
 
 (map!
- "M-y" 'consult-yank-from-kill-ring)
+        "M-y" 'consult-yank-from-kill-ring)
 
 (map! :after python
       :map python-mode-map
@@ -317,9 +317,9 @@
         :leader "n r I" 'org-roam-node-insert-immediate)
 
 (map!
- :leader "w /" 'evil-window-vsplit
- :leader "w -" 'evil-window-split
- :map evil-window-map "c-n" #'which-key-show-next-page-cycle)
+        :leader "w /" 'evil-window-vsplit
+        :leader "w -" 'evil-window-split
+        :map evil-window-map "c-n" #'which-key-show-next-page-cycle)
 
 (map!
  :leader :desc "buffer new window" "b w" 'switch-to-buffer-other-window
@@ -355,3 +355,49 @@ information retrieved from files created by the keychain script."
 
 (after! rust
   (setq lsp-rust-server 'rust-analyzer))
+
+;; (use-package ement
+;;   :ensure t
+;;   :custom
+;;   (ement-room-images t)
+;;   (ement-room-prism 'both)
+;;   )
+
+;; (ement-connect :uri-prefix "http://localhost:8009")
+
+;; (use-package burly
+;;   :ensure t)
+
+;; Thanks alphapapa!
+;; (cl-defun ap/display-buffer-in-side-window (&optional (buffer (current-buffer))
+;;                                                       &key (side 'right) (slot 0))
+;;   "Display BUFFER in dedicated side window.
+;; With universal prefix, use left SIDE instead of right.  With two
+;; universal prefixes, prompt for side and slot (which allows
+;; setting up an IDE-like layout)."
+;;   (interactive (list (current-buffer)
+;;                      :side (pcase current-prefix-arg
+;;                              ('nil 'right)
+;;                              ('(0) left)
+;;                              (_ (intern (completing-read "Side: " '(left right top bottom) nil t))))
+;;                      :slot (pcase current-prefix-arg
+;;                              ('nil 0)
+;;                              ('(0) 0)
+;;                              (_ (read-number "Slot: ")))))
+;;   (let ((display-buffer-mark-dedicated t))
+;;     (display-buffer buffer
+;;                     `(display-buffer-in-side-window
+;;                       (side . ,side)
+;;                       (slot . ,slot)
+;;                       (window-parameters
+;;                        (no-delete-other-windows . t))))))
+;; (setf use-default-font-for-symbols nil)
+;; (set-fontset-font t 'unicode "Noto Emoji" nil 'append)
+
+;; (defun first-graphical-frame-hook-function ()
+;;   (remove-hook 'focus-in-hook #'first-graphical-frame-hook-function)
+;;   (provide 'ement))
+;; (add-hook 'focus-in-hook #'first-graphical-frame-hook-function)
+
+;; (with-eval-after-load 'ement
+;;   (setq svg-lib-style-default (svg-lib-style-compute-default))) ;
