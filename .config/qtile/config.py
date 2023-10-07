@@ -125,6 +125,9 @@ keys = [
     Key([mod], "1", lazy.to_screen(1), desc="left screen"),
     Key([mod], "2", lazy.to_screen(0), desc="middle screen"),
     Key([mod], "3", lazy.to_screen(2), desc="right screen"),
+    # volume control
+    Key([mod], "u", lazy.widget["volume"].increase_vol()),
+    Key([mod], "d", lazy.widget["volume"].decrease_vol()),
 ]
 
 
@@ -260,7 +263,12 @@ if num_of_monitors == 3:
                     widget.WindowName(
                         foreground="F6F6F6",
                     ),
-                    widget.Battery(charge_char="󱐌", low_percentage=0.25),
+                    widget.Volume(),
+                    widget.Battery(
+                        charge_char="󱐌",
+                        low_percentage=0.25,
+                        format="{char} {percent:2.0%} {hour:d}:{min:02d}",
+                    ),
                     widget.GenPollText(
                         func=get_datetime,
                         update_interval=1,

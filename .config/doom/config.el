@@ -122,6 +122,8 @@
 
 ;; (setq +org-capture-todo-file)
 
+(setq org-clock-string-limit 11)
+
 (defun set-pomodoro-length (minutes)
   "Set the org-pomodoro-length variable to the specified value in MINUTES."
   (interactive "nEnter pomodoro length in minutes: ")
@@ -155,7 +157,8 @@
 (after! org
   (require 'org-tempo)
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-  (add-to-list 'org-structure-template-alist '("p" . "src python"))
+  (add-to-list 'org-structure-template-alist '("p" . "src python :results output"))
+  (add-to-list 'org-structure-template-alist '("sc" . "src c"))
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (setq org-hide-emphasis-markers t)
   )
@@ -211,7 +214,7 @@
   (setq org-roam-capture-templates
         '(("d" "default" plain "%?"
            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                              "#+title: ${title}\n#+date: %U\n")
+                              "#+title: ${title}\n#+date: %U\n#+startup: overview\n")
            :unnarrowed t)
           ("y" "python" plain (file "~/.dotfiles/resources/templates/org-roam/PythonNoteTemplate.org")
            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Python")
@@ -242,6 +245,21 @@
                                                   '(:immediate-finish t)))))
     (apply #'org-roam-node-insert args)))
 
+(use-package! websocket
+    :after org-roam)
+
+(use-package! org-roam-ui
+    :after org-roam ;; or :after org
+;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+;;         a hookable mode anymore, you're advised to pick something yourself
+;;         if you don't care about startup time, use
+;;  :hook (after-init . org-roam-ui-mode)
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))
+
 (setq org-gtd-update-ack "3.0.0")
 (use-package! org-gtd
   :after org
@@ -264,8 +282,11 @@
 
 (after! evil
   (setq evil-escape-key-sequence "fd")
-  (setq evil-escape-excluded-states '(normal multiedit emacs motion))
-  (modify-syntax-entry ?_ "w"))
+  (setq evil-escape-excluded-states '(normal multiedit emacs motion)))
+;; (modify-syntax-entry ?_ "w"))
+
+;; (after! lsp-mode
+;;   (setq c-basic-offset 4))
 
 (setq which-key-idle-delay 0.01)
 
@@ -300,6 +321,11 @@
       :localleader
       :prefix ("e" . "pipenv"))
 
+(map! :after python
+      :map python-mode-map
+      :localleader
+      :desc "pytest all" "t a" #'python-pytest)
+
 (map! :leader
       :prefix ("j" . "harpoon")
       "m" 'harpoon-quick-menu-hydra
@@ -312,7 +338,7 @@
       "j" 'harpoon-go-to-3
       "k" 'harpoon-go-to-4
       "l" 'harpoon-go-to-5
-      "k" 'harpoon-go-to-6
+      ";" 'harpoon-go-to-6
       )
 
 (map!   :mode dired-mode
@@ -366,44 +392,6 @@ information retrieved from files created by the keychain script."
 (after! rust
   (setq lsp-rust-server 'rust-analyzer))
 
-;; (use-package ement
-;;   :ensure t
-;;   :custom
-;;   (ement-room-images t)
-;;   (ement-room-prism 'both)
-;;   )
-
-;; (ement-connect :uri-prefix "http://localhost:8009")
-
-;; (use-package burly
-;;   :ensure t)
-
-;; Thanks alphapapa!
-;; (cl-defun ap/display-buffer-in-side-window (&optional (buffer (current-buffer))
-;;                                                       &key (side 'right) (slot 0))
-;;   "Display BUFFER in dedicated side window.
-;; With universal prefix, use left SIDE instead of right.  With two
-;; universal prefixes, prompt for side and slot (which allows
-;; setting up an IDE-like layout)."
-;;   (interactive (list (current-buffer)
-;;                      :side (pcase current-prefix-arg
-;;                              ('nil 'right)
-;;                              ('(0) left)
-;;                              (_ (intern (completing-read "Side: " '(left right top bottom) nil t))))
-;;                      :slot (pcase current-prefix-arg
-;;                              ('nil 0)
-;;                              ('(0) 0)
-;;                              (_ (read-number "Slot: ")))))
-;;   (let ((display-buffer-mark-dedicated t))
-;;     (display-buffer buffer
-;;                     `(display-buffer-in-side-window
-;;                       (side . ,side)
-;;                       (slot . ,slot)
-;;                       (window-parameters
-;;                        (no-delete-other-windows . t))))))
-;; (setf use-default-font-for-symbols nil)
-;; (set-fontset-font t 'unicode "Noto Emoji" nil 'append)
-
 ;; (defun first-graphical-frame-hook-function ()
 ;;   (remove-hook 'focus-in-hook #'first-graphical-frame-hook-function)
 ;;   (provide 'ement))
@@ -411,3 +399,18 @@ information retrieved from files created by the keychain script."
 
 ;; (with-eval-after-load 'ement
 ;;   (setq svg-lib-style-default (svg-lib-style-compute-default))) ;
+
+
+;; (setf use-default-font-for-symbols nil)
+;; (set-fontset-font t 'unicode "Noto Emoji" nil 'append)
+
+;; (use-package ement
+;;   :ensure t
+;;   :custom
+;;   (ement-room-images t)
+;;   (ement-room-prism 'both))
+  ;; (ement-connect :uri-prefix "keisn:matrix.org")
+
+(add-hook 'html-mode-hook 'skewer-html-mode)
+(add-hook 'js2-mode-hook 'skewer-mode)
+(add-hook 'css-mode-hook 'skewer-css-mode)
