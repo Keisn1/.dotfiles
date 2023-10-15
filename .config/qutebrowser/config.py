@@ -234,3 +234,5 @@ config.set(
         "de_wiki": "https://de.wikipedia.org/wiki/{}",
     },
 )
+
+config.set("content.autoplay", False)

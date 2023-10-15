@@ -18,7 +18,16 @@
 (package! org-roam-ui)
 (package! impatient-mode)
 (package! command-log-mode)
-
+;; (package! company-tabnine)
+(package! copilot
+  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
+(package! exec-path-from-shell)
+(package! eglot-java)
+(package! go-mode)
+(package! go-gen-test)
+(package! gorepl-mode)
+(package! gorepl-mode)
+(package! go-playground)
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
 ;; https://github.com/radian-software/straight.el#the-recipe-format

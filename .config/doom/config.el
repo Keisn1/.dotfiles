@@ -81,11 +81,11 @@
 (after! org
   ;; If you use `org' and don't want your org files in the default location below,
   ;; change `org-directory'. It must be set before org loads!
-  (setq org-directory "~/org/")
-  (setq org-attach-directory "~/org-files/.attach"))
+  (setq org-directory "~/org-files/org/")
+  (setq org-attach-directory "~/org-files/org/.attach"))
 
 (setq org-agenda-files
-      '("~/org/Habits.org" "~/org/todo.org"))
+      '("~/org-files/agenda-files/Habits.org" "~/org-files/agenda-files/todo.org"))
 
 (setq org-tag-alist
       '((:startgroup)
@@ -98,8 +98,8 @@
         ("idea" . ?i)))
 
 (setq org-refile-targets
-      '(("Archive.org" :maxlevel . 1)
-        ("todo.org" :maxlevel . 2)))
+      '(("~/org-files/agenda-files/Archive.org" :maxlevel . 1)
+        ("~/org-files/agenda-files/todo.org" :maxlevel . 2)))
 ;; Save Org buffers after refiling!
 (advice-add 'org-refile :after #'(lambda (&rest _) (org-save-all-org-buffers)))
 ;; (advice-add 'org-refile :after 'org-save-all-org-buffers)
@@ -157,7 +157,7 @@
 (after! org
   (require 'org-tempo)
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-  (add-to-list 'org-structure-template-alist '("p" . "src python :results output"))
+  (add-to-list 'org-structure-template-alist '("p" . "src python-ts :results output"))
   (add-to-list 'org-structure-template-alist '("sc" . "src c"))
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (setq org-hide-emphasis-markers t)
@@ -198,7 +198,7 @@
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 
-(setq org-roam-directory "~/roam/")
+(setq org-roam-directory "~/org-files/roam/")
 
 (after! org
   (setq org-roam-completion-everywhere t))
@@ -265,7 +265,7 @@
   :after org
   :config
   (setq org-edna-use-inheritance t)
-  (setq org-gtd-directory "~/gtd")
+  (setq org-gtd-directory "~/org-files/gtd")
   (setq org-gtd-engage-prefix-width 20)
   (org-edna-mode)
   (add-to-list 'org-gtd-organize-hooks 'org-set-effort)
@@ -280,15 +280,66 @@
   (map! :map org-gtd-clarify-map
         :desc "Organize this item" "C-c c" #'org-gtd-organize))
 
+;; (setq projectile-ignored-projects '(".git" "~/org-files/roam/"))
+;; (setq projectile-ignored-projects '("~/org-files/roam/"))
+;; (setq projectile-track-known-projects-automatically nil)
+;; (setq projectile-auto-discover nil)
+;; (setq projectile-project-root-functions
+;;       '(projectile-root-local
+;;         projectile-root-marked
+;;         projectile-root-top-down
+;;         projectile-root-top-down-recurring
+;;         projectile-root-bottom-up))
+
 (after! evil
   (setq evil-escape-key-sequence "fd")
   (setq evil-escape-excluded-states '(normal multiedit emacs motion)))
 ;; (modify-syntax-entry ?_ "w"))
 
+(add-hook 'c-mode-hook 'eglot-ensure)
+(setq c-basic-offset 4)
 ;; (after! lsp-mode
 ;;   (setq c-basic-offset 4))
 
-(setq which-key-idle-delay 0.01)
+(setq treesit-language-source-alist
+   '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+     (c "https://github.com/tree-sitter/tree-sitter-c")
+     (cmake "https://github.com/uyha/tree-sitter-cmake")
+     (css "https://github.com/tree-sitter/tree-sitter-css")
+     (docker "https://github.com/tree-sitter/tree-sitter-docker")
+     (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+     (go "https://github.com/tree-sitter/tree-sitter-go")
+     (gomod "https://github.com/camdencheek/tree-sitter-go-mod.git")
+     (html "https://github.com/tree-sitter/tree-sitter-html")
+     (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+     (json "https://github.com/tree-sitter/tree-sitter-json")
+     (make "https://github.com/alemuller/tree-sitter-make")
+     (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+     (python "https://github.com/tree-sitter/tree-sitter-python")
+     (rust "https://github.com/tree-sitter/rust-tree-sitter")
+     (toml "https://github.com/tree-sitter/tree-sitter-toml")
+     (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+     (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+     (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile.git")
+     (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+
+;; (add-to-list 'exec-path "/home/kaypro/go/bin" )
+;; (add-to-list 'exec-path "/usr/local/go/bin" )
+(exec-path-from-shell-initialize)
+(after! eglot
+(add-hook 'go-mode-hook 'eglot-ensure))
+
+(add-hook 'java-mode-hook 'eglot-java-mode)
+
+;; (add-hook 'java-mode-hook 'eglot-ensure)
+
+(defun my/disable-scroll-bars (frame)
+  (modify-frame-parameters frame
+                           '((vertical-scroll-bars . nil)
+                             (horizontal-scroll-bars . nil))))
+(add-hook 'after-make-frame-functions 'my/disable-scroll-bars)
+
+(setq which-key-idle-delay 0.001)
 
 (add-hook! 'dired-mode-hook #'nerd-icons-dired-mode)
 
@@ -304,6 +355,43 @@
 
 (after! python
   (setq python-pytest-executable "python3 -m pytest"))
+
+(add-hook 'python-mode-hook 'eglot-ensure)
+
+;; (copy-keymap python-mode-map)           ;
+(setq major-mode-remap-alist
+      '((python-mode . python-ts-mode)))
+(dolist (hook python-mode-hook)
+  (add-hook 'python-ts-mode-hook hook))
+
+(add-hook 'python-ts-mode-hook (lambda () (yas-activate-extra-mode 'python-mode)))
+
+(after! python
+  (set-keymap-parent python-ts-mode-map python-mode-map))
+(map! :after python
+      :map python-ts-mode-map
+      :localleader
+      :prefix ("e" . "pipenv")
+      :prefix ("i" . "import")
+      :prefix ("t" . "test"))
+
+
+
+;; accept completion from copilot and fallback to company
+(use-package! copilot
+  :hook (prog-mode . copilot-mode))
+;; (map! :after copilot
+;;       "C-x j" 'copilot-accept-completion
+;;       "C-x l" 'copilot-accept-completion-by-word)
+(map! :map company-active-map
+      "C-SPC" nil
+      )
+(map! :map evil-insert-state-map
+      "C-SPC j" 'copilot-accept-completion
+      "C-SPC l" 'copilot-accept-completion-by-word)
+  ;; :bind (:map copilot-completion-map
+  ;;             (:leader "c u" . 'copilot-accept-completion)
+  ;;             (:leader "c y" . 'copilot-accept-completion-by-word)))
 
 ;; (setq doom-localleader-key ",")
 
@@ -346,8 +434,12 @@
 
 
 
-(map!   :mode org-mode
-        :leader "m v p" 'set-pomodoro-length)
+;; (map! :after python
+;;       :map python-mode-map
+;;       :localleader
+;;       :prefix ("e" . "pipenv"))
+(map!   :map org-mode-map
+        :localleader "v p" 'set-pomodoro-length)
 
 (map!   :mode org-mode
         :leader "n r I" 'org-roam-node-insert-immediate)
@@ -414,3 +506,9 @@ information retrieved from files created by the keychain script."
 (add-hook 'html-mode-hook 'skewer-html-mode)
 (add-hook 'js2-mode-hook 'skewer-mode)
 (add-hook 'css-mode-hook 'skewer-css-mode)
+
+(after! eglot
+(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd-16"))
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+)

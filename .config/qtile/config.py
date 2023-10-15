@@ -133,6 +133,7 @@ keys = [
 
 group_names = [
     ("Emacs", {"layout": "max"}, "e"),
+    ("Org", {"layout": "max"}, "o"),
     ("Browser", {"layout": "max"}, "i"),
     ("Terminal", {"layout": "max"}, "t"),
     ("Chat", {"layout": "max"}, "c"),

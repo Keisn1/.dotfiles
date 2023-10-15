@@ -135,7 +135,31 @@ PATH=$PATH:$HOME/.dotfiles/bin
 #+end_src
 * fzf
 #+begin_src shell
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh ]
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#+end_src
+* jdtls
+#+begin_src shell
+export CLASSPATH=$CLASSPATH:$HOME/.config/jdtls/bin/jdtls
+#+end_src
+* Go
+#+begin_src shell
+export PATH=$PATH:/usr/local/go/bin
+#+end_src
+** gopls
+#+begin_src shell
+export PATH=$PATH:$(go env GOPATH)/bin
+#+end_src
+* Gradle
+#+begin_src shell
+export PATH=$PATH:/opt/gradle/gradle-8.4/bin
+#+end_src
+* IntelliJ
+#+begin_src shell
+export PATH=$PATH:/opt/intelliJ/idea-IC-232.10072.27/bin
+#+end_src
+* Hook direnv
+#+begin_src shell
+eval "$(direnv hook zsh)"
 #+end_src
 * Aliases
 ** ls
@@ -153,6 +177,12 @@ alias kedaemon='eclient -e "(kill-emacs)"'
 alias r='ranger'
 alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 #+end_src
+** docker
+#+begin_src shell
+alias dps='docker ps'
+alias dpsa='docker ps -a'
+alias dst='docker stop'
+#+end_src
 * Last commands
 #+begin_src shell
 source $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -161,4 +191,8 @@ source $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highli
 * Source Oh-my-zsh
 #+begin_src shell
 source $ZSH/oh-my-zsh.sh
+#+end_src
+* tmuxing
+#+begin_src shell
+tmux
 #+end_src
