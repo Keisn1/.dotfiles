@@ -194,5 +194,5 @@ source $ZSH/oh-my-zsh.sh
 #+end_src
 * tmuxing
 #+begin_src shell
-tmux
+# tmux
 #+end_src

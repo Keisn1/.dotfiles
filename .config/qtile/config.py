@@ -49,6 +49,8 @@ if hostname == "kaypro-UX330UAK":
 st = subprocess.check_output(["xrandr", "--listactivemonitors"], encoding="UTF-8")
 num_of_monitors = int(st.split("\n")[0][-1])
 
+if num_of_monitors == 1:
+    subprocess.run(["xrandr", "--output", "eDP-1", "--mode", "1920x1080"])
 if num_of_monitors == 3:
     subprocess.run(["xrandr", "--output", "DP-2", "--rotate", "left"])
     subprocess.run(["xrandr", "--output", "DP-1-1", "--primary", "--mode", "1920x1080"])
@@ -174,7 +176,7 @@ for i, (name, _, key) in enumerate(group_names, 1):
 layout_theme = {
     "border_focus": "#c792ea",
     "border_normal": "#4c566a",
-    "border_width": 2,
+    "border_width": 0,
     "margin_on_single": 4,
     "margin": 4,
 }

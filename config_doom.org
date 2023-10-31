@@ -58,7 +58,7 @@
 ** Themes
 - choosing theme
 #+begin_src emacs-lisp
-(setq doom-theme 'doom-dracula)
+(setq doom-theme 'kaolin-aurora)
 #+end_src
 - enabling bold and italic for the theme but may not be necessary
 #+begin_src emacs-lisp :tangle no
@@ -77,7 +77,7 @@
 (if (string= (system-name) "kaypro-MacBookPro")
     (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 19)
       doom-variable-pitch-font (font-spec :family "Ubuntu" :size 27)
-      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 40)))
+      doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 30)))
 
 (if (string= (system-name) "Kays-Mac-mini.local")
     (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15)
