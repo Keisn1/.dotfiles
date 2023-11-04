@@ -98,7 +98,7 @@
         ("idea" . ?i)))
 
 (setq org-refile-targets
-      '(("~/org-files/agenda-files/Archive.org" :maxlevel . 1)
+      '(("~/org-files/agenda-files/Archive.org" :maxlevel . 2)
         ("~/org-files/agenda-files/todo.org" :maxlevel . 2)))
 ;; Save Org buffers after refiling!
 (advice-add 'org-refile :after #'(lambda (&rest _) (org-save-all-org-buffers)))
@@ -268,7 +268,8 @@
   (setq org-gtd-directory "~/org-files/gtd")
   (setq org-gtd-engage-prefix-width 20)
   (org-edna-mode)
-  (add-to-list 'org-gtd-organize-hooks 'org-set-effort)
+  (org-gtd-mode)
+  ;; (add-to-list 'org-gtd-organize-hooks 'org-set-effort)
   (add-to-list 'org-gtd-organize-hooks 'org-priority)
   (map! :leader
         (:prefix ("d" . "org-gtd")
@@ -290,6 +291,9 @@
 ;;         projectile-root-top-down
 ;;         projectile-root-top-down-recurring
 ;;         projectile-root-bottom-up))
+
+(map! :leader
+      "b a" 'switch-to-buffer)
 
 (after! evil
   (setq evil-escape-key-sequence "fd")
@@ -316,7 +320,7 @@
      (make "https://github.com/alemuller/tree-sitter-make")
      (markdown "https://github.com/ikatyang/tree-sitter-markdown")
      (python "https://github.com/tree-sitter/tree-sitter-python")
-     (rust "https://github.com/tree-sitter/rust-tree-sitter")
+     (rust "https://github.com/tree-sitter/tree-sitter-rust")
      (toml "https://github.com/tree-sitter/tree-sitter-toml")
      (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
      (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
@@ -326,8 +330,11 @@
 ;; (add-to-list 'exec-path "/home/kaypro/go/bin" )
 ;; (add-to-list 'exec-path "/usr/local/go/bin" )
 (exec-path-from-shell-initialize)
+(add-hook 'go-ts-mode-hook
+          (lambda ()
+            (setq compile-command "go build")))
 (after! eglot
-(add-hook 'go-mode-hook 'eglot-ensure))
+  (add-hook 'go-mode-hook 'eglot-ensure))
 
 (add-hook 'java-mode-hook 'eglot-java-mode)
 
@@ -483,6 +490,9 @@ information retrieved from files created by the keychain script."
 
 (after! rust
   (setq lsp-rust-server 'rust-analyzer))
+(after! eglot
+  (add-hook 'rust-mode-hook 'eglot-ensure)
+)
 
 ;; (defun first-graphical-frame-hook-function ()
 ;;   (remove-hook 'focus-in-hook #'first-graphical-frame-hook-function)

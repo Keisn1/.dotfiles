@@ -26,7 +26,7 @@
 (package! go-mode)
 (package! go-gen-test)
 (package! gorepl-mode)
-(package! gorepl-mode)
+(package! ob-go)
 (package! go-playground)
 (package! kaolin-themes)
 ;; To install a package directly from a remote git repo, you must specify a
