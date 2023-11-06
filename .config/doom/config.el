@@ -297,6 +297,7 @@
 
 (after! evil
   (setq evil-escape-key-sequence "fd")
+  (setq evil-escape-delay 0.15)
   (setq evil-escape-excluded-states '(normal multiedit emacs motion)))
 ;; (modify-syntax-entry ?_ "w"))
 
