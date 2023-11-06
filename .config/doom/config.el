@@ -281,8 +281,8 @@
   (map! :map org-gtd-clarify-map
         :desc "Organize this item" "C-c c" #'org-gtd-organize))
 
-;; (setq projectile-ignored-projects '(".git" "~/org-files/roam/"))
-;; (setq projectile-ignored-projects '("~/org-files/roam/"))
+(setq projectile-ignored-projects '(".git" "~/org-files/roam/"))
+(setq projectile-ignored-projects '("~/org-files/roam/"))
 ;; (setq projectile-track-known-projects-automatically nil)
 ;; (setq projectile-auto-discover nil)
 ;; (setq projectile-project-root-functions

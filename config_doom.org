@@ -382,8 +382,8 @@
 #+end_src
 * Projectile
 #+begin_src emacs-lisp
-;; (setq projectile-ignored-projects '(".git" "~/org-files/roam/"))
-;; (setq projectile-ignored-projects '("~/org-files/roam/"))
+(setq projectile-ignored-projects '(".git" "~/org-files/roam/"))
+(setq projectile-ignored-projects '("~/org-files/roam/"))
 ;; (setq projectile-track-known-projects-automatically nil)
 ;; (setq projectile-auto-discover nil)
 ;; (setq projectile-project-root-functions
