@@ -461,6 +461,8 @@
  :leader :desc "buffer new window" "b w" 'switch-to-buffer-other-window
  :leader :desc "doom dashboard" "b h" '+doom-dashboard/open)
 
+(map! :map emacs-lisp-mode-map "C-c C-j" #'eval-print-last-sexp)
+
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "qutebrowser")
 

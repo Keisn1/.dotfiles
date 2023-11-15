@@ -631,6 +631,10 @@
  :leader :desc "buffer new window" "b w" 'switch-to-buffer-other-window
  :leader :desc "doom dashboard" "b h" '+doom-dashboard/open)
 #+end_src
+** elisp
+#+begin_src emacs-lisp
+(map! :map emacs-lisp-mode-map "C-c C-j" #'eval-print-last-sexp)
+#+end_src
 * pdf-tools
 #+begin_src shell
 sudo apt-get update
