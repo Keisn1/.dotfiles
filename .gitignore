@@ -1,5 +1,4 @@
 .ubuntu_setup.sh
-.zshrc
 /.config/qtile/__pycache__/
 /.zsh/.zcompdump
 /.zsh/.zcompdump-kaypro-UX330UAK-5.9
