@@ -210,6 +210,9 @@ config.bind("Z", "hint links spawn yt-dlp {hint-url}")
 config.bind("J", "tab-prev")
 config.bind("K", "tab-next")
 
+config.bind("gk", "tab-move +")
+config.bind("gj", "tab-move -")
+
 # Bindings for command mode
 config.bind("<Ctrl+j>", "completion-item-focus --history next", mode="command")
 config.bind("<Ctrl+k>", "completion-item-focus --history prev", mode="command")
