@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+## Copyright (C) 2020-2023 Aditya Shakya <adi1090x@gmail.com>
+##
+#
+PATH=$PATH:~/.local/bin
+
+## Autostart Programs
+
+# Kill already running process
+_ps=(waybar mako)
+for _prs in "${_ps[@]}"; do
+	if [[ `pidof ${_prs}` ]]; then
+		killall -9 ${_prs}
+	fi
+done
+
+# Polkit agent
+if [[ ! `pidof xfce-polkit` ]]; then
+	/usr/lib/xfce-polkit/xfce-polkit &
+fi
+
+# Set wallpaper
+~/.config/hypr/scripts/wallpaper &
+
+# Apply themes
+~/.config/hypr/scripts/gtkthemes &
+
+# Lauch notification daemon (mako)
+~/.config/hypr/scripts/notifications &
+
+# Lauch statusbar (waybar)
+~/.config/hypr/scripts/statusbar &
+
+# Start network manager applet
+nm-applet --indicator &
+
+# Start mpd
+exec mpd &
+
+# Launch emacs daemon (Doom by default)
+# emacs --with-profile crafted --daemon &
+emacs --with-profile doom --daemon &
+# emacs --with-profile gnu --daemon &
+# could be possible to create a symlink from /usr/bin/emacs to ./local/bin/emacs
+# where you put emacsclient -c -s doom -a emacs or something similar inside
