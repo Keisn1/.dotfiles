@@ -39,7 +39,7 @@ source_default() {
 
 ## Random Theme
 source_pywal() {
-	# Set you wallpaper directory here.
+	# Set your wallpaper directory here.
 	WALLDIR="`xdg-user-dir PICTURES`/wallpapers"
 
 	# Check for wallpapers
