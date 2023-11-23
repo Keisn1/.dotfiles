@@ -195,11 +195,11 @@ c.zoom.default = "125%"
 c.colors.webpage.darkmode.enabled = True
 # c.colors.webpage.preferred_color_scheme = "dark"  #
 c.content.user_stylesheets = [
-    "~/workspace/solarized-everything-css/css/solarized-dark/solarized-dark-all-sites.css",
+    "~/.local/share/solarized-everything-css/css/solarized-dark/solarized-dark-all-sites.css",
 ]
 config.bind(
     ",s",
-    'config-cycle content.user_stylesheets ~/workspace/solarized-everything-css/css/solarized-dark/solarized-dark-all-sites.css ""',
+    'config-cycle content.user_stylesheets ~/.local/share/solarized-everything-css/css/solarized-dark/solarized-dark-all-sites.css ""',
 )
 
 # tab colors

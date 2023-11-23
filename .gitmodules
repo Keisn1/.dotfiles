@@ -1,0 +1,3 @@
+[submodule ".local/share/solarized-everything-css"]
+	path = .local/share/solarized-everything-css
+	url = git@github.com:alphapapa/solarized-everything-css.git

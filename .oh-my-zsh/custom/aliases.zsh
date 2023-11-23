@@ -28,3 +28,8 @@ alias yayforeign="yay -Qm" # -m, --foreign ,list installed packages not found in
 # ranger
 alias r='ranger'
 alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
+
+# pipenv
+pipenv_activate() {
+    source "$(pipenv --venv)/bin/activate"
+}
