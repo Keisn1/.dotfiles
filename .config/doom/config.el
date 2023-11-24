@@ -62,8 +62,6 @@
   (setq org-directory "~/org-files/org/")
   (setq org-attach-directory "./.attach"))
 
-(setq org-roam-directory "~/org-files/roam/")
-
 ;; org-agenda ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq org-agenda-files
@@ -176,6 +174,8 @@
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org-roam ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq org-roam-directory "~/org-files/roam2/")
 
 ;; org-roam variables ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

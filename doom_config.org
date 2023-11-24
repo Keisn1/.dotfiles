@@ -118,8 +118,6 @@ following situations:
   ;; change `org-directory'. It must be set before org loads!
   (setq org-directory "~/org-files/org/")
   (setq org-attach-directory "./.attach"))
-
-(setq org-roam-directory "~/org-files/roam/")
 #+end_src
 ** Org-Agenda
 #+begin_src emacs-lisp
@@ -269,6 +267,10 @@ following situations:
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org-roam ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+#+end_src
+** org roam directories
+#+begin_src emacs-lisp
+(setq org-roam-directory "~/org-files/roam2/")
 #+end_src
 ** Org roam variables
 #+begin_src emacs-lisp
