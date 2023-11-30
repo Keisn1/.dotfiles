@@ -107,7 +107,7 @@
 (after! org
   (require 'org-tempo)
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-  (add-to-list 'org-structure-template-alist '("p" . "src python-ts :results output"))
+  (add-to-list 'org-structure-template-alist '("p" . "src python :results output"))
   (add-to-list 'org-structure-template-alist '("sc" . "src c"))
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (setq org-hide-emphasis-markers t)
