@@ -52,6 +52,9 @@ if [[ ! -f "$SSH_AUTH_SOCK" ]]; then
     source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
 fi
 
+# Path
+PATH=$PATH:$HOME/.config/.doom-emacs/bin
+
 # keychain
 # https://wiki.archlinux.org/title/SSH_keys#Configuration
 eval $(keychain --eval --quiet id_ed25519 )
