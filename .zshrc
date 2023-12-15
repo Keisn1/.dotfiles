@@ -55,6 +55,11 @@ fi
 # Path
 PATH=$PATH:$HOME/.config/.doom-emacs/bin
 
+# opening stuff with emacs
+export ALTERNATE_EDITOR=""
+export EDITOR="emacsclient -c -s doom"
+export VISUAL="emacsclient -c -s doom"
+
 # keychain
 # https://wiki.archlinux.org/title/SSH_keys#Configuration
 eval $(keychain --eval --quiet id_ed25519 )

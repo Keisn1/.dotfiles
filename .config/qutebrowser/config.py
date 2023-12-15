@@ -215,8 +215,8 @@ c.colors.tabs.odd.bg = "#000000"
 # Bindings for normal mode
 config.bind("<Ctrl+l>gh", "open -t github.com")
 config.bind("<Ctrl+l>yt", "open -t youtube.com")
-config.bind("M", "hint links spawn mpv --ytdl-format=best {hint-url}")
-config.bind("pv", "spawn mpv --ytdl-format=best {url}")
+config.bind("M", "hint links spawn mpv --volume=50 --ytdl-format=best {hint-url}")
+config.bind("pv", "spawn mpv --volume=50 --ytdl-format=best {url}")
 config.bind("Z", "hint links spawn yt-dlp {hint-url}")
 config.bind("J", "tab-prev")
 config.bind("K", "tab-next")
