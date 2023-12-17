@@ -325,6 +325,7 @@
   (add-hook 'java-mode-hook 'eglot-java-mode)
   (add-hook 'python-mode-hook 'eglot-ensure)
   (add-hook 'rust-mode-hook 'eglot-ensure)
+  (add-hook 'go-mode-hook 'eglot-ensure)
   (add-hook 'c-mode-hook 'eglot-ensure)
   (add-hook 'c++-mode-hook 'eglot-ensure)
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd-16"))
