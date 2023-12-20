@@ -60,6 +60,9 @@ export ALTERNATE_EDITOR=""
 export EDITOR="emacsclient -c -s doom"
 export VISUAL="emacsclient -c -s doom"
 
+# nvm
+source /usr/share/nvm/init-nvm.sh
+
 # keychain
 # https://wiki.archlinux.org/title/SSH_keys#Configuration
 eval $(keychain --eval --quiet id_ed25519 )

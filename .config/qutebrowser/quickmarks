@@ -54,3 +54,5 @@ virtualBoxSSH https://www.golinuxcloud.com/ssh-into-virtualbox-vm/#Method-1_SSH_
 archInstallationGuide https://wiki.archlinux.org/title/Installation_guide
 packer automate images software https://www.packer.io/
 8080 http://localhost:8080/
+inputConf MPV https://github.com/noelsimbolon/mpv-config/blob/windows/input.conf
+git-katas https://github.com/Keisn1/git-katas
