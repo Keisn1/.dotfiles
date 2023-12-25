@@ -220,6 +220,7 @@ config.bind("pv", "spawn mpv --volume=50 --ytdl-format=best {url}")
 config.bind("Z", "hint links spawn yt-dlp {hint-url}")
 config.bind("J", "tab-prev")
 config.bind("K", "tab-next")
+config.bind("tf", "cmd-set-text -s :tab-focus")
 
 config.bind("gk", "tab-move +")
 config.bind("gj", "tab-move -")
