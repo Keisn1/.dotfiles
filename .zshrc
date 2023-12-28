@@ -55,6 +55,7 @@ fi
 # Path
 PATH=$PATH:$HOME/.config/.doom-emacs/bin
 PATH=$PATH:$HOME/.local/bin
+PATH=$PATH:$HOME/go/bin
 
 # opening stuff with emacs
 export ALTERNATE_EDITOR=""

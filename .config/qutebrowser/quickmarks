@@ -58,3 +58,6 @@ inputConf MPV https://github.com/noelsimbolon/mpv-config/blob/windows/input.conf
 git-katas https://github.com/Keisn1/git-katas
 WebDevWithGoBook https://www.usegolang.com/sample/
 kata order https://github.com/Keisn1/git-katas/blob/master/Overview.md
+hackerrank coding exercises https://www.hackerrank.com/get-started/
+cobra go framework for cli https://github.com/spf13/cobra
+urfave/cli go package to build cli tools https://github.com/urfave/cli
