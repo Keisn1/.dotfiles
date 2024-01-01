@@ -70,7 +70,7 @@
 ;; org-agenda ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq org-agenda-files
-      '("~/org-files/agenda-files/Habits.org" "~/org-files/agenda-files/todo.org"))
+      '("~/org-files/agenda-files/Habits.org" "~/org-files/agenda-files/todo.org" "~/org-files/agenda-files/Archive.org" ))
 
 (setq org-tag-alist
       '((:startgroup)

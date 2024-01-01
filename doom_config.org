@@ -131,7 +131,7 @@ following situations:
 *** Agenda files
 #+begin_src emacs-lisp
 (setq org-agenda-files
-      '("~/org-files/agenda-files/Habits.org" "~/org-files/agenda-files/todo.org"))
+      '("~/org-files/agenda-files/Habits.org" "~/org-files/agenda-files/todo.org" "~/org-files/agenda-files/Archive.org" ))
 #+end_src
 *** Tags
 #+begin_src emacs-lisp
