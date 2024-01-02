@@ -42,7 +42,9 @@
 ;; (set-frame-parameter (selected-frame) 'alpha '(93 93))
 ;; (add-to-list 'default-frame-alist '(alpha . 93))
 
-(setq doom-modeline-buffer-file-name-style 'truncate-upto-project)
+(setq doom-modeline-buffer-file-name-style 'buffer-name)
+
+(size-indication-mode -1)
 
 (scroll-bar-mode -1)
 
@@ -177,7 +179,7 @@
 
 (add-hook! 'org-mode-hook #'display-line-numbers-mode)
 
-(setq org-clock-string-limit 11)
+(setq org-clock-string-limit 0)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org-roam ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -267,7 +269,7 @@
   :config
   (setq org-edna-use-inheritance t)
   (setq org-gtd-directory "~/org-files/gtd")
-  (setq org-gtd-engage-prefix-width 20)
+  (setq org-gtd-engage-prefix-width 30)
   (org-edna-mode)
   (org-gtd-mode)
   ;; (add-to-list 'org-gtd-organize-hooks 'org-set-effort)

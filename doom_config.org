@@ -70,7 +70,11 @@
 #+end_src
 ** Modeline
 #+begin_src emacs-lisp
-(setq doom-modeline-buffer-file-name-style 'truncate-upto-project)
+(setq doom-modeline-buffer-file-name-style 'buffer-name)
+#+end_src
+** Size-indication-mode
+#+begin_src emacs-lisp
+(size-indication-mode -1)
 #+end_src
 ** Scroll bar
 #+begin_src emacs-lisp
@@ -96,11 +100,10 @@
   (setq dired-omit-mode nil)
   (setq dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^\\..*$"))
 #+end_src
-** SpecialMode
+** SpecialMode (like eldoc)
 #+begin_src emacs-lisp
 (add-hook! 'special-mode-hook #'visual-line-mode)
 #+end_src
-
 * Org
 #+begin_src emacs-lisp
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -271,7 +274,7 @@ following situations:
 
 *** Org-clock
 #+begin_src emacs-lisp
-(setq org-clock-string-limit 11)
+(setq org-clock-string-limit 0)
 #+end_src
 * Org-roam
 #+begin_src emacs-lisp
@@ -393,7 +396,7 @@ following situations:
   :config
   (setq org-edna-use-inheritance t)
   (setq org-gtd-directory "~/org-files/gtd")
-  (setq org-gtd-engage-prefix-width 20)
+  (setq org-gtd-engage-prefix-width 30)
   (org-edna-mode)
   (org-gtd-mode)
   ;; (add-to-list 'org-gtd-organize-hooks 'org-set-effort)
