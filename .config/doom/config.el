@@ -30,7 +30,6 @@
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
-(setq global-visual-line-mode t)
 
 (defun kb/toggle-window-transparency ()
   "Toggle transparency."
@@ -58,9 +57,11 @@
   (setq dired-omit-mode nil)
   (setq dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^\\..*$"))
 
-(add-hook! 'special-mode-hook #'visual-line-mode)
-
 (display-battery-mode 't)
+
+(after! pdf-tools
+  (add-to-list 'pdf-tools-enabled-modes 'pdf-view-themed-minor-mode)
+)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ORG      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -326,6 +327,7 @@
 ;; eglot ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(after! eglot
   (add-hook 'go-mode-hook 'eglot-ensure)
   (add-hook 'java-mode-hook 'eglot-java-mode)
   (add-hook 'python-mode-hook 'eglot-ensure)
@@ -334,6 +336,7 @@
   (add-hook 'c++-mode-hook 'eglot-ensure)
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
   (add-to-list 'eglot-server-programs '((python-mode) "pyright"))
+)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; copilot ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -360,7 +363,10 @@
 (after! python
   (setq python-pytest-executable "python3 -m pytest"))
 
+(setq global-visual-line-mode t)
 (add-hook! 'inferior-python-mode-hook #'visual-line-mode)
+(add-hook! 'special-mode-hook #'visual-line-mode)
+(add-hook! 'go-test-mode-hook #'visual-line-mode)
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Keychain ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
