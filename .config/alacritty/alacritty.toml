@@ -1,52 +1,33 @@
-## Copyright (C) 2020-2023 Aditya Shakya <adi1090x@gmail.com>
-##
-## Configuration for Alacritty, the GPU enhanced terminal emulator.
-## It's a very basic and simple config file, for full configuration...
-## See, /usr/share/doc/alacritty/example/alacritty.yml
-    
-## Import files (Colors, Fonts, Etc)
-import = [
-    "~/.config/alacritty/colors.toml",
-    "~/.config/alacritty/fonts.toml",
-]
+import = ["/home/kay/.config/alacritty/colors.toml", "/home/kay/.config/alacritty/fonts.toml"]
 live_config_reload = true
- 
-## Set environment variables
+
+[cursor]
+unfocused_hollow = false
+
+[cursor.style]
+blinking = "On"
+shape = "Block"
+
 [env]
 TERM = "alacritty"
 WINIT_X11_SCALE_FACTOR = "1.0"
- 
-# Terminal window settings
-[window]
-startup_mode = "Windowed"
-decorations = "full"
-startup_mode = "Windowed"
-dynamic_title = true
-history = 10_000
-multiplier = 3
-opacity = 1
 
-## scrolling
+[shell]
+args = ["--login"]
+program = "/bin/zsh"
+
+[window]
+decorations = "full"
+dynamic_title = true
+# history = 10000 unused config key
+# multiplier = 3 unused config key
+opacity = 0.9
+startup_mode = "Windowed"
+
 [window.dimensions]
 columns = 82
 lines = 24
 
-## Background opacity
 [window.padding]
 x = 12
 y = 12
-
-## Cursor
-[cursor]
-unfocused_hollow = false
-
-## Live config reload
-[cursor.style]
-shape = "Block"
-blinking = "On"
-
-## Shell
-#shell:
-#  program: /bin/zsh
-#  args:
-#    - --login
