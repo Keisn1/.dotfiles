@@ -514,6 +514,12 @@ information retrieved from files created by the keychain script."
       :prefix ("t" . "test"))
 
 ;; dired ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(map! :map evil-motion-state-map
-      "] e" 'flymake-goto-next-error
-      "[ e" 'flymake-goto-prev-error)
+(map! :map evil-motion-state-map "] e" 'flymake-goto-next-error
+      :map evil-motion-state-map "[ e" 'flymake-goto-prev-error)
+(map!
+ :map doom-leader-code-map "k" nil
+ :map doom-leader-code-map :desc "flymake-goto-prev-error" "k" 'flymake-goto-prev-error
+ :map doom-leader-code-map :desc "flymake-goto-next-error" "j" 'flymake-goto-next-error)
+
+(map!
+ :map doom-leader-code-map :desc "eglot-rename" "r" 'eglot-rename)
