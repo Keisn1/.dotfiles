@@ -215,6 +215,7 @@ c.colors.tabs.odd.bg = "#000000"
 # Bindings for normal mode
 config.bind("<Ctrl+l>gh", "open -t github.com")
 config.bind("<Ctrl+l>yt", "open -t youtube.com")
+config.bind("<Ctrl+l>c", "open -t https://chat.openai.com/")
 config.bind("M", "hint links spawn mpv --volume=50 --ytdl-format=best {hint-url}")
 config.bind("pv", "spawn mpv --volume=50 --ytdl-format=best {url}")
 config.bind("Z", "hint links spawn yt-dlp {hint-url}")
