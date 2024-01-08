@@ -412,6 +412,10 @@ information retrieved from files created by the keychain script."
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "qutebrowser")
 
+(after! flymake
+  (setq flymake-show-diagnostics-at-end-of-line t)
+  )
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; keybindings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -508,3 +512,8 @@ information retrieved from files created by the keychain script."
       :prefix ("e" . "pipenv")
       :prefix ("i" . "import")
       :prefix ("t" . "test"))
+
+;; dired ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(map! :map evil-motion-state-map
+      "] e" 'flymake-goto-next-error
+      "[ e" 'flymake-goto-prev-error)

@@ -604,6 +604,12 @@ information retrieved from files created by the keychain script."
 #+begin_src elisp
 (setq sql-sqlite-program "/usr/bin/sqlite3")
 #+end_src
+* Flymake
+#+begin_src emacs-lisp
+(after! flymake
+  (setq flymake-show-diagnostics-at-end-of-line t)
+  )
+#+end_src
 * Keybindings
 #+begin_src emacs-lisp
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -736,4 +742,12 @@ information retrieved from files created by the keychain script."
       :prefix ("e" . "pipenv")
       :prefix ("i" . "import")
       :prefix ("t" . "test"))
+#+end_src
+
+** Flymake
+#+begin_src emacs-lisp
+;; dired ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(map! :map evil-motion-state-map
+      "] e" 'flymake-goto-next-error
+      "[ e" 'flymake-goto-prev-error)
 #+end_src
