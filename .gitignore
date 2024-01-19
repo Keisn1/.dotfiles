@@ -1,1 +1,3 @@
 /.config/doom/custom.el
+/load_keys.el
+/.config/doom/load_keys.el
