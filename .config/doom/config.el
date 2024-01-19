@@ -550,3 +550,5 @@ information retrieved from files created by the keychain script."
 
 (map!
  :map doom-leader-toggle-map :desc "golden-ratio-mode" "o" 'golden-ratio-mode)
+
+(load "~/.config/doom/load_keys")

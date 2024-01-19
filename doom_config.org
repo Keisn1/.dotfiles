@@ -790,3 +790,7 @@ information retrieved from files created by the keychain script."
 (map!
  :map doom-leader-toggle-map :desc "golden-ratio-mode" "o" 'golden-ratio-mode)
 #+end_src
+* Load keys
+#+begin_src emacs-lisp
+(load "~/.config/doom/load_keys")
+#+end_src
