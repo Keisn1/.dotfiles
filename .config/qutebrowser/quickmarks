@@ -66,9 +66,13 @@ roadmap software design https://roadmap.sh/software-design-architecture
 roadmap backend https://roadmap.sh/backend
 learn go with tests https://quii.gitbook.io/learn-go-with-tests
 source code test with go https://github.com/joncalhoun/twg
-localhost 3000 http://localhost:3000/pkg/
 how to setop vpn https://www.youtube.com/watch?v=Lk_v6Q0YsNo
 github learn go with tests https://github.com/quii/learn-go-with-tests/tree/main/hello-world
 ccc congress https://media.ccc.de/c/37c3
 sage go type conversions https://medium.com/lyonas/go-type-casting-starter-guide-a9c1811670c5
 systemCraftershompage https://systemcrafters.net/
+localhost 3000 http://localhost:3000/
+go test assertin library https://onsi.github.io/gomega/
+go test testing framework https://onsi.github.io/ginkgo/
+8000 http://localhost:8000/
+impatient mode emacs live preview html https://emacs.stackexchange.com/questions/32426/html-editing-with-preview

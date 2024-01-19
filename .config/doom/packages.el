@@ -30,6 +30,10 @@
 (package! go-playground)
 (package! kaolin-themes)
 (package! flycheck :disable t)
+(package! golden-ratio)
+(package! imenu-list)
+(package! bufler)
+(package! org-ai)
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:

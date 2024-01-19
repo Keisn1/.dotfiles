@@ -59,6 +59,15 @@
 
 (display-battery-mode 't)
 
+(use-package! golden-ratio
+  :after-call pre-command-hook
+  :config
+  ;; (golden-ratio-mode +1)
+  ;; Using this hook for resizing windows is less precise than
+  ;; `doom-switch-window-hook'.
+  (remove-hook 'window-configuration-change-hook #'golden-ratio)
+  (add-hook 'doom-switch-window-hook #'golden-ratio))
+
 (after! pdf-tools
   (add-to-list 'pdf-tools-enabled-modes 'pdf-view-themed-minor-mode)
 )
@@ -357,6 +366,7 @@
 (add-hook 'go-ts-mode-hook
           (lambda ()
             (setq compile-command "go build")))
+(add-hook 'go-ts-mode-hook eldoc-mode)
 
 ;; Python ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -414,6 +424,19 @@ information retrieved from files created by the keychain script."
 
 (after! flymake
   (setq flymake-show-diagnostics-at-end-of-line t)
+  )
+
+(use-package! org-ai
+  :ensure t
+  :commands (
+             org-ai-mode
+             org-ai-global-mode)
+  :init
+  (add-hook 'org-mode-hook #'org-ai-mode) ;enable org-ai in org mode
+  (org-ai-global-mode)                    ; installs global keybindings C-c M-a
+  :config
+  (setq org-ai-default-chat-model "gpt-3.5")
+  (org-ai-install-yasnippets)
   )
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -504,6 +527,7 @@ information retrieved from files created by the keychain script."
   (add-hook 'python-ts-mode-hook hook))
 
 (add-hook 'python-ts-mode-hook (lambda () (yas-activate-extra-mode 'python-mode)))
+(add-hook 'python-ts-mode-hook (lambda () (setq flymake-show-diagnostics-at-end-of-line nil)))
 (after! python
   (set-keymap-parent python-ts-mode-map python-mode-map))
 (map! :after python
@@ -523,3 +547,6 @@ information retrieved from files created by the keychain script."
 
 (map!
  :map doom-leader-code-map :desc "eglot-rename" "r" 'eglot-rename)
+
+(map!
+ :map doom-leader-toggle-map :desc "golden-ratio-mode" "o" 'golden-ratio-mode)

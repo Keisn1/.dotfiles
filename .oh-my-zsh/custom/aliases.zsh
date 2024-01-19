@@ -16,6 +16,7 @@ alias tkt='tmux kill-session -t'
 alias tks='tmux_kill_session'
 alias tka='tmux kill-server'
 alias tkao='tmux kill-session -a'
+alias td='tmux detach'
 
 alias tf='~/.local/bin/tmux-sessionizer.zsh'
 
