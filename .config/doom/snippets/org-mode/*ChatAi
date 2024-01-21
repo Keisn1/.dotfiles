@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: *ChatAi
+# key: *ai
+# uuid: *ai
+# --
+* Chat
+#+begin_ai
+[SYS]: You are a helpful assistant.
+
+[ME]: $0
+#+end_ai

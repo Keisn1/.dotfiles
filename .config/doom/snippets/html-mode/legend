@@ -1,0 +1,6 @@
+# key: legend
+# name: <legend>...</legend>
+# --
+<legend>
+  $0
+</legend>

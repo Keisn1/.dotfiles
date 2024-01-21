@@ -435,7 +435,7 @@ information retrieved from files created by the keychain script."
   (add-hook 'org-mode-hook #'org-ai-mode) ;enable org-ai in org mode
   (org-ai-global-mode)                    ; installs global keybindings C-c M-a
   :config
-  (setq org-ai-default-chat-model "gpt-3.5")
+  (setq org-ai-default-chat-model "gpt-3.5-turbo")
   (org-ai-install-yasnippets)
   )
 
@@ -550,5 +550,9 @@ information retrieved from files created by the keychain script."
 
 (map!
  :map doom-leader-toggle-map :desc "golden-ratio-mode" "o" 'golden-ratio-mode)
+
+(map!  :leader
+       "k" org-ai-global-prefix-map
+       )
 
 (load "~/.config/doom/load_keys")

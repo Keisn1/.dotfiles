@@ -76,3 +76,5 @@ go test assertin library https://onsi.github.io/gomega/
 go test testing framework https://onsi.github.io/ginkgo/
 8000 http://localhost:8000/
 impatient mode emacs live preview html https://emacs.stackexchange.com/questions/32426/html-editing-with-preview
+8080/imp http://localhost:8080/imp/
+devDocs https://devdocs.io/
