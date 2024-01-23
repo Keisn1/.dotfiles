@@ -624,7 +624,6 @@ information retrieved from files created by the keychain script."
 * org-ai
 #+begin_src emacs-lisp
 (use-package! org-ai
-  :ensure t
   :commands (
              org-ai-mode
              org-ai-global-mode)
@@ -635,6 +634,21 @@ information retrieved from files created by the keychain script."
   (setq org-ai-default-chat-model "gpt-3.5-turbo")
   (org-ai-install-yasnippets)
   )
+#+end_src
+* devdocs
+#+begin_src emacs-lisp
+(add-hook 'python-mode-hook
+          (lambda () (setq-local devdocs-current-docs '("python~3.11"))))
+
+(add-hook 'go-mode-hook
+          (lambda () (setq-local devdocs-current-docs '("go"))))
+
+(add-hook 'css-mode-hook
+          (lambda () (setq-local devdocs-current-docs '("dom" "css" "javascript" "html"))))
+(add-hook 'html-mode-hook
+          (lambda () (setq-local devdocs-current-docs '("dom" "css" "javascript" "html"))))
+(add-hook 'js-mode-hook
+          (lambda () (setq-local devdocs-current-docs '("dom" "css" "javascript" "html"))))
 #+end_src
 * Keybindings
 #+begin_src emacs-lisp
@@ -794,7 +808,16 @@ information retrieved from files created by the keychain script."
 #+begin_src emacs-lisp
 (map!  :leader
        "k" org-ai-global-prefix-map
+       :leader
+       :prefix "k" "e" #'org-ai-explain-code
        )
+#+end_src
+** devdocs
+#+begin_src emacs-lisp
+(map! :leader
+      :prefix "s"
+      :desc "devdocs-lookup" "o" #'devdocs-lookup
+      )
 #+end_src
 
 

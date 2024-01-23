@@ -1,6 +1,6 @@
 # key: div
 # name: <div>...</div>
 # --
-<div id="$1">
+<div class="$1">
   $2
 </div>

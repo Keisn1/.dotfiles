@@ -427,7 +427,6 @@ information retrieved from files created by the keychain script."
   )
 
 (use-package! org-ai
-  :ensure t
   :commands (
              org-ai-mode
              org-ai-global-mode)
@@ -438,6 +437,19 @@ information retrieved from files created by the keychain script."
   (setq org-ai-default-chat-model "gpt-3.5-turbo")
   (org-ai-install-yasnippets)
   )
+
+(add-hook 'python-mode-hook
+          (lambda () (setq-local devdocs-current-docs '("python~3.11"))))
+
+(add-hook 'go-mode-hook
+          (lambda () (setq-local devdocs-current-docs '("go"))))
+
+(add-hook 'css-mode-hook
+          (lambda () (setq-local devdocs-current-docs '("dom" "css" "javascript" "html"))))
+(add-hook 'html-mode-hook
+          (lambda () (setq-local devdocs-current-docs '("dom" "css" "javascript" "html"))))
+(add-hook 'js-mode-hook
+          (lambda () (setq-local devdocs-current-docs '("dom" "css" "javascript" "html"))))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; keybindings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -553,6 +565,13 @@ information retrieved from files created by the keychain script."
 
 (map!  :leader
        "k" org-ai-global-prefix-map
+       :leader
+       :prefix "k" "e" #'org-ai-explain-code
        )
+
+(map! :leader
+      :prefix "s"
+      :desc "devdocs-lookup" "o" #'devdocs-lookup
+      )
 
 (load "~/.config/doom/load_keys")
