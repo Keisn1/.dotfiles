@@ -451,6 +451,8 @@ information retrieved from files created by the keychain script."
 (add-hook 'js-mode-hook
           (lambda () (setq-local devdocs-current-docs '("dom" "css" "javascript" "html"))))
 
+(add-to-list 'auto-mode-alist '("\\.gohtml\\'" . mhtml-mode))
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; keybindings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

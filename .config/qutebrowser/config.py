@@ -215,6 +215,7 @@ c.colors.tabs.odd.bg = "#000000"
 # Bindings for normal mode
 config.bind("<Ctrl+l>gh", "open -t github.com")
 config.bind("<Ctrl+l>yt", "open -t youtube.com")
+config.bind("<Ctrl+l>go", "open -t https://pkg.go.dev/")
 config.bind("<Ctrl+l>c", "open -t https://chat.openai.com/")
 config.bind("M", "hint links spawn mpv --volume=50 --ytdl-format=best {hint-url}")
 config.bind("pv", "spawn mpv --volume=50 --ytdl-format=best {url}")
@@ -246,6 +247,7 @@ config.set(
     {
         "DEFAULT": "https://duckduckgo.com/?q={}",
         "yt": "youtube.com/results?search_query={}",
+        "gop": "https://pkg.go.dev/search?q={}",
         "en_wiki": "https://en.wikipedia.org/wiki/{}",
         "de_wiki": "https://de.wikipedia.org/wiki/{}",
     },

@@ -78,3 +78,6 @@ go test testing framework https://onsi.github.io/ginkgo/
 impatient mode emacs live preview html https://emacs.stackexchange.com/questions/32426/html-editing-with-preview
 8080/imp http://localhost:8080/imp/
 devDocs https://devdocs.io/
+Canon TDD test driven post https://tidyfirst.substack.com/p/canon-tdd
+book test driven development By example https://www.amazon.com/Test-Driven-Development-Kent-Beck/dp/0321146530/ref=sr_1_1?crid=2OY1UO0NIQDWZ&keywords=kent+beck+test+driven+development&qid=1706080410&sprefix=kent+test+d%2Caps%2C160&sr=8-1
+effective go https://go.dev/doc/effective_go

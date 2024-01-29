@@ -650,6 +650,10 @@ information retrieved from files created by the keychain script."
 (add-hook 'js-mode-hook
           (lambda () (setq-local devdocs-current-docs '("dom" "css" "javascript" "html"))))
 #+end_src
+* auto-mode-alist
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.gohtml\\'" . mhtml-mode))
+#+end_src
 * Keybindings
 #+begin_src emacs-lisp
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
