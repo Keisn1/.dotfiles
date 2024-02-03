@@ -4,5 +4,5 @@
 # --
 
 if got != want {
-   t.Errorf("${1:func}($2) = \\"%v\\"; want \\"%v\\"", `%`$0got, want)
+   t.Errorf(\`got = %v; want %v\`, $0got, want)
 }

@@ -180,6 +180,10 @@
 
 ;; org-appearance ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(after! org
+  (setq org-startup-folded 'show2levels)
+  )
+
 (require 'org-superstar)
 (add-hook! 'org-mode-hook #'org-superstar-mode)
 (setq org-superstar-headline-bullets-list '("◉" "○" "◈" "◇"))
@@ -557,7 +561,9 @@ information retrieved from files created by the keychain script."
 (map!
  :map doom-leader-code-map "k" nil
  :map doom-leader-code-map :desc "flymake-goto-prev-error" "k" 'flymake-goto-prev-error
- :map doom-leader-code-map :desc "flymake-goto-next-error" "j" 'flymake-goto-next-error)
+ :map doom-leader-code-map :desc "flymake-goto-next-error" "j" 'flymake-goto-next-error
+ :map doom-leader-code-map :desc "consult-flymake" "l" 'consult-flymake
+ :map doom-leader-code-map :desc "flymake-show-project-diagnostics" "L" 'flymake-show-project-diagnostics)
 
 (map!
  :map doom-leader-code-map :desc "eglot-rename" "r" 'eglot-rename)

@@ -270,6 +270,12 @@ following situations:
 #+begin_src emacs-lisp
 ;; org-appearance ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 #+end_src
+*** Org-startup
+#+begin_src emacs-lisp
+(after! org
+  (setq org-startup-folded 'show2levels)
+  )
+#+end_src
 *** Org-superstar
 #+begin_src emacs-lisp
 (require 'org-superstar)
@@ -796,7 +802,9 @@ information retrieved from files created by the keychain script."
 (map!
  :map doom-leader-code-map "k" nil
  :map doom-leader-code-map :desc "flymake-goto-prev-error" "k" 'flymake-goto-prev-error
- :map doom-leader-code-map :desc "flymake-goto-next-error" "j" 'flymake-goto-next-error)
+ :map doom-leader-code-map :desc "flymake-goto-next-error" "j" 'flymake-goto-next-error
+ :map doom-leader-code-map :desc "consult-flymake" "l" 'consult-flymake
+ :map doom-leader-code-map :desc "flymake-show-project-diagnostics" "L" 'flymake-show-project-diagnostics)
 #+end_src
 ** eglot
 #+begin_src emacs-lisp
@@ -823,7 +831,6 @@ information retrieved from files created by the keychain script."
       :desc "devdocs-lookup" "o" #'devdocs-lookup
       )
 #+end_src
-
 
 * Load keys
 #+begin_src emacs-lisp

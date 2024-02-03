@@ -3,4 +3,4 @@
 # key: fc
 # --
 
-func(${1:args})${2:return type}{`%`$0}
+func(${1:args}) ${2:return type} {`%`$0}
