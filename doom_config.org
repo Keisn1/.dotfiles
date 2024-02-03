@@ -832,7 +832,3 @@ information retrieved from files created by the keychain script."
       )
 #+end_src
 
-* Load keys
-#+begin_src emacs-lisp
-(load "~/.config/doom/load_keys")
-#+end_src

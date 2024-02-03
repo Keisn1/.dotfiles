@@ -581,5 +581,3 @@ information retrieved from files created by the keychain script."
       :prefix "s"
       :desc "devdocs-lookup" "o" #'devdocs-lookup
       )
-
-(load "~/.config/doom/load_keys")
