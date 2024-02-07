@@ -45,6 +45,7 @@ elif [[ "$1" == '--suspend' ]]; then
 elif [[ "$1" == '--logout' ]]; then
 	cdialog
 	if [[ "$?" == 0 ]]; then
+        rbw lock
 		hyprctl dispatch exit 0
     else
 		exit

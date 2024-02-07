@@ -84,3 +84,4 @@ effective go https://go.dev/doc/effective_go
 generics go cheatsheet https://gosamples.dev/generics-cheatsheet/
 python design patterns https://python-patterns.guide/
 ferris aurora sweep https://splitkb.com/products/aurora-sweep
+type hints class types https://adamj.eu/tech/2021/05/16/python-type-hints-return-class-not-instance/
