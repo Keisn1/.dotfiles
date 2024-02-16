@@ -124,6 +124,8 @@
 
 ;; org-babel ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(org-babel-do-load-languages 'org-babel-load-languages '((sql . t)))
+
 ;; babel-structure templates ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (after! org
   (require 'org-tempo)
@@ -131,6 +133,8 @@
   (add-to-list 'org-structure-template-alist '("p" . "src python :results output"))
   (add-to-list 'org-structure-template-alist '("go" . "src go :results output :imports \"fmt\" "))
   (add-to-list 'org-structure-template-alist '("sc" . "src c"))
+  (add-to-list 'org-structure-template-alist '("sqlite" . "src sqlite :db db.sqlite3 :colnames yes"))
+  (add-to-list 'org-structure-template-alist '("postgres" . "src postgres :engine postgresql :dbuser djangouser :database djangotraining :colnames yes"))
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (setq org-hide-emphasis-markers t)
   )
@@ -377,6 +381,14 @@
 (after! python
   (setq python-pytest-executable "python3 -m pytest"))
 
+(defun toggle-django-shell-interpreter-args ()
+  (interactive)
+  (if (not (string= python-shell-interpreter-args "-i"))
+      (setq python-shell-interpreter-args "-i")
+    (setq python-shell-interpreter-args (concat "-i " (expand-file-name (magit-toplevel)) "manage.py shell"))))
+
+(map! :map doom-leader-toggle-map :desc "toggle-django-shell" "d" 'toggle-django-shell-interpreter-args)
+
 (setq global-visual-line-mode t)
 (add-hook! 'inferior-python-mode-hook #'visual-line-mode)
 (add-hook! 'special-mode-hook #'visual-line-mode)
@@ -443,7 +455,7 @@ information retrieved from files created by the keychain script."
   )
 
 (add-hook 'python-mode-hook
-          (lambda () (setq-local devdocs-current-docs '("python~3.11"))))
+          (lambda () (setq-local devdocs-current-docs '("python~3.11" "django~5.0" "django_rest_framework"))))
 
 (add-hook 'go-mode-hook
           (lambda () (setq-local devdocs-current-docs '("go"))))
@@ -647,3 +659,15 @@ information retrieved from files created by the keychain script."
           (:maildir "/icloud/inbox" :key ?i)
           (:maildir "/icloud/Sent Messages"     :key ?s)
           (:maildir "/icloud/Saved"    :key ?v))))
+
+(after! mhtml-mode
+  (add-hook 'mhtml-mode-hook (lambda () (apheleia-mode -1))))
+(after! jinja2-mode
+  (add-hook 'jinja2-mode-hook (lambda () (apheleia-mode -1))))
+
+(map!
+ :map doom-leader-toggle-map :desc "apheleia-mode" "a" 'apheleia-mode)
+
+;; (after! auth-source
+;;   (setq auth-sources (nreverse auth-sources)))
+(setq! auth-sources '("~/.authinfo.gpg" "~/.authinfo" "~/.netrc"))
