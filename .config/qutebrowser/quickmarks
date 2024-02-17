@@ -90,3 +90,4 @@ triggers django postgres https://2021.djangocon.us/talks/using-simple-database-t
 keyboard split aurora https://splitkb.com/
 docs django toc https://docs.djangoproject.com/en/5.0/contents/
 Class based views django docs https://ccbv.co.uk/
+Minor uggrade Postgresql https://dba.stackexchange.com/questions/324649/collation-version-mismatch
