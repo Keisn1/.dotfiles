@@ -212,6 +212,11 @@ c.colors.tabs.selected.even.bg = "#9d81ba"
 c.colors.tabs.even.bg = "#000000"
 c.colors.tabs.odd.bg = "#000000"
 
+# localhost keybindings
+config.bind("<Ctrl+l>8000", "open -t localhost:8000")
+config.bind("<Ctrl+l>5000", "open -t localhost:5000")
+config.bind("<Ctrl+l>3000", "open -t localhost:3000")
+
 # Bindings for normal mode
 config.bind("<Ctrl+l>gh", "open -t github.com")
 config.bind("<Ctrl+l>yt", "open -t youtube.com")

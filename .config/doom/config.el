@@ -133,8 +133,7 @@
   (add-to-list 'org-structure-template-alist '("p" . "src python :results output"))
   (add-to-list 'org-structure-template-alist '("go" . "src go :results output :imports \"fmt\" "))
   (add-to-list 'org-structure-template-alist '("sc" . "src c"))
-  (add-to-list 'org-structure-template-alist '("sqlite" . "src sqlite :db db.sqlite3 :colnames yes"))
-  (add-to-list 'org-structure-template-alist '("postgres" . "src postgres :engine postgresql :dbuser djangouser :database djangotraining :colnames yes"))
+  (add-to-list 'org-structure-template-alist '("sql" . "src sql"))
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (setq org-hide-emphasis-markers t)
   )
@@ -200,6 +199,8 @@
 (add-hook! 'org-mode-hook #'display-line-numbers-mode)
 
 (setq org-clock-string-limit 0)
+
+(org-add-link-type "mpv" (lambda (path) (mpv-play path)))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org-roam ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -461,11 +462,13 @@ information retrieved from files created by the keychain script."
           (lambda () (setq-local devdocs-current-docs '("go"))))
 
 (add-hook 'css-mode-hook
-          (lambda () (setq-local devdocs-current-docs '("dom" "css" "javascript" "html"))))
+          (lambda () (setq-local devdocs-current-docs '("dom" "css" "javascript" "html" "tailwindcss"))))
 (add-hook 'html-mode-hook
-          (lambda () (setq-local devdocs-current-docs '("dom" "css" "javascript" "html"))))
+          (lambda () (setq-local devdocs-current-docs '("dom" "css" "javascript" "html" "tailwindcss"))))
+(add-hook 'mhtml-mode-hook
+          (lambda () (setq-local devdocs-current-docs '("dom" "css" "javascript" "html" "tailwindcss"))))
 (add-hook 'js-mode-hook
-          (lambda () (setq-local devdocs-current-docs '("dom" "css" "javascript" "html"))))
+          (lambda () (setq-local devdocs-current-docs '("dom" "css" "javascript" "html" "tailwindcss"))))
 
 (add-to-list 'auto-mode-alist '("\\.gohtml\\'" . mhtml-mode))
 
@@ -671,3 +674,12 @@ information retrieved from files created by the keychain script."
 ;; (after! auth-source
 ;;   (setq auth-sources (nreverse auth-sources)))
 (setq! auth-sources '("~/.authinfo.gpg" "~/.authinfo" "~/.netrc"))
+
+;; (after! all-the-icons
+;;     :config
+;;   (add-to-list 'all-the-icons-extension-icon-alist '("gohtml" all-the-icons-alltheicon "html5" :face all-the-icons-orange)))
+;; (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+(use-package! nerd-icons
+    :config
+    (add-to-list 'nerd-icons-extension-icon-alist '("gohtml" nerd-icons-devicon "nf-dev-html5" :face nerd-icons-orange)))
+;; (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
