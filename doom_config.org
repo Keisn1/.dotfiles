@@ -69,7 +69,7 @@
 #+end_src
 ** Modeline
 #+begin_src emacs-lisp
-(setq doom-modeline-buffer-file-name-style 'buffer-name)
+(setq doom-modeline-buffer-file-name-style 'relative-to-project)
 #+end_src
 ** Size-indication-mode
 #+begin_src emacs-lisp
@@ -244,7 +244,6 @@ following situations:
   (setq org-pomodoro-length minutes)
   (message "org-pomodoro-length set to %d minutes." minutes))
 #+end_src
-
 *** Pomodoro sounds
 #+begin_src emacs-lisp
 (setq org-enable-notification t)
@@ -926,7 +925,8 @@ information retrieved from files created by the keychain script."
   (add-hook 'mhtml-mode-hook (lambda () (apheleia-mode -1))))
 (after! jinja2-mode
   (add-hook 'jinja2-mode-hook (lambda () (apheleia-mode -1))))
-
+(after! dockerfile-mode
+  (add-hook 'dockerfile-mode-hook (lambda () (apheleia-mode -1))))
 (map!
  :map doom-leader-toggle-map :desc "apheleia-mode" "a" 'apheleia-mode)
 #+end_src

@@ -41,7 +41,7 @@
 ;; (set-frame-parameter (selected-frame) 'alpha '(93 93))
 ;; (add-to-list 'default-frame-alist '(alpha . 93))
 
-(setq doom-modeline-buffer-file-name-style 'buffer-name)
+(setq doom-modeline-buffer-file-name-style 'relative-to-project)
 
 (size-indication-mode -1)
 
@@ -667,7 +667,8 @@ information retrieved from files created by the keychain script."
   (add-hook 'mhtml-mode-hook (lambda () (apheleia-mode -1))))
 (after! jinja2-mode
   (add-hook 'jinja2-mode-hook (lambda () (apheleia-mode -1))))
-
+(after! dockerfile-mode
+  (add-hook 'dockerfile-mode-hook (lambda () (apheleia-mode -1))))
 (map!
  :map doom-leader-toggle-map :desc "apheleia-mode" "a" 'apheleia-mode)
 
