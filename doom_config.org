@@ -879,22 +879,7 @@ information retrieved from files created by the keychain script."
 
   (setq mu4e-contexts
         (list
-         ;; Work account
-         (make-mu4e-context
-          :name "Keisn"
-          :match-func
-          (lambda (msg)
-            (when msg
-              (string-prefix-p "/gmail" (mu4e-message-field msg :maildir))))
-          :vars '((user-mail-address . "peterdiefontaene@gmail.com")
-                  (user-full-name    . "Kay Freyer")
-
-                  (mu4e-get-mail-command . "mbsync gmail")
-                  (mu4e-drafts-folder  . "/gmail/[Gmail]/Drafts")
-                  (mu4e-sent-folder  . "/gmail/[Gmail]/Sent Mail")
-                  (mu4e-refile-folder  . "/gmail/[Gmail]/All Mail")
-                  (mu4e-trash-folder  . "/gmail/[Gmail]/Trash")))
-
+         ;; icloud
          (make-mu4e-context
           :name "icloud"
           :match-func
@@ -911,6 +896,40 @@ information retrieved from files created by the keychain script."
                   (mu4e-drafts-folder  . "/icloud/Drafts")
                   (mu4e-sent-folder  . "/icloud/Sent Messages")
                   (mu4e-trash-folder  . "/icloud/Bin")))
+
+
+         ;; kaytravaille account
+         (make-mu4e-context
+          :name "kaytravaille"
+          :match-func
+          (lambda (msg)
+            (when msg
+              (string-prefix-p "/gmail/kaytravaille" (mu4e-message-field msg :maildir))))
+          :vars '((user-mail-address . "kaytravaille@gmail.com")
+                  (user-full-name    . "Kay Freyer")
+
+                  (mu4e-get-mail-command . "mbsync gmail")
+                  (mu4e-drafts-folder  . "/gmail/[Gmail]/kaytravaille/Drafts")
+                  (mu4e-sent-folder  . "/gmail/[Gmail]/kaytravaille/Sent Mail")
+                  (mu4e-refile-folder  . "/gmail/[Gmail]/kaytravaille/All Mail")
+                  (mu4e-trash-folder  . "/gmail/[Gmail]/kaytravaille/Trash")))
+
+         ;; Keisn account
+         (make-mu4e-context
+          :name "Keisn"
+          :match-func
+          (lambda (msg)
+            (when msg
+              (string-prefix-p "/gmail" (mu4e-message-field msg :maildir))))
+          :vars '((user-mail-address . "peterdiefontaene@gmail.com")
+                  (user-full-name    . "Kay Freyer")
+
+                  (mu4e-get-mail-command . "mbsync gmail")
+                  (mu4e-drafts-folder  . "/gmail/[Gmail]/Drafts")
+                  (mu4e-sent-folder  . "/gmail/[Gmail]/Sent Mail")
+                  (mu4e-refile-folder  . "/gmail/[Gmail]/All Mail")
+                  (mu4e-trash-folder  . "/gmail/[Gmail]/Trash")))
+
          ))
 
   (setq mu4e-maildir-shortcuts
