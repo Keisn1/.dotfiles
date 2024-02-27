@@ -1,6 +1,36 @@
 IMAPAccount gmail
 # Address to connect to
 Host imap.gmail.com
+User kaytravaille@gmail.com
+# To store the password in an encrypted file use PassCmd instead of Pass
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.gmail-kaytravaille.gpg"
+#
+# Use TLS
+SSLType IMAPS
+# The following line should work. If you get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+#CertificateFile ~/.cert/imap.gmail.com.pem
+#CertificateFile ~/.cert/Equifax_Secure_CA.pem
+
+MaildirStore gmail-local
+# The trailing "/" is important
+Path ~/.mail/gmail-kt/
+Inbox ~/.mail/gmail-kt/Inbox
+SubFolders Verbatim
+
+IMAPStore gmail-remote
+Account gmail
+
+Channel gmail
+Far :gmail-remote:
+Near :gmail-local:
+Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" "[Gmail]/Trash"
+Create Both
+SyncState *
+
+IMAPAccount gmail
+# Address to connect to
+Host imap.gmail.com
 User peterdiefontaene@gmail.com
 # To store the password in an encrypted file use PassCmd instead of Pass
 PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.gmail.gpg"
