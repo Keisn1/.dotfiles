@@ -443,17 +443,52 @@ information retrieved from files created by the keychain script."
   (setq flymake-show-diagnostics-at-end-of-line t)
   )
 
-(use-package! org-ai
-  :commands (
-             org-ai-mode
-             org-ai-global-mode)
-  :init
-  (add-hook 'org-mode-hook #'org-ai-mode) ;enable org-ai in org mode
-  (org-ai-global-mode)                    ; installs global keybindings C-c M-a
+;; (use-package! org-ai
+;;   :commands (
+;;              org-ai-mode
+;;              org-ai-global-mode)
+;;   :init
+;;   (add-hook 'org-mode-hook #'org-ai-mode) ;enable org-ai in org mode
+;;   (org-ai-global-mode)                    ; installs global keybindings C-c M-a
+;;   :config
+;;   (setq org-ai-default-chat-model "gpt-3.5-turbo")
+;;   (org-ai-install-yasnippets)
+;;   )
+
+;; (map!  :leader
+;;        "k" org-ai-global-prefix-map
+;;        :leader
+;;        :prefix "k" "e" #'org-ai-explain-code
+;;        )
+
+(use-package! gptel
   :config
-  (setq org-ai-default-chat-model "gpt-3.5-turbo")
-  (org-ai-install-yasnippets)
+  (setq! gptel-api-key #'gptel-api-key-from-auth-source)
+  (setq! gptel-default-mode 'org-mode))
+
+(defvar gptel-global-prefix-map (make-sparse-keymap)
+  "Keymap for GPTel.")
+
+(defun gptel-buffer ()
+  (interactive)
+  (setq current-prefix-arg '(4))
+  (call-interactively 'gptel))
+
+(let ((map gptel-global-prefix-map))
+  (define-key map (kbd "b") 'gptel)
+  (define-key map (kbd "B") 'gptel-buffer)
+  (define-key map (kbd "s") 'gptel-send)
+  (define-key map (kbd "m") 'gptel-menu)
+  (define-key map (kbd "r") 'gptel--suffix-rewrite)
+  (define-key map (kbd "R") 'gptel-rewrite-menu)
   )
+
+(map!  :leader
+       "k" gptel-global-prefix-map)
+
+(after! gptel
+  (add-to-list 'gptel-directives '(find-emacs-function . "Please provide the name of the Emacs function that performs this action.")
+  (add-to-list 'gptel-directives '(bash-function . "Assist in generating command line commands by providing the requested action without extra elaboration. Only provide the command itself as I will further refine it before execution.")))
 
 (add-hook 'python-mode-hook
           (lambda () (setq-local devdocs-current-docs '("python~3.11" "django~5.0" "django_rest_framework"))))
@@ -585,12 +620,6 @@ information retrieved from files created by the keychain script."
 
 (map!
  :map doom-leader-toggle-map :desc "golden-ratio-mode" "o" 'golden-ratio-mode)
-
-(map!  :leader
-       "k" org-ai-global-prefix-map
-       :leader
-       :prefix "k" "e" #'org-ai-explain-code
-       )
 
 (map! :leader
       :prefix "s"

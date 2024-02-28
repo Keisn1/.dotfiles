@@ -33,11 +33,12 @@
 (package! golden-ratio)
 (package! imenu-list)
 (package! bufler)
-(package! org-ai)
 (package! devdocs)
 (package! validate-html)
 (package! jinja2-mode)
 (package! mpv)
+(package! gptel)
+;; (package! org-ai)
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
 ;; https://github.com/radian-software/straight.el#the-recipe-format
