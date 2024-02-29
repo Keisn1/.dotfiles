@@ -68,3 +68,6 @@ source /usr/share/nvm/init-nvm.sh
 # keychain
 # https://wiki.archlinux.org/title/SSH_keys#Configuration
 eval $(keychain --eval --quiet id_ed25519 )
+
+# direnv
+eval "$(direnv hook zsh)"
