@@ -464,7 +464,22 @@ information retrieved from files created by the keychain script."
 (use-package! gptel
   :config
   (setq! gptel-api-key #'gptel-api-key-from-auth-source)
-  (setq! gptel-default-mode 'org-mode))
+  (setq! gptel-default-mode 'org-mode)
+  (setq! gptel-directives '(
+                            (default . "You are a large language model living in Emacs and a helpful assistant. Respond concisely.")
+                            (default-long . "You are a helpful assistant, occasionally dwelling within Emacs, believe it or not.
+     A convivial sort with an easy-going natural manner.
+     Wrap any generated code in gfm code blocks - this applies only to code, not to general responses.  For example
+     ```emacs-lisp
+     (message \"this is a test\")
+     ```
+")
+                            (programming . "You are a large language model and a careful programmer. Provide code and only code as output without any additional text, prompt or note.")
+                            (writing . "You are a large language model and a writing assistant. Respond concisely.")
+                            (chat . "You are a large language model and a conversation partner. Respond concisely.")
+                            (find-emacs-function . "Please provide the name of the Emacs function that performs this action.")
+                            (bash-function . "Assist in generating command line commands by providing the requested action without extra elaboration. Only provide the command itself as I will further refine it before execution.")))
+    (setq! gptel--system-message (alist-get 'default gptel-directives)))
 
 (defvar gptel-global-prefix-map (make-sparse-keymap)
   "Keymap for GPTel.")
@@ -481,14 +496,99 @@ information retrieved from files created by the keychain script."
   (define-key map (kbd "m") 'gptel-menu)
   (define-key map (kbd "r") 'gptel--suffix-rewrite)
   (define-key map (kbd "R") 'gptel-rewrite-menu)
-  )
+  (define-key map (kbd "P") 'gjg/gptel-select-system-prompt))
 
 (map!  :leader
        "k" gptel-global-prefix-map)
 
-(after! gptel
-  (add-to-list 'gptel-directives '(find-emacs-function . "Please provide the name of the Emacs function that performs this action.")
-  (add-to-list 'gptel-directives '(bash-function . "Assist in generating command line commands by providing the requested action without extra elaboration. Only provide the command itself as I will further refine it before execution.")))
+;; (after! gptel
+;;   (add-to-list 'gptel-directives '(find-emacs-function . "Please provide the name of the Emacs function that performs this action.")
+;;   (add-to-list 'gptel-directives '(bash-function . "Assist in generating command line commands by providing the requested action without extra elaboration. Only provide the command itself as I will further refine it before execution."))))
+
+;; Use the system prompt builder function
+
+(let ((build-custom-directives-fun "~/.dotfiles/ai/gptel-build-custom-directives.el"))
+  (when (f-exists-p build-custom-directives-fun)
+    (load build-custom-directives-fun)
+    ;; (custom-set-variables '(gptel-directives
+    (setq gptel-custom-directives
+          (gjg/gptel-build-custom-directives
+           "~/.dotfiles/ai/system-prompts/"))))
+
+;; pandoc -f gfm -t org|sed '/:PROPERTIES:/,/:END:/d'
+
+(defun gjg/gptel--convert-markdown->org (str)
+  "Convert string STR from markdown to org markup using Pandoc.
+         Remove the property drawers Pandoc insists on inserting for org output."
+  ;; point will be at the last user position - assistant response will be after that to the end of the buffer (hopefully without the next user prompt)
+  ;; So let's
+  (interactive)
+  (let* ((org-prefix (alist-get 'org-mode gptel-prompt-prefix-alist))
+         (shift-indent (progn (string-match "^\\(\\*+\\)" org-prefix) (length (match-string 1 org-prefix))))
+         (lua-filter (when (file-readable-p "~/.config/pandoc/gfm_code_to_org_block.lua")
+                       (concat "--lua-filter=" (expand-file-name "~/.config/pandoc/gfm_code_to_org_block.lua"))))
+         (temp-name (make-temp-name "gptel-convert-" ))
+         (sentence-end "\\([.?!
+         ]\\)"))
+    ;; TODO: consider placing original complete response in the kill ring
+    ;; (with-temp-buffer
+    (with-current-buffer (get-buffer-create (concat "*" temp-name "*"))
+      (insert str)
+      (write-region (point-min) (point-max) (concat "/tmp/" temp-name ".md" ))
+      (shell-command-on-region (point-min) (point-max)
+                               (format "pandoc -f gfm -t org --shift-heading-level-by=%d %s|sed '/:PROPERTIES:/,/:END:/d'" shift-indent lua-filter)
+                               nil ;; use current buffer
+                               t   ;; replace the buffer contents
+                               "*gptel-convert-error*")
+      (goto-char (point-min))
+      ;; (insert (format "%sAssistant: %s\n" (alist-get 'org-mode gptel-prompt-prefix-alist) (or (sentence-at-point t) "[resp]")))
+      (insert (format "%sAssistant: \n" (alist-get 'org-mode gptel-prompt-prefix-alist)))
+      ;; (insert "\n")
+      (goto-char (point-max))
+      (buffer-string))))
+
+(defun gjg/gptel-convert-org-with-pandoc (content buffer)
+  "Transform CONTENT acoording to required major-mode using `pandoc'.
+          Currenly only `org-mode' is supported
+          This depends on the `pandoc' binary only, not on the  Emacs Lisp `pandoc' package."
+  (pcase (buffer-local-value 'major-mode buffer)
+    ('org-mode (gjg/gptel--convert-markdown->org content))
+    (_ content)))
+
+(custom-set-variables '(gptel-response-filter-functions
+                        '(gjg/gptel-convert-org-with-pandoc)))
+
+(defun gjg/gptel--annotate-directives (s)
+  "Make the directives selection look fancy."
+  (let* ((item (assoc (intern s) minibuffer-completion-table))
+         (desc (s-truncate 40 (nth 1 item)))
+         (prompt (s-truncate 80 (s-replace "\n" "\\n" (nth 2 item)))))
+    (when item (concat
+                (string-pad "" (- 40 (string-width s)))
+                desc
+                (string-pad "" (- 55 (string-width desc)))
+                prompt
+                ))))
+
+(defun gjg/gptel-select-system-prompt (&optional directive-key)
+  "Set system message in local gptel buffer to directive/prompt indicated by DIRECTIVE-KEY."
+  (interactive)
+  (let* ((marginalia-align-offset 80)
+         (completion-extra-properties '(:annotation-function gjg/gptel--annotate-directives))
+         (directive-key (or directive-key
+                            (intern
+                             (completing-read
+                              ;; "New directive: "
+                              (format "Current prompt %s: "
+                                      (truncate-string-to-width gptel--system-message 90 nil nil (truncate-string-ellipsis) ))
+                              gptel-custom-directives
+                              nil ;; predicate/filter
+                              nil ;; do not require a match - allow custom prompt
+                              nil ;; no initial input
+                              nil ;; no history specified
+                              "default" ;; default value if return is nil
+                              )))))
+    (setq-local gptel--system-message (nth 2 (assoc directive-key gptel-custom-directives)))))
 
 (add-hook 'python-mode-hook
           (lambda () (setq-local devdocs-current-docs '("python~3.11" "django~5.0" "django_rest_framework"))))
