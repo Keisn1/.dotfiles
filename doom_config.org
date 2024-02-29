@@ -685,7 +685,7 @@ information retrieved from files created by the keychain script."
                             (writing . "You are a large language model and a writing assistant. Respond concisely.")
                             (chat . "You are a large language model and a conversation partner. Respond concisely.")
                             (find-emacs-function . "Please provide the name of the Emacs function that performs this action.")
-                            (bash-function . "Assist in generating command line commands by providing the requested action without extra elaboration. Only provide the command itself as I will further refine it before execution.")))
+                            (bash-function . "Assist in generating command line commands by providing the requested action without extra elaboration. Only provide the command without any formatting itself as I will further refine it before execution.")))
     (setq! gptel--system-message (alist-get 'default gptel-directives)))
 #+end_src
 ** map
