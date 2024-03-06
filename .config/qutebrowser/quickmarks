@@ -94,3 +94,4 @@ Minor uggrade Postgresql https://dba.stackexchange.com/questions/324649/collatio
 input conf mpv https://github.com/mpv-player/mpv/blob/master/etc/input.conf
 keybindings mpv https://github.com/mpv-player/mpv/blob/master/etc/input.conf
 Costs Chat GPT https://platform.openai.com/usage
+logging golang blog post honeybadger https://www.honeybadger.io/blog/golang-logging/

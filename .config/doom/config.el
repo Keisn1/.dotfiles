@@ -134,6 +134,7 @@
   (add-to-list 'org-structure-template-alist '("go" . "src go :results output :imports \"fmt\" "))
   (add-to-list 'org-structure-template-alist '("sc" . "src c"))
   (add-to-list 'org-structure-template-alist '("sql" . "src sql"))
+  (add-to-list 'org-structure-template-alist '("sqlite" . "src sqlite"))
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (setq org-hide-emphasis-markers t)
   )
@@ -384,9 +385,10 @@
 
 (defun toggle-django-shell-interpreter-args ()
   (interactive)
-  (if (not (string= python-shell-interpreter-args "-i"))
-      (setq python-shell-interpreter-args "-i")
-    (setq python-shell-interpreter-args (concat "-i " (expand-file-name (magit-toplevel)) "manage.py shell"))))
+  (let ((manage-py (locate-dominating-file default-directory "manage.py")))
+    (if manage-py
+        (setq python-shell-interpreter-args (concat "-i " (expand-file-name manage-py) "manage.py shell"))
+      (message "manage.py not found in parent directories"))))
 
 (map! :map doom-leader-toggle-map :desc "toggle-django-shell" "d" 'toggle-django-shell-interpreter-args)
 
