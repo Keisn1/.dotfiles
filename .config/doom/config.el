@@ -199,7 +199,7 @@
 
 (add-hook! 'org-mode-hook #'display-line-numbers-mode)
 
-(setq org-clock-string-limit 0)
+(setq org-clock-clocked-in-display nil)
 
 (org-add-link-type "mpv" (lambda (path) (mpv-play path)))
 
@@ -468,7 +468,6 @@ information retrieved from files created by the keychain script."
   (setq! gptel-api-key #'gptel-api-key-from-auth-source)
   (setq! gptel-default-mode 'org-mode)
   (setq! gptel-directives '(
-                            (default . "You are a large language model living in Emacs and a helpful assistant. Respond concisely.")
                             (default-long . "You are a helpful assistant, occasionally dwelling within Emacs, believe it or not.
      A convivial sort with an easy-going natural manner.
      Wrap any generated code in gfm code blocks - this applies only to code, not to general responses.  For example
@@ -476,6 +475,7 @@ information retrieved from files created by the keychain script."
      (message \"this is a test\")
      ```
 ")
+                            (default . "You are a large language model living in Emacs and a helpful assistant. Respond concisely.")
                             (programming . "You are a large language model and a careful programmer. Provide code and only code as output without any additional text, prompt or note.")
                             (writing . "You are a large language model and a writing assistant. Respond concisely.")
                             (chat . "You are a large language model and a conversation partner. Respond concisely.")
