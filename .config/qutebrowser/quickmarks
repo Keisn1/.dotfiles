@@ -95,3 +95,6 @@ input conf mpv https://github.com/mpv-player/mpv/blob/master/etc/input.conf
 keybindings mpv https://github.com/mpv-player/mpv/blob/master/etc/input.conf
 Costs Chat GPT https://platform.openai.com/usage
 logging golang blog post honeybadger https://www.honeybadger.io/blog/golang-logging/
+gophercises https://gophercises.com/
+euler project https://projecteuler.net/
+cyber dojo coding practice tdd https://cyber-dojo.org/creator/home

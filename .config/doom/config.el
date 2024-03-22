@@ -373,10 +373,16 @@
 (setq c-basic-offset 4)
 
 ;; Go ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(add-hook 'go-ts-mode-hook
-          (lambda ()
-            (setq compile-command "go build")))
+;; (add-hook 'go-ts-mode-hook
+;;           (lambda ()
+;;             (setq compile-command "go build")))
 (add-hook 'go-ts-mode-hook eldoc-mode)
+(setq-default eglot-workspace-configuration
+              '((:gopls .
+                        ((staticcheck . t)
+                         (matcher . "CaseSensitive")
+                         (symbolScope . "workspace")
+                         ))))
 
 ;; Python ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -445,17 +451,17 @@ information retrieved from files created by the keychain script."
   (setq flymake-show-diagnostics-at-end-of-line t)
   )
 
-;; (use-package! org-ai
-;;   :commands (
-;;              org-ai-mode
-;;              org-ai-global-mode)
-;;   :init
-;;   (add-hook 'org-mode-hook #'org-ai-mode) ;enable org-ai in org mode
-;;   (org-ai-global-mode)                    ; installs global keybindings C-c M-a
-;;   :config
-;;   (setq org-ai-default-chat-model "gpt-3.5-turbo")
-;;   (org-ai-install-yasnippets)
-;;   )
+(use-package! org-ai
+  :commands (
+             org-ai-mode
+             org-ai-global-mode)
+  :init
+  (add-hook 'org-mode-hook #'org-ai-mode) ;enable org-ai in org mode
+  (org-ai-global-mode)                    ; installs global keybindings C-c M-a
+  :config
+  (setq org-ai-default-chat-model "gpt-3.5-turbo")
+  (org-ai-install-yasnippets)
+  )
 
 ;; (map!  :leader
 ;;        "k" org-ai-global-prefix-map
@@ -727,6 +733,14 @@ information retrieved from files created by the keychain script."
       :prefix "s"
       :desc "devdocs-lookup" "o" #'devdocs-lookup
       )
+
+(map! :after go-mode
+      :map go-mode-map
+      :localleader
+      :prefix ("t" . "test")
+      "t" #'go-test-current-test
+      "f" #'go-test-current-file
+      "p" #'go-test-current-project)
 
 (after! mu4e
   (setq! mu4e-compose-context-policy 'ask-if-none)

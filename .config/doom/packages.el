@@ -39,7 +39,7 @@
 (package! mpv)
 (package! gptel)
 ;; (package! gptel :recipe (:host github :repo "https://github.com/karthink/gptel.git" :type git :fork "gregoryg"))
-;; (package! org-ai)
+(package! org-ai)
 (package! ox-pandoc)
 
 

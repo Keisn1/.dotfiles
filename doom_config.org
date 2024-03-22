@@ -527,10 +527,16 @@ following situations:
 ** GO
 #+begin_src emacs-lisp
 ;; Go ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(add-hook 'go-ts-mode-hook
-          (lambda ()
-            (setq compile-command "go build")))
+;; (add-hook 'go-ts-mode-hook
+;;           (lambda ()
+;;             (setq compile-command "go build")))
 (add-hook 'go-ts-mode-hook eldoc-mode)
+(setq-default eglot-workspace-configuration
+              '((:gopls .
+                        ((staticcheck . t)
+                         (matcher . "CaseSensitive")
+                         (symbolScope . "workspace")
+                         ))))
 #+end_src
 ** Python
 #+begin_src emacs-lisp
@@ -649,17 +655,17 @@ information retrieved from files created by the keychain script."
 #+end_src
 * org-ai
 #+begin_src emacs-lisp
-;; (use-package! org-ai
-;;   :commands (
-;;              org-ai-mode
-;;              org-ai-global-mode)
-;;   :init
-;;   (add-hook 'org-mode-hook #'org-ai-mode) ;enable org-ai in org mode
-;;   (org-ai-global-mode)                    ; installs global keybindings C-c M-a
-;;   :config
-;;   (setq org-ai-default-chat-model "gpt-3.5-turbo")
-;;   (org-ai-install-yasnippets)
-;;   )
+(use-package! org-ai
+  :commands (
+             org-ai-mode
+             org-ai-global-mode)
+  :init
+  (add-hook 'org-mode-hook #'org-ai-mode) ;enable org-ai in org mode
+  (org-ai-global-mode)                    ; installs global keybindings C-c M-a
+  :config
+  (setq org-ai-default-chat-model "gpt-3.5-turbo")
+  (org-ai-install-yasnippets)
+  )
 
 ;; (map!  :leader
 ;;        "k" org-ai-global-prefix-map
@@ -994,6 +1000,16 @@ This ultimately replaces the Markdown -> Org Mode conversion built in to =gptel=
       :prefix "s"
       :desc "devdocs-lookup" "o" #'devdocs-lookup
       )
+#+end_src
+** go-mode
+#+begin_src emacs-lisp
+(map! :after go-mode
+      :map go-mode-map
+      :localleader
+      :prefix ("t" . "test")
+      "t" #'go-test-current-test
+      "f" #'go-test-current-file
+      "p" #'go-test-current-project)
 #+end_src
 * mu4e
 #+begin_src emacs-lisp
