@@ -1006,10 +1006,12 @@ This ultimately replaces the Markdown -> Org Mode conversion built in to =gptel=
 (map! :after go-mode
       :map go-mode-map
       :localleader
+      "r" #'go-run
       :prefix ("t" . "test")
       "t" #'go-test-current-test
       "f" #'go-test-current-file
-      "p" #'go-test-current-project)
+      "p" #'go-test-current-project
+      )
 #+end_src
 * mu4e
 #+begin_src emacs-lisp

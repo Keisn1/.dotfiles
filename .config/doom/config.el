@@ -737,10 +737,12 @@ information retrieved from files created by the keychain script."
 (map! :after go-mode
       :map go-mode-map
       :localleader
+      "r" #'go-run
       :prefix ("t" . "test")
       "t" #'go-test-current-test
       "f" #'go-test-current-file
-      "p" #'go-test-current-project)
+      "p" #'go-test-current-project
+      )
 
 (after! mu4e
   (setq! mu4e-compose-context-policy 'ask-if-none)
