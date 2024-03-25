@@ -499,6 +499,7 @@ following situations:
   (add-hook 'c-mode-hook 'eglot-ensure)
   (add-hook 'c++-mode-hook 'eglot-ensure)
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+  (add-to-list 'eglot-server-programs '((go-mode) "gopls"))
   (add-to-list 'eglot-server-programs '((python-mode) "pyright"))
 )
 #+end_src
@@ -530,11 +531,11 @@ following situations:
 ;; (add-hook 'go-ts-mode-hook
 ;;           (lambda ()
 ;;             (setq compile-command "go build")))
-(add-hook 'go-ts-mode-hook eldoc-mode)
+;; (add-hook 'go-ts-mode-hook eldoc-mode)
 (setq-default eglot-workspace-configuration
               '((:gopls .
                         ((staticcheck . t)
-                         (matcher . "CaseSensitive")
+                         ;; (matcher . "CaseSensitive")
                          (symbolScope . "workspace")
                          ))))
 #+end_src
@@ -1011,6 +1012,13 @@ This ultimately replaces the Markdown -> Org Mode conversion built in to =gptel=
       "t" #'go-test-current-test
       "f" #'go-test-current-file
       "p" #'go-test-current-project
+      )
+#+end_src
+** imenu
+#+begin_src emacs-lisp
+(map! :leader
+      :prefix "s"
+      "M" #'imenu-list
       )
 #+end_src
 * mu4e

@@ -354,6 +354,7 @@
   (add-hook 'c-mode-hook 'eglot-ensure)
   (add-hook 'c++-mode-hook 'eglot-ensure)
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+  (add-to-list 'eglot-server-programs '((go-mode) "gopls"))
   (add-to-list 'eglot-server-programs '((python-mode) "pyright"))
 )
 
@@ -376,11 +377,11 @@
 ;; (add-hook 'go-ts-mode-hook
 ;;           (lambda ()
 ;;             (setq compile-command "go build")))
-(add-hook 'go-ts-mode-hook eldoc-mode)
+;; (add-hook 'go-ts-mode-hook eldoc-mode)
 (setq-default eglot-workspace-configuration
               '((:gopls .
                         ((staticcheck . t)
-                         (matcher . "CaseSensitive")
+                         ;; (matcher . "CaseSensitive")
                          (symbolScope . "workspace")
                          ))))
 
@@ -742,6 +743,11 @@ information retrieved from files created by the keychain script."
       "t" #'go-test-current-test
       "f" #'go-test-current-file
       "p" #'go-test-current-project
+      )
+
+(map! :leader
+      :prefix "s"
+      "M" #'imenu-list
       )
 
 (after! mu4e
