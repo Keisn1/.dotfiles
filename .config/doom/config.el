@@ -229,6 +229,10 @@
            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                               "#+title: ${title}\n#+date: %U\n#+startup: overview\n")
            :unnarrowed t)
+          ("d" "latex" plain "%?"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                              "#+title: ${title}\n#+date: %U\n#+startup: overview\n")
+           :unnarrowed t)
           ("y" "python" plain (file "~/.dotfiles/resources/templates/org-roam/PythonNoteTemplate.org")
            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Python")
            :unnarrowed t)
@@ -484,8 +488,6 @@ information retrieved from files created by the keychain script."
 ")
                             (default . "You are a large language model living in Emacs and a helpful assistant. Respond concisely.")
                             (programming . "You are a large language model and a careful programmer. Provide code and only code as output without any additional text, prompt or note.")
-                            (writing . "You are a large language model and a writing assistant. Respond concisely.")
-                            (chat . "You are a large language model and a conversation partner. Respond concisely.")
                             (find-emacs-function . "Please provide the name of the Emacs function that performs this action.")
                             (bash-function . "Assist in generating command line commands by providing the requested action without extra elaboration. Only provide the command without any formatting itself as I will further refine it before execution.")))
     (setq! gptel--system-message (alist-get 'default gptel-directives)))
@@ -646,6 +648,9 @@ information retrieved from files created by the keychain script."
 (map!   :map org-mode-map
         :localleader "v p" 'set-pomodoro-length)
 
+(map!   :map org-mode-map
+        :localleader "v l" #'org-latex-preview)
+
 (map!   :mode org-mode
         :leader "n r I" 'org-roam-node-insert-immediate)
 
@@ -748,6 +753,11 @@ information retrieved from files created by the keychain script."
 (map! :leader
       :prefix "s"
       "M" #'imenu-list
+      )
+
+(map! :leader
+      :prefix "c"
+      "o" #'eldoc
       )
 
 (after! mu4e
