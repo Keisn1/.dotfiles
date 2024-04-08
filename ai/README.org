@@ -451,23 +451,66 @@
    #+end_src
 ** Translations
 *** To english
-   #+description: translate to english
-   #+name: translate-to-english
-   #+begin_src gfm
+#+description: translate to english
+#+name: translate-to-english
+#+begin_src gfm
 Translate to english
-   #+end_src
+If reasonable, give more than one translation.
+
+If the prompt appears inside an org-table similar to:
+```org-mode
+|   toBeTranslated |        |
+```
+then put the translations (up to 3; but could be 1 or 2) into the open column. Like so:
+```org-mode
+|   toBeTranslated |  translation1    |
+|                  |  translation2    |
+|                  |  translation3    |
+```
+
+If the prompt doesn't appear inside an org-table, then just write the translations as plain text.
+#+end_src
 *** To french
    #+description: translate to french
    #+name: translate-to-french
    #+begin_src gfm
 Translate to french
+If reasonable, give more than one translation.
+If the prompt appears inside an org table similar to:
+```org-mode
+|   toBeTranslated |        |
+```
+then put the translations (up to 3; but could be 1 or 2) to the open column. Like so:
+```org-mode
+|   toBeTranslated |  translation1    |
+|                  |  translation2    |
+|                  |  translation3    |
+```
    #+end_src
 *** To german
    #+description: translate to german
    #+name: translate-to-german
    #+begin_src gfm
 Translate to german
+If reasonable, give more than one translation.
+If the prompt appears inside an org table similar to:
+```org-mode
+|   toBeTranslated |        |
+```
+then put the translations (up to 3; but could be 1 or 2) to the open column. Like so:
+```org-mode
+|   toBeTranslated |  translation1    |
+|                  |  translation2    |
+|                  |  translation3    |
+```
    #+end_src
+** Commands
+*** Correct spelling errors in the sentence
+#+description: Correct spelling errors in the phrase, in the language that the phrase is written in
+#+name: correct-phrase
+#+begin_src gfm
+Correct spelling errors in the phrase, in the language that the phrase is written in
+#+end_src
 ** Generic for LLMs in Emacs
    :PROPERTIES:
    :image:    img/assistant-in-emacs-in-laptop.jpeg-crop-4-3.png

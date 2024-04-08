@@ -744,6 +744,7 @@ information retrieved from files created by the keychain script."
       :map go-mode-map
       :localleader
       "r" #'go-run
+      "i" #'go-import-add
       :prefix ("t" . "test")
       "t" #'go-test-current-test
       "f" #'go-test-current-file
