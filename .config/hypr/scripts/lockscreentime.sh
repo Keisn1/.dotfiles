@@ -87,7 +87,7 @@ EOF
 if [ -f "/usr/bin/swayidle" ]; then
     echo "swayidle is installed."
     swayidle -w timeout $timeswaylock "$(echo $multi_line_string)" \
-        timeout $timeswaylock "ssh-agent -k" \
+        timeout $timeswaylock "pkill ssh-agent" \
         timeout $timeswaylock "rbw lock" \
         timeout $timeoff 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on'
 else
