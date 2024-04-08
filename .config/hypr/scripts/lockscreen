@@ -13,6 +13,7 @@ blue=${color4:1}    magenta=${color5:1}  cyan=${color6:1}
 alpha='00000000'
 
 # CMD
+ssh-agent -k
 rbw lock
 
 swaylock -f \

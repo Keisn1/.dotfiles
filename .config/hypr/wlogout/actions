@@ -46,6 +46,7 @@ elif [[ "$1" == '--logout' ]]; then
 	cdialog
 	if [[ "$?" == 0 ]]; then
         rbw lock
+        ssh-add -D
 		hyprctl dispatch exit 0
     else
 		exit

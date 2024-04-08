@@ -18,8 +18,8 @@ red=${color1:1}     green=${color2:1}    yellow=${color3:1}
 blue=${color4:1}    magenta=${color5:1}  cyan=${color6:1}
 alpha='00000000'
 
-timeswaylock=450
-timeoff=600
+timeswaylock=300
+timeoff=360
 
 multi_line_string=$(cat <<EOF
 swaylock -f 
@@ -87,6 +87,7 @@ EOF
 if [ -f "/usr/bin/swayidle" ]; then
     echo "swayidle is installed."
     swayidle -w timeout $timeswaylock "$(echo $multi_line_string)" \
+        timeout $timeswaylock "ssh-agent -k" \
         timeout $timeswaylock "rbw lock" \
         timeout $timeoff 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on'
 else
