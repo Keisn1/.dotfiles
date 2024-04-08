@@ -745,7 +745,7 @@ information retrieved from files created by the keychain script."
       :localleader
       "r" #'go-run
       :prefix ("i" . "import")
-      "a" #'go-import-add
+      "i" #'go-import-add
       "o" #'eglot-code-action-organize-imports
       :prefix ("t" . "test")
       "t" #'go-test-current-test
