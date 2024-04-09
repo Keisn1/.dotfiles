@@ -18,8 +18,8 @@ red=${color1:1}     green=${color2:1}    yellow=${color3:1}
 blue=${color4:1}    magenta=${color5:1}  cyan=${color6:1}
 alpha='00000000'
 
-timeswaylock=300
-timeoff=360
+timeswaylock=450
+timeoff=600
 
 multi_line_string=$(cat <<EOF
 swaylock -f 
