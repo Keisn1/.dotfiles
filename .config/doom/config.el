@@ -765,7 +765,6 @@ information retrieved from files created by the keychain script."
       )
 
 (after! mu4e
-
   (setq! doom-modeline-mu4e nil)
   (setq! mu4e-compose-context-policy 'ask-if-none)
   (setq! sendmail-program (executable-find "msmtp")

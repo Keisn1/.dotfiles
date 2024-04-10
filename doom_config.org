@@ -1042,7 +1042,6 @@ This ultimately replaces the Markdown -> Org Mode conversion built in to =gptel=
 * mu4e
 #+begin_src emacs-lisp
 (after! mu4e
-
   (setq! doom-modeline-mu4e nil)
   (setq! mu4e-compose-context-policy 'ask-if-none)
   (setq! sendmail-program (executable-find "msmtp")
