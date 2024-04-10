@@ -42,7 +42,6 @@
 ;; (add-to-list 'default-frame-alist '(alpha . 93))
 
 (setq doom-modeline-buffer-file-name-style 'relative-to-project)
-(setq doom-modeline-mu4e nil)
 
 (size-indication-mode -1)
 
@@ -766,8 +765,10 @@ information retrieved from files created by the keychain script."
       )
 
 (after! mu4e
+
+  (setq! doom-modeline-mu4e nil)
   (setq! mu4e-compose-context-policy 'ask-if-none)
-  (setq sendmail-program (executable-find "msmtp")
+  (setq! sendmail-program (executable-find "msmtp")
         send-mail-function #'smtpmail-send-it
         message-sendmail-f-is-evil t
         message-sendmail-extra-arguments '("--read-envelope-from")
