@@ -42,6 +42,7 @@
 ;; (add-to-list 'default-frame-alist '(alpha . 93))
 
 (setq doom-modeline-buffer-file-name-style 'relative-to-project)
+(setq doom-modeline-mu4e nil)
 
 (size-indication-mode -1)
 
@@ -751,6 +752,7 @@ information retrieved from files created by the keychain script."
       "t" #'go-test-current-test
       "f" #'go-test-current-file
       "p" #'go-test-current-project
+      "c" #'go-test-current-coverage
       )
 
 (map! :leader

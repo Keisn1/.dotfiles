@@ -272,4 +272,5 @@ config.set("content.autoplay", False)
 #     "emacs",
 #     "{}",
 # ]
-c.editor.command = ["emacs", "--with-profile", "doom", "{}"]
+# c.editor.command = ["emacs", "--with-profile", "doom", "{}"]
+c.editor.command = ["emacsclient", "-s", "doom", "-a", "emacs", "{}"]

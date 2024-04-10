@@ -70,6 +70,7 @@
 ** Modeline
 #+begin_src emacs-lisp
 (setq doom-modeline-buffer-file-name-style 'relative-to-project)
+(setq doom-modeline-mu4e nil)
 #+end_src
 ** Size-indication-mode
 #+begin_src emacs-lisp
@@ -1022,6 +1023,7 @@ This ultimately replaces the Markdown -> Org Mode conversion built in to =gptel=
       "t" #'go-test-current-test
       "f" #'go-test-current-file
       "p" #'go-test-current-project
+      "c" #'go-test-current-coverage
       )
 #+end_src
 ** imenu
