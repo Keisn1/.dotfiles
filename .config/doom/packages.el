@@ -41,8 +41,8 @@
 ;; (package! gptel :recipe (:host github :repo "https://github.com/karthink/gptel.git" :type git :fork "gregoryg"))
 (package! org-ai)
 (package! ox-pandoc)
-
-
+(package! mu4e-compat
+  :recipe (:host github :repo "tecosaur/mu4e-compat"))
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
 ;; https://github.com/radian-software/straight.el#the-recipe-format
