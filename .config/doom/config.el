@@ -1,6 +1,8 @@
 ;; Exec-path-from-shell ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (exec-path-from-shell-initialize)
 
+(setq require-final-newline nil)
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Appearance ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -278,7 +280,7 @@
 ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
 ;;         a hookable mode anymore, you're advised to pick something yourself
 ;;         if you don't care about startup time, use
-;;  :hook (after-init . org-roam-ui-mode)
+ ;; :hook (after-init . org-roam-ui-mode)
     :config
     (setq org-roam-ui-sync-theme t
           org-roam-ui-follow t
@@ -486,8 +488,8 @@ information retrieved from files created by the keychain script."
      (message \"this is a test\")
      ```
 ")
-                            (default . "You are a large language model living in Emacs and a helpful assistant. Respond concisely.")
-                            (programming . "You are a large language model and a careful programmer. Provide code and only code as output without any additional text, prompt or note.")
+                            (default . "You are a large language model living in Emacs and a helpful assistant. Try to avoid long answers.")
+                            (programming . "You are a large language model and a careful programmer. When asked about something with regards to programming, provide code example")
                             (find-emacs-function . "Please provide the name of the Emacs function that performs this action.")
                             (bash-function . "Assist in generating command line commands by providing the requested action without extra elaboration. Only provide the command without any formatting itself as I will further refine it before execution.")))
     (setq! gptel--system-message (alist-get 'default gptel-directives)))
