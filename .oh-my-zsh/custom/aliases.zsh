@@ -37,3 +37,4 @@ pipenv_activate() {
 
 # important alias to redirect program names
 alias clangd-16='clangd'
+

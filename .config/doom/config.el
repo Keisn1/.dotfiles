@@ -603,6 +603,11 @@ information retrieved from files created by the keychain script."
                               )))))
     (setq-local gptel--system-message (nth 2 (assoc directive-key gptel-custom-directives)))))
 
+(gptel-make-ollama "Ollama"             ;Any name of your choosing
+  :host "localhost:11434"               ;Where it's running
+  :stream t                             ;Stream responses
+  :models '("llama3:latest"))          ;List of models
+
 (add-hook 'python-mode-hook
           (lambda () (setq-local devdocs-current-docs '("python~3.11" "django~5.0" "django_rest_framework"))))
 

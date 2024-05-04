@@ -71,3 +71,6 @@ eval $(keychain --eval --quiet id_ed25519 )
 
 # direnv
 eval "$(direnv hook zsh)"
+
+# always use this
+export OLLAMA_MODELS=/home/kay/.ollama/models

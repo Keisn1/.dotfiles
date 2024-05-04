@@ -824,6 +824,13 @@ This ultimately replaces the Markdown -> Org Mode conversion built in to =gptel=
                               )))))
     (setq-local gptel--system-message (nth 2 (assoc directive-key gptel-custom-directives)))))
 #+end_src
+** backends
+#+begin_src emacs-lisp
+(gptel-make-ollama "Ollama"             ;Any name of your choosing
+  :host "localhost:11434"               ;Where it's running
+  :stream t                             ;Stream responses
+  :models '("llama3:latest"))          ;List of models
+#+end_src
 * devdocs
 #+begin_src emacs-lisp
 (add-hook 'python-mode-hook
