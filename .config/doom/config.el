@@ -336,6 +336,7 @@
      (go "https://github.com/tree-sitter/tree-sitter-go")
      (gomod "https://github.com/camdencheek/tree-sitter-go-mod.git")
      (html "https://github.com/tree-sitter/tree-sitter-html")
+     (java "https://github.com/tree-sitter/tree-sitter-java.git")
      (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
      (json "https://github.com/tree-sitter/tree-sitter-json")
      (make "https://github.com/alemuller/tree-sitter-make")
@@ -1208,13 +1209,13 @@ information retrieved from files created by the keychain script."
          org-msg-convert-citation t
          org-msg-signature "
 
- Best Regards,
+Best Regards,
 
- #+begin_signature
- --
+#+begin_signature
+--
 
- *Kay Freyer*
- #+end_signature")
+*Kay Freyer*
+#+end_signature")
   )
 
 (after! mhtml-mode

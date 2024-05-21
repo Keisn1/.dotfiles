@@ -298,7 +298,7 @@
              "activated": " ",
              "deactivated": " "
          },
-         "timeout": 30
+         "timeout": 300
     },
 
 	// waybar-wlr-workspaces
