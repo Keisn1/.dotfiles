@@ -74,3 +74,6 @@ eval "$(direnv hook zsh)"
 
 # always use this
 export OLLAMA_MODELS=/home/kay/.ollama/models
+
+# JackCompiler from the project
+alias JackCompilerProject='~/workspace/from-nand-to-tetris/nand2tetris/tools/JackCompiler.sh'
