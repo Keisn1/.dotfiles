@@ -1,0 +1,36 @@
+import = ["/home/kay/.config/alacritty/colors.toml", "/home/kay/.config/alacritty/fonts.toml"]
+live_config_reload = true
+
+[cursor]
+unfocused_hollow = false
+
+[cursor.style]
+blinking = "On"
+shape = "Block"
+
+# [env]
+# TERM = "alacritty"
+# WINIT_X11_SCALE_FACTOR = "1.0"
+
+[shell]
+args = ["--login"]
+program = "/bin/zsh"
+
+[window]
+decorations = "none"
+dynamic_title = true
+startup_mode = "Maximized"
+# history = 10000 unused config key
+# multiplier = 3 unused config key
+opacity = 0.9
+
+[window.dimensions]
+columns = 82
+lines = 24
+
+[window.padding]
+x = 12
+y = 12
+
+[font]
+size = 16

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: if got != want { ... }
+# key: ifgot
+# --
+
+if got != want {
+   t.Errorf(\"got = %v; want %v\", $0got, want)
+}

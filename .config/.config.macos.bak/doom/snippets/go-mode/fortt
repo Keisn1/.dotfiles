@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: forTestCases
+# uuid:
+# key: fortc
+# condition: t
+# --
+
+for _, tc := range testCases {
+    `%`$0
+}

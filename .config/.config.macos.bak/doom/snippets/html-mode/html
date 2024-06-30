@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: <html>...</html>
+# key: html
+# condition: t
+# --
+
+<html lang='$1'>
+  $2
+</html>
