@@ -360,7 +360,7 @@
   (add-hook 'rust-mode-hook 'eglot-ensure)
   (add-hook 'c-mode-hook 'eglot-ensure)
   (add-hook 'c++-mode-hook 'eglot-ensure)
-  (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+  (add-to-list 'eglot-server-programs '((c-mode) "ccls"))
   (add-to-list 'eglot-server-programs '((go-mode) "gopls"))
   (add-to-list 'eglot-server-programs '((python-mode) "pyright"))
 )
@@ -377,8 +377,14 @@
 ;; Languages ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(add-hook 'c-mode-hook (lambda () (apheleia-mode -1)))
+(add-hook 'c++-mode-hook (lambda () (apheleia-mode -1)))
+(set-eglot-client! 'cc-mode '("clangd" "-j=3" "--clang-tidy" "--header-insertion=never"))
+
 ;; C  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq c-basic-offset 4)
+;; (after! apheleia
+;;   (add-hook 'c-mode-hook (lambda () (apheleia-mode -1)))
+;;   (add-hook 'c++-mode-hook (lambda () (apheleia-mode -1)))
 
 ;; Go ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; (add-hook 'go-ts-mode-hook
@@ -697,6 +703,9 @@ information retrieved from files created by the keychain script."
 (map! :map evil-insert-state-map
       "C-SPC j" 'copilot-accept-completion
       "C-SPC l" 'copilot-accept-completion-by-word)
+
+(map! :after cc-mode
+      :map doom-leader-code-map :desc "42 formatter" "F" #'format-42-current-c-file)
 
 ;; python ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -1239,3 +1248,151 @@ Best Regards,
     :config
     (add-to-list 'nerd-icons-extension-icon-alist '("gohtml" nerd-icons-devicon "nf-dev-html5" :face nerd-icons-orange)))
 ;; (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+
+(eval-after-load 'autoinsert
+  '(define-auto-insert '("\\.\\(c\\|h\\)\\'" . "42 C header")
+     '(
+       "Short description: "
+       "/* ************************************************************************** */" \n
+       "/*                                                                            */" \n
+       "/*                                                        :::      ::::::::   */" \n
+       "/*   "
+       (file-name-nondirectory (buffer-file-name))
+       (substring (make-string 51 ? )
+                  (length (file-name-nondirectory (buffer-file-name))))
+       ":+:      :+:    :+:   */" \n
+       "/*                                                    +:+ +:+         +:+     */" \n
+       "/*   By: " (user-login-name) " <kay.frey@42.fr>"
+       (substring (make-string 28 ? ) (length (user-login-name)))
+       "+#+  +:+       +#+        */" \n
+       "/*                                                +#+#+#+#+#+   +#+           */" \n
+       "/*   Created: " (format-time-string "%Y/%m/%d %H:%M:%S") " by " (user-login-name)
+       (substring (make-string 18 ? ) (length (user-login-name)))
+       "#+#    #+#             */" \n
+       "/*   Updated: " (format-time-string "%Y/%m/%d %H:%M:%S") " by " (user-login-name)
+       (substring (make-string 17 ? ) (length (user-login-name)))
+       "###   ########.fr       */" \n
+       "/*                                                                            */" \n
+       "/* ************************************************************************** */" \n
+       )))
+
+(defun my-42-header ()
+  "check and update or replace 42 header in .c and .h files"
+  (interactive)
+  (if (my-42-header-check)
+      (my-42-header-update)
+    (my-42-header-replace)))
+
+(defun my-42-header-update ()
+  "Update the existing 42 header"
+  (interactive)
+  (save-excursion
+    (goto-char 0)
+    (re-search-forward "/\\*   .\\{51\\}:\\+:      :\\+:    :\\+:   \\*/" 891 t)
+    (replace-match (concat "/*   "
+                           (file-name-nondirectory (buffer-file-name))
+                           (substring (make-string 51 ? )
+                                      (length (file-name-nondirectory (buffer-file-name))))
+                           ":+:      :+:    :+:   */"))
+    (re-search-forward "/\\*   Updated: [0-9]\\{4\\}/[0-9]\\{2\\}/[0-9]\\{2\\} \
+[0-9]\\{2\\}:[0-9]\\{2\\}:[0-9]\\{2\\} by .\\{17\\}###   ########\\.fr       \\*/" 891 t)
+    (replace-match (concat "/*   Updated: "
+                           (format-time-string "%Y/%m/%d %H:%M:%S")
+                           " by " (user-login-name)
+                           (substring (make-string 17 ? ) (length (user-login-name)))
+                           "###   ########.fr       */"))))
+
+(defun my-42-header-replace ()
+  "Replace the first 11 lines with a fresh 42 header, if there is probably a bad header"
+  (interactive)
+  (save-excursion
+    (goto-char 0)
+    (cond ((re-search-forward "^/\\*.*\\*/$" nil t)
+           (re-search-forward "^$" nil t)
+           (delete-region 1 (point))))
+    (insert (my-42-header-generate))))
+
+(defun my-42-header-generate ()
+  "Generate 42 header string"
+  (concat "/* ************************************************************************** */\n"
+          "/*                                                                            */\n"
+          "/*                                                        :::      ::::::::   */\n"
+          "/*   "
+          (file-name-nondirectory (buffer-file-name))
+          (substring (make-string 51 ? )
+                     (length (file-name-nondirectory (buffer-file-name))))
+          ":+:      :+:    :+:   */\n"
+          "/*                                                    +:+ +:+         +:+     */\n"
+          "/*   By: " (user-login-name) " <marvin@42.fr>"
+          (substring (make-string 28 ? ) (length (user-login-name)))
+          "+#+  +:+       +#+        */\n"
+          "/*                                                +#+#+#+#+#+   +#+           */\n"
+          "/*   Created: " (format-time-string "%Y/%m/%d %H:%M/%S") " by " (user-login-name)
+          (substring (make-string 18 ? ) (length (user-login-name)))
+          "#+#    #+#             */\n"
+          "/*   Updated: " (format-time-string "%Y/%m/%d %H:%M:%S") " by " (user-login-name)
+          (substring (make-string 17 ? ) (length (user-login-name)))
+          "###   ########.fr       */\n"
+          "/*                                                                            */\n"
+          "/* ************************************************************************** */\n"))
+
+(defun my-42-header-check ()
+  "Check if there's a 42 header at the top of the current buffer"
+  (widen)
+  (let (header lines)
+    (condition-case my-simple-error
+      (setq header (buffer-substring-no-properties 1 891))
+      (my-simple-handler
+        (my-42-header-replace)))
+    (setq lines (split-string header "\n"))
+    (and (= 11 (length lines))
+         (seq-every-p (lambda (e) (= 80 (length e))) lines)
+         (string-match "/\\* \\*\\{74\\} \\*/" (nth 0 lines))
+         (string-match "/\\* \\{76\\}\\*/" (nth 1 lines))
+         (string-match "/\\* \\{56\\}:::      ::::::::   \\*/" (nth 2 lines))
+         (string-match "/\\*   .\\{51\\}:\\+:      :\\+:    :\\+:   \\*/" (nth 3 lines))
+         (string-match "/\\* \\{52\\}\\+:\\+ \\+:\\+         \\+:\\+     \\*/" (nth 4 lines))
+         (string-match "/\\*   By: .\\{3,42\\}<marvin@42.fr> *\\+#\\+  \\+:\\+       \\+#\\+        \\*/" (nth 5 lines))
+         (string-match "/\\* \\{48\\}\\+#\\+#\\+#\\+#\\+#\\+   \\+#\\+           \\*/" (nth 6 lines))
+         (string-match "/\\*   Created: [0-9]\\{4\\}/[0-9]\\{2\\}/[0-9]\\{2\\} \
+[0-9]\\{2\\}:[0-9]\\{2\\}:[0-9]\\{2\\} by .\\{18\\}#\\+#    #\\+#             \\*/" (nth 7 lines))
+         (string-match "/\\*   Updated: [0-9]\\{4\\}/[0-9]\\{2\\}/[0-9]\\{2\\} \
+[0-9]\\{2\\}:[0-9]\\{2\\}:[0-9]\\{2\\} by .\\{17\\}###   ########\\.fr       \\*/" (nth 8 lines))
+         (string-match "/\\* \\{76\\}\\*/" (nth 9 lines))
+         (string-match "/\\* \\*\\{74\\} \\*/" (nth 10 lines)))))
+
+;; (auto-insert-mode t)
+;; (add-hook 'c-mode-hook 'my-42-header)
+
+;; basic configuration for 42 .c and .h files
+(defun my-c-mode-hook ()
+  (setq-default tab-width 4)
+  (setq-default indent-tabs-mode t)
+  (setq-default c-default-style "linux")
+  (c-set-offset 'substatement-open 0)
+  (setq-default c-basic-offset 4)
+  ;; buggy sometimes if you don't setq it as well
+  (setq c-basic-offset 4))
+(add-hook 'c-mode-hook 'my-c-mode-hook)
+
+;; basic configuration for whitespace mode to assist with norminette requirements
+(setq whitespace-style (quote (tab-mark space-mark face tabs spaces)))
+(setq whitespace-display-mappings
+	  '((space-mark 32 [9251] [46])
+		(tab-mark 9 [8594 9] [92 9])))
+(custom-set-faces
+ '(whitespace-space ((t (:bold t :foreground "red"))))
+ '(whitespace-tab ((t (:bold t :foreground "green")))))
+
+;; (global-set-key (kbd "C-c r") 'my-42-header)
+;; (global-set-key (kbd "TAB") 'tab-to-tab-stop)
+;; (global-set-key (kbd "C-c w") 'whitespace-mode)
+
+(defun format-42-current-c-file ()
+  (interactive)
+  (if buffer-file-name
+      (let* ((start (point-min))
+             (end (point-max))
+             (command (format "c_formatter_42 < %s" buffer-file-name)))
+        (shell-command-on-region start end command t t))
+    (message "Buffer is not visiting a file")))
