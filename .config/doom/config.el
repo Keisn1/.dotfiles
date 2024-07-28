@@ -16,8 +16,8 @@
           doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 40)))
 
 (if (string= (system-name) "archlinux")
-    (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 18)
-          doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 18)
+    (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 16)
+          doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 16)
           doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 36)))
 
 (custom-set-faces!

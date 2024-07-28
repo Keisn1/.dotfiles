@@ -25,7 +25,7 @@ plugins=(
     zsh-autosuggestions
     archlinux
     colored-man-pages
-    zsh-vi-mode
+    # zsh-vi-mode
     docker
     docker-compose
     docker-machine
