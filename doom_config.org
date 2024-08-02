@@ -26,14 +26,14 @@
 ** Font
 #+begin_src emacs-lisp
 (if (string= (system-name) "kayarch")
-    (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 20)
-          doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 20)
-          doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 40)))
+    (setq doom-font (font-spec :family "Hack Nerd Font" :size 20)
+          doom-variable-pitch-font (font-spec :family "Hack Nerd Font" :size 20)
+          doom-big-font (font-spec :family "Hack Nerd Font" :size 40)))
 
 (if (string= (system-name) "archlinux")
-    (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 16)
-          doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 16)
-          doom-big-font (font-spec :family "JetBrainsMono Nerd Font" :size 36)))
+    (setq doom-font (font-spec :family "Hack Nerd Font" :size 17)
+          doom-variable-pitch-font (font-spec :family "Hack Nerd Font" :size 17)
+          doom-big-font (font-spec :family "Hack Nerd Font" :size 36)))
 #+end_src
 ** Faces
 *** Comments
@@ -507,7 +507,7 @@ following situations:
   (add-hook 'rust-mode-hook 'eglot-ensure)
   (add-hook 'c-mode-hook 'eglot-ensure)
   (add-hook 'c++-mode-hook 'eglot-ensure)
-  (add-to-list 'eglot-server-programs '((c-mode) "ccls"))
+  (add-to-list 'eglot-server-programs '((c-mode) "clangd"))
   (add-to-list 'eglot-server-programs '((go-mode) "gopls"))
   (add-to-list 'eglot-server-programs '((python-mode) "pyright"))
 )
@@ -1559,15 +1559,15 @@ Best Regards,
                   (length (file-name-nondirectory (buffer-file-name))))
        ":+:      :+:    :+:   */" \n
        "/*                                                    +:+ +:+         +:+     */" \n
-       "/*   By: " (user-login-name) " <kay.frey@42.fr>"
-       (substring (make-string 28 ? ) (length (user-login-name)))
+       "/*   By: " kfreyer " <kay.frey@42.fr>"
+       (substring (make-string 28 ? ) (length "kfreyer"))
        "+#+  +:+       +#+        */" \n
        "/*                                                +#+#+#+#+#+   +#+           */" \n
-       "/*   Created: " (format-time-string "%Y/%m/%d %H:%M:%S") " by " (user-login-name)
-       (substring (make-string 18 ? ) (length (user-login-name)))
+       "/*   Created: " (format-time-string "%Y/%m/%d %H:%M:%S") " by " "kfreyer"
+       (substring (make-string 18 ? ) (length "kfreyer"))
        "#+#    #+#             */" \n
-       "/*   Updated: " (format-time-string "%Y/%m/%d %H:%M:%S") " by " (user-login-name)
-       (substring (make-string 17 ? ) (length (user-login-name)))
+       "/*   Updated: " (format-time-string "%Y/%m/%d %H:%M:%S") " by " "kfreyer"
+       (substring (make-string 17 ? ) (length "kfreyer"))
        "###   ########.fr       */" \n
        "/*                                                                            */" \n
        "/* ************************************************************************** */" \n
@@ -1595,8 +1595,8 @@ Best Regards,
 [0-9]\\{2\\}:[0-9]\\{2\\}:[0-9]\\{2\\} by .\\{17\\}###   ########\\.fr       \\*/" 891 t)
     (replace-match (concat "/*   Updated: "
                            (format-time-string "%Y/%m/%d %H:%M:%S")
-                           " by " (user-login-name)
-                           (substring (make-string 17 ? ) (length (user-login-name)))
+                           " by " "kfreyer"
+                           (substring (make-string 17 ? ) (length "kfreyer"))
                            "###   ########.fr       */"))))
 
 (defun my-42-header-replace ()
@@ -1620,15 +1620,15 @@ Best Regards,
                      (length (file-name-nondirectory (buffer-file-name))))
           ":+:      :+:    :+:   */\n"
           "/*                                                    +:+ +:+         +:+     */\n"
-          "/*   By: " (user-login-name) " <marvin@42.fr>"
-          (substring (make-string 28 ? ) (length (user-login-name)))
+          "/*   By: " "kfreyer" " <marvin@42.fr>"
+          (substring (make-string 28 ? ) (length "kfreyer"))
           "+#+  +:+       +#+        */\n"
           "/*                                                +#+#+#+#+#+   +#+           */\n"
-          "/*   Created: " (format-time-string "%Y/%m/%d %H:%M/%S") " by " (user-login-name)
-          (substring (make-string 18 ? ) (length (user-login-name)))
+          "/*   Created: " (format-time-string "%Y/%m/%d %H:%M/%S") " by " "kfreyer"
+          (substring (make-string 18 ? ) (length "kfreyer"))
           "#+#    #+#             */\n"
-          "/*   Updated: " (format-time-string "%Y/%m/%d %H:%M:%S") " by " (user-login-name)
-          (substring (make-string 17 ? ) (length (user-login-name)))
+          "/*   Updated: " (format-time-string "%Y/%m/%d %H:%M:%S") " by " "kfreyer"
+          (substring (make-string 17 ? ) (length "kfreyer"))
           "###   ########.fr       */\n"
           "/*                                                                            */\n"
           "/* ************************************************************************** */\n"))
