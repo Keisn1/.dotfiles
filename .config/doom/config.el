@@ -310,7 +310,9 @@
          :desc "Show all next"  "n"  #'org-gtd-show-all-next
          :desc "Stuck projects" "s"  #'org-gtd-review-stuck-projects))
   (map! :map org-gtd-clarify-map
-        :desc "Organize this item" "C-c c" #'org-gtd-organize))
+        :desc "Organize this item" "C-c c" #'org-gtd-organize)
+  (add-to-list 'org-todo-keywords '(sequence "TODO" "NEXT" "DONE"))
+  )
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Evil  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
