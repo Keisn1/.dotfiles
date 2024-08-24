@@ -5,7 +5,7 @@
 ## Set Wallpaper in Hyprland
 
 # WALLPAPER='/home/kay/.config/hypr/wallpapers/wallpaper.jpg'
-# WALLPAPER='/home/kay/.config/hypr/wallpapers/wallpaper-alt.jpg'
-WALLPAPER='/home/kay/.config/hypr/wallpapers/ad66173fbfb98ff0458cfc7cd1d4be12.jpg'
+# WALLPAPER='/home/kay/.config/hypr/wallpapers/wallpaper.jpg'
+WALLPAPER='/home/kay/.config/hypr/wallpapers/wallpaper.jpg'
 
 swaybg --output '*' --mode fill --image "$WALLPAPER"

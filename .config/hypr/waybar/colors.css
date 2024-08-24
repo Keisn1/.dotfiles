@@ -1,22 +1,11 @@
 /** ********** Colors ********** **/
 @define-color background      #20262C;
-@define-color background_workspaces      rgba(32, 38, 44, 0.6);
-
-/* @define-color background-alt1 #2a323b; */
-@define-color background-alt1 rgba(42, 50, 59, 0.6);
-
-/* @define-color background-alt2 #353f4a; */
-@define-color background-alt2 rgba(53, 63, 74, 0.6);
-
+@define-color background-alt1 #2a323b;
+@define-color background-alt2 #353f4a;
 @define-color foreground      #f1fcf9;
-
-/* @define-color selected        #b4a1db; */
-@define-color selected        rgba(180, 161, 219, 0.6);
-
-@define-color red             #db86ba; 
-/* @define-color red             rgba(219, 134, 186, 0.6); */
-
+@define-color selected        #b4a1db;
 @define-color black           #20262c;
+@define-color red             #db86ba;
 @define-color green           #74dd91;
 @define-color yellow          #e49186;
 @define-color blue            #75dbe1;

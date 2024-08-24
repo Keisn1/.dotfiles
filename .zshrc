@@ -77,3 +77,7 @@ export OLLAMA_MODELS=/home/kay/.ollama/models
 
 # JackCompiler from the project
 alias JackCompilerProject='~/workspace/from-nand-to-tetris/nand2tetris/tools/JackCompiler.sh'
+
+alias francinette=/home/kay/francinette/tester.sh
+
+alias paco=/home/kay/francinette/tester.sh

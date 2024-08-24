@@ -364,7 +364,7 @@
   (add-hook 'c++-mode-hook 'eglot-ensure)
   (add-to-list 'eglot-server-programs '((c-mode) "clangd"))
   (add-to-list 'eglot-server-programs '((go-mode) "gopls"))
-  (add-to-list 'eglot-server-programs '((python-mode) "pyright"))
+  (add-to-list 'eglot-server-programs '((python-mode) "pyls"))
 )
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
