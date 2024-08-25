@@ -55,9 +55,12 @@
 
 (add-hook! 'dired-mode-hook #'nerd-icons-dired-mode)
 
-(after! dired-mode
-  (setq dired-omit-mode nil)
+(after! dired
+  (setq dired-omit-mode t)
   (setq dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^\\..*$"))
+
+(use-package! diredfl
+  :hook (dired-mode . diredfl-mode))
 
 (display-battery-mode 't)
 
@@ -142,15 +145,34 @@
   )
 
 ;; babel-tangle ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun efs/org-babel-tangle-config ()
-  (if (or
-       (string-equal (buffer-file-name)
-                     (expand-file-name "~/.dotfiles/doom_config.org")))
-      ;; dynamic scoping to the rescue
-      (let ((org-confirm-babel-evaluate nil))
-        (org-babel-tangle))))
+;; (defun efs/org-babel-tangle-config ()
+;;   (if (or
+;;        (string-equal (buffer-file-name)
+;;                      (expand-file-name "~/.dotfiles/doom_config.org"))
+;;        (string-equal (buffer-file-name)
+;;                      (expand-file-name "~/.dotfiles/crafted_config.org"))
+;;        )
+;;       ;; dynamic scoping to the rescue
+;;       (let ((org-confirm-babel-evaluate nil))
+;;         (org-babel-tangle))))
 
-(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
+;; (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
+
+(defun efs/org-babel-tangle-config ()
+  "Tangle the current Org file if it matches specific files or files in a specific directory."
+  (let ((target-files '("~/.dotfiles/doom_config.org"
+                        "~/.dotfiles/crafted_config.org"))
+        (target-directory "~/.dotfiles/.config/.crafted-emacs/modules/"))
+    (if (or
+         ;; Check for specific files
+         (member (expand-file-name (buffer-file-name)) (mapcar 'expand-file-name target-files))
+         ;; Check for files in the target directory
+
+         (member (file-name-nondirectory (buffer-file-name))
+                 (directory-files target-directory nil "\\.org$")))
+        ;; Dynamic scoping to the rescue
+        (let ((org-confirm-babel-evaluate nil))
+          (org-babel-tangle)))))
 
 ;; org-pomodoro ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

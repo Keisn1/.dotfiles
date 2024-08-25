@@ -2,3 +2,4 @@
 resources
 doom_config.org
 keys.sh
+\.config/\.crafted-emacs/modules/.*\.org$
