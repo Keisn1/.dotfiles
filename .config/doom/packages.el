@@ -14,9 +14,6 @@
 (package! harpoon)
 (package! org-gtd)
 ;; (package! ement)
-(package! diredfl)
-(package! dirvish)
-
 (unpin! org-roam)
 (package! org-roam-ui)
 (package! impatient-mode)

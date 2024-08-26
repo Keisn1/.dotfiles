@@ -1,5 +1,6 @@
 \.git
 resources
 doom_config.org
+crafted_config.org
 keys.sh
 \.config/\.crafted-emacs/modules/.*\.org$
