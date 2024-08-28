@@ -56,7 +56,7 @@
 (add-hook! 'dired-mode-hook #'nerd-icons-dired-mode)
 
 (after! dired
-  (setq dired-omit-mode t)
+  (setq dired-omit-mode nil)
   (setq dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^\\..*$"))
 
 (use-package! diredfl
@@ -161,8 +161,9 @@
 (defun efs/org-babel-tangle-config ()
   "Tangle the current Org file if it matches specific files or files in a specific directory."
   (let ((target-files '("~/.dotfiles/doom_config.org"
-                        "~/.dotfiles/crafted_config.org"))
-        (target-directory "~/.dotfiles/.config/.crafted-emacs/modules/"))
+                        "~/.dotfiles/.config/crafted-emacs/crafted_init.org"
+                        "~/.dotfiles/.config/crafted-emacs/crafted_early_init.org"))
+        (target-directory "~/.dotfiles/.config/crafted-emacs/modules/"))
     (if (or
          ;; Check for specific files
          (member (expand-file-name (buffer-file-name)) (mapcar 'expand-file-name target-files))
@@ -173,6 +174,8 @@
         ;; Dynamic scoping to the rescue
         (let ((org-confirm-babel-evaluate nil))
           (org-babel-tangle)))))
+
+(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 
 ;; org-pomodoro ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

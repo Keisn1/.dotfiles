@@ -1,0 +1,39 @@
+#+title: Crafted Init
+#+STARTUP: overview
+#+PROPERTY: header-args:emacs-lisp :tangle init.el :mkdirp yes
+
+* load packages
+#+begin_src emacs-lisp
+;; (require 'crafted-evil-packages)
+(package-install-selected-packages :noconfirm)
+#+end_src
+* load configs
+#+begin_src emacs-lisp
+(require 'crafted-defaults-config)
+;; (require 'crafted-evil-config)
+#+end_src
+* display startup time
+#+begin_src emacs-lisp
+;; Profile emacs startup
+;; showing the startup time in the echo area
+(defun ce-base-example/display-startup-time ()
+  "Display the startup time after Emacs is fully initialized."
+  (message "Crafted Emacs loaded in %s."
+           (emacs-init-time)))
+(add-hook 'emacs-startup-hook #'ce-base-example/display-startup-time)
+#+end_src
+
+* Appearance
+** Turning off menu-bar, tool-bar and scroll-bar
+#+begin_src emacs-lisp
+;; Turning off menu-bar, tool-bar and scroll-bar
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+#+end_src
+** face
+#+begin_src emacs-lisp
+(set-face-attribute 'default nil
+                    :font "Hack Nerd Font"
+                    :height 120)
+#+end_src

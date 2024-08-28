@@ -1,7 +1,11 @@
-#+title: Crafted Config
+#+title: Crafted Early Init
 #+STARTUP: overview
-#+PROPERTY: header-args:emacs-lisp :tangle ~/.dotfiles/.config/.crafted-emacs/init.el :mkdirp yes
+#+PROPERTY: header-args:emacs-lisp :tangle early-init.el :mkdirp yes
 
+* load crafted-early-init-config
+#+begin_src emacs-lisp
+(load "~/.config/crafted-emacs/modules/crafted-early-init-config")
+#+end_src
 * crafted initialization
 ** set custom.el file
 #+begin_src emacs-lisp
@@ -81,43 +85,8 @@ In this example, customizations are saved to =my-custom.el= instead of the defau
 ** load crafted init config
 #+begin_src emacs-lisp
 ;; load crafted init config
-(load "~/.config/.crafted-emacs/modules/crafted-init-config")
+(load "~/.config/crafted-emacs/modules/crafted-init-config")
 #+end_src
 - sets up the load-path, so code from modules and custom-modules can be loaded with require
 - sets up the info system to make this documentation accessible from within Emacs’ info buffer
 - ensures all customizations and packages are saved to the custom-file
-* load packages
-#+begin_src emacs-lisp
-;; (require 'crafted-evil-packages)
-(package-install-selected-packages :noconfirm)
-#+end_src
-* load configs
-#+begin_src emacs-lisp
-(require 'crafted-defaults-config)
-;; (require 'crafted-evil-config)
-#+end_src
-* display startup time
-#+begin_src emacs-lisp
-;; Profile emacs startup
-;; showing the startup time in the echo area
-(defun ce-base-example/display-startup-time ()
-  "Display the startup time after Emacs is fully initialized."
-  (message "Crafted Emacs loaded in %s."
-           (emacs-init-time)))
-(add-hook 'emacs-startup-hook #'ce-base-example/display-startup-time)
-#+end_src
-
-* Appearance
-** Turning off menu-bar, tool-bar and scroll-bar
-#+begin_src emacs-lisp
-;; Turning off menu-bar, tool-bar and scroll-bar
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-#+end_src
-** face
-#+begin_src emacs-lisp
-(set-face-attribute 'default nil
-                    :font "Hack Nerd Font"
-                    :height 120)
-#+end_src

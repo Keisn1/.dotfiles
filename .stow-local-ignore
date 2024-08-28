@@ -3,4 +3,8 @@ resources
 doom_config.org
 crafted_config.org
 keys.sh
-\.config/\.crafted-emacs/modules/.*\.org$
+.*\.org
+\.config/crafted-emacs/docs
+\.config/crafted-emacs/eln-cache
+\.config/crafted-emacs/elpa
+\.config/crafted-emacs/custom.el

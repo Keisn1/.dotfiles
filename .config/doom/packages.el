@@ -14,8 +14,10 @@
 (package! harpoon)
 (package! org-gtd)
 ;; (package! ement)
-(unpin! org-roam)
-(package! org-roam-ui)
+;; (unpin! org-roam)
+;; (unpin! org-roam-ui)
+(package! org-roam-ui
+  :recipe (:host github :repo "Keisn1/org-roam-ui"))
 (package! impatient-mode)
 (package! command-log-mode)
 ;; (package! company-tabnine)
