@@ -55,8 +55,9 @@
 
 (add-hook! 'dired-mode-hook #'nerd-icons-dired-mode)
 
+(remove-hook 'dired-mode-hook #'dired-omit-mode)
 (after! dired
-  (setq dired-omit-mode nil)
+  ;; (setq dired-omit-mode nil)
   (setq dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^\\..*$"))
 
 (use-package! diredfl
