@@ -1,12 +1,28 @@
-(require 'package)
+#+title: Crafted Early Init Config
+#+PROPERTY: header-args:emacs-lisp :tangle crafted-early-init-config.el
 
+* Setting up package.el
+** Load Package library (package.el)
+- load the built-in =package= library in Emacs
+- package library is native-compiled library ([[file:/usr/share/emacs/29.4/lisp/emacs-lisp/package.el.gz]])
+#+begin_src emacs-lisp
+(require 'package)
+#+end_src
+** Setup Emacs Lisp package archives
+- https://www.emacswiki.org/emacs/InstallingPackages#h5o-2
+- package-archives is a customizable variable defined in package.el.gz.
+- [[help:package-archives]]
+#+begin_src emacs-lisp
 ;;; Setup Emacs Lisp Package Archives (ELPAs)
 ;; where to get packages to install
 (when (version< emacs-version "28")
   (add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 (add-to-list 'package-archives '("stable" . "https://stable.melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-
+#+end_src
+** set priorities on which archive to choose when fetching
+- [[help:package-archive-priorities]]
+#+begin_src emacs-lisp
 ;;; Configure ELPA priorities
 ;; Prefer GNU sources and stable versions before development versions from MELPA.
 (customize-set-variable 'package-archive-priorities
@@ -17,7 +33,19 @@
                                         ; from melpa
                           ("melpa"  . 0)))  ; if all else fails, get it
                                         ; from melpa
-
+#+end_src
+* refreshing package contents
+We are defining variables and functions:
+1. A Flag, that tells if we shall perform a stale-archive check.
+   =crafted-package-perform-stale-archive-check=
+2. A variable denoting the number of days before an archive will be considered stale. =crafted-package-update-days=
+3. A function that takes as input an archive and tells if it is stale or not =crafted-package-archive-stale-p=
+   - stale if on-disk cache is older than =crafted-package-update-days=
+   - if =crafted-package-perform-stale-archive-check= is nil, the check is skipped
+4. A "any"-function that returns t if any package archives' cache is out of date =crafted-package-archives-stale-p=
+5. A function that initializes the package system, added to [[help:before-init-hook][before-init-hook]]
+** require time-date package
+#+begin_src emacs-lisp
 ;;; Forms to refresh package archive contents
 ;; These functions are available to use for deciding if
 ;; `package-refresh-contents' needs to be run during startup.  As this
@@ -26,17 +54,26 @@
 ;; day old.  Set the `crafted-package-update-days' to a larger value
 ;; in your `early-init' file to changes this behavior
 (require 'time-date)
-
+#+end_src
+** define variables
+*** crafted-package-perform-stale-archive-check
+- Check if any package archives are stale.
+#+begin_src emacs-lisp
 (defvar crafted-package-perform-stale-archive-check t
   "Check if any package archives are stale.
 
 Set this value in your `early-init.el' file.")
-
+#+end_src
+*** crafted-package-update-days
+#+begin_src emacs-lisp
 (defvar crafted-package-update-days 1
   "Number of days before an archive will be considered stale.
 
 Set this value in your `early-init.el' file")
-
+#+end_src
+** define functions
+*** crafted-package-archive-stale-p
+#+begin_src emacs-lisp
 (defun crafted-package-archive-stale-p (archive)
   "Return t if ARCHIVE is stale.
 
@@ -54,7 +91,9 @@ is skipped"
     (when crafted-package-perform-stale-archive-check
       (time-less-p (encode-time (decoded-time-add last-update-time delta))
                    (encode-time today)))))
-
+#+end_src
+*** crafted-package-archives-stale-p
+#+begin_src emacs-lisp
 (defun crafted-package-archives-stale-p ()
   "Return t if any package archives' cache is out of date.
 
@@ -64,7 +103,17 @@ non-nil value.  Fails fast, will return t for the first stale
 archive found or nil if they are all up-to-date"
   (interactive)
   (cl-some #'crafted-package-archive-stale-p (mapcar #'car package-archives)))
-
+#+end_src
+*** crafted-package-initialize
+1. only runs if package is enables at startup
+  "Whether to make installed packages available when Emacs starts."
+2. seq package is used (nice functional functions)
+3. if package-archive-contents is empty, it will run ~package-refresh-contents~
+   - For each archive configured in the variable package-archives, inform Emacs about the latest versions of all packages it offers, and make them available for download.
+   - possibly ASYNC, but not here
+4. runs crafted-package-archive-stale-p, checks if any of them is stale
+   - it will then run package-refresh-contents (but asynchronously)
+#+begin_src emacs-lisp
 (defun crafted-package-initialize ()
   "Initialize the package system.
 
@@ -84,10 +133,15 @@ Run this in the `before-init-hook'"
              (message "crafted-package-config: package archives stale, refreshing")
              (package-refresh-contents t))))
     (message "crafted-package-config: package system initialized!")))
-
+#+end_src
+** add to before-init-hook
+#+begin_src emacs-lisp
 ;;; Initialize package system
 ;; Refresh archives if necessary before init file runs.
 (add-hook 'before-init-hook #'crafted-package-initialize)
-
+#+end_src
+* provide crafted-early-init-config package
+#+begin_src emacs-lisp
 (provide 'crafted-early-init-config)
 ;;; crafted-early-init-config.el ends here
+#+end_src

@@ -65,7 +65,7 @@ explicitly."))
 (when (null crafted-emacs-home)
   (setq crafted-emacs-home
         (expand-file-name
-         (vc-find-root load-file-name "modules"))))
+         (vc-find-root "/home/kay/.config/crafted-emacs/crafted-init-config.el"  "modules"))))
 
 ;; we still don't have a `crafted-emacs-home' value, so we can't
 ;; proceed, without it the `load-path' will not be set correctly and
@@ -76,7 +76,8 @@ explicitly."))
          "Please set this value to the location where crafted-emacs is installed"))
 
 ;; update the `load-path' to include the Crafted Emacs modules path
-(let ((modules (expand-file-name "./modules/" crafted-emacs-home)))
+
+(let ((modules (expand-file-name "modules" crafted-emacs-home)))
   (when (file-directory-p modules)
     (message "adding modules to load-path: %s" modules)
     (add-to-list 'load-path modules)))
@@ -88,9 +89,8 @@ explicitly."))
     (message "adding custom-modules to load-path: %s" custom-modules)
     (add-to-list 'load-path custom-modules)))
 
-;; (auto-insert-mode)
-
 ;; When writing crafted-modules, insert header from skeleton
+(auto-insert-mode)
 (with-eval-after-load "autoinsert"
   ;; Handle a missing `custom-file' by not running `auto-insert' when
   ;; it gets created.  The value of the `custom-file' for Crafted

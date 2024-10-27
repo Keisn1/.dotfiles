@@ -162,8 +162,8 @@
 (defun efs/org-babel-tangle-config ()
   "Tangle the current Org file if it matches specific files or files in a specific directory."
   (let ((target-files '("~/.dotfiles/doom_config.org"
-                        "~/.dotfiles/.config/crafted-emacs/crafted_init.org"
-                        "~/.dotfiles/.config/crafted-emacs/crafted_early_init.org"))
+                        "~/.dotfiles/.config/crafted-emacs/init.org"
+                        "~/.dotfiles/.config/crafted-emacs/early_init.org"))
         (target-directory "~/.dotfiles/.config/crafted-emacs/modules/"))
     (if (or
          ;; Check for specific files
@@ -282,6 +282,7 @@
 ;; roam daily capture templates ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (after! org
+  (setq  )
   (setq org-roam-dailies-capture-templates
         '(("d" "default" entry "* %<%I:%M %p>: %?"
            :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
@@ -345,6 +346,7 @@
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (after! evil
+  (setq evil-want-fine-undo t)
   (setq evil-escape-key-sequence "fd")
   (setq evil-escape-delay 0.15)
   (setq evil-escape-excluded-states '(normal multiedit emacs motion)))
@@ -1424,3 +1426,9 @@ Best Regards,
              (command (format "c_formatter_42 < %s" buffer-file-name)))
         (shell-command-on-region start end command t t))
     (message "Buffer is not visiting a file")))
+
+(after! tramp (advice-add 'doom--recentf-file-truename-fn :override
+                          (defun my-recent-truename (file &rest _args)
+                            (if (or (not (file-remote-p file)) (equal "sudo" (file-remote-p file 'method)))
+                                (abbreviate-file-name (file-truename (tramp-file-local-name file)))
+                              file))))

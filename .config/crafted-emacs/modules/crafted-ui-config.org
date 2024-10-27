@@ -1,0 +1,7 @@
+#+title: Crafted Ui Config
+#+PROPERTY: header-args:emacs-lisp :tangle crafted-ui-packages.el
+
+* All-the-icons
+
+- Run `all-the-icons-install-fonts' to ensure the fonts necessary for ALL THE ICONS are available on your system.
+- You must run this function if the "stop" icon at the beginning of this paragraph is not displayed properly (it appears as a box with some numbers and/or letters inside it).

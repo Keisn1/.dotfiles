@@ -23,6 +23,10 @@ alias tf='~/.local/bin/tmux-sessionizer.zsh'
 # reflector
 alias reflrefr="reflector --country France --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist"
 
+# docker simple aliases
+alias di='docker image'
+alias dc='docker container'
+
 # yay
 alias yayforeign="yay -Qm" # -m, --foreign ,list installed packages not found in sync db(s) [filter]
 
@@ -37,4 +41,3 @@ pipenv_activate() {
 
 # important alias to redirect program names
 alias clangd-16='clangd'
-

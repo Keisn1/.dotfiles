@@ -1,3 +1,8 @@
+#+title: Crafted Init Config
+# #+PROPERTY: header-args:emacs-lisp :tangle crafted-init-config.el
+
+* commentary
+#+begin_src emacs-lisp
 ;;; Code:
 
 ;; Use this file to find the project root where you cloned
@@ -5,19 +10,26 @@
 ;; `crafted-emacs-home' value which is needed by a few modules,
 ;; including the template below used for writing Crafted Emacs
 ;; modules.
-
+#+end_src
+* define Customization groups
+** crafted
+#+begin_src emacs-lisp
 ;;; A top level group containing subgroups like `crafted-init' -
 ;;; - See `M-x customize-group RET crafted'
 (defgroup crafted '()
   "Customization options for Crafted Emacs."
   :tag "Crafted")
-
+#+end_src
+*** crafted-init
+#+begin_src emacs-lisp
 ;;; Customization variables - See `M-x customize-group RET crafted-init'
 (defgroup crafted-init '()
   "Customizations for Crafted Emacs - Initialization."
   :tag "Crafted Init"
   :group 'crafted)
-
+#+end_src
+**** defcustom: crafted-init-auto-save-customized
+#+begin_src emacs-lisp
 ;; By default, crafted emacs calls `customize-save-variable' in the
 ;; `after-init-hook'. The user can opt out of this by setting
 ;; `crafted-init-auto-save-customized' to nil.
@@ -25,7 +37,10 @@
   "Save customized variables automatically every session."
   :type 'boolean
   :group 'crafted-init)
-
+#+end_src
+**** defcustom: crafted-init-auto-save-selected-packages
+Default set to nil, since we are using straight-el
+#+begin_src emacs-lisp
 ;; By default, crafted emacs calls `package--save-selected-packages' in the
 ;; `after-init-hook'. The user can opt out of this by setting
 ;; `crafted-init-auto-save-selected-packages' to nil.
@@ -33,7 +48,14 @@
   "Save the list of selected packages automatically every session."
   :type 'boolean
   :group 'crafted-init)
+#+end_src
+* Emacs version compatibility < 29
+- get emacs compatibility function (~require 'compat~)
+- setopt is a new set function, meant for user options, that is not provided by compat
+- !!!  be careful for future configs on older releases !!!
+- change to use-package (straight-el integration)
 
+#+begin_src emacs-lisp
 ;;; Emacs 29 compatibility for Emacs prior to release 29
 (when (version< emacs-version "29")
   ;; Get some Emacs 29 compatibility functions. Notably missing is
@@ -43,13 +65,23 @@
   ;; around a block, in which case we use `setopt' instead.
   (unless (require 'compat nil :noerror)
     (use-package compat)))
-
+#+end_src
+* KILL require project
+#+begin_src emacs-lisp
 ;; (require 'project)
+#+end_src
 
+* KILL set load-prefer-newer
+- since we are using straight, the goal is to use version-control to use newer revisions, and to build them upfront
+- nil by default, could therefore be eliminated
+#+begin_src emacs-lisp
 ;; If the source file is newer than the compiled file, load it instead
 ;; of the compiled version.
 (customize-set-variable 'load-prefer-newer nil)
-
+#+end_src
+* crafter-emacs-home
+** define crafted-emacs-home variable if not existent
+#+begin_src emacs-lisp
 ;; Create the variable if needed
 (if (boundp 'crafted-emacs-home)
     (message "crafted-emacs-home value set by user: %s" crafted-emacs-home)
@@ -59,14 +91,21 @@
 This is set when loading the crafted-init-config.el module during
 initialization.  Alternatively, it can be set by the user
 explicitly."))
-
+#+end_src
+** set crafted-emacs-home if it is nil
+- load-file-name is set to full name of file that is being loaded
+- vc-find-root finds directory where it first encounters modules
+- expand-file-name gives back the abolute path
+#+begin_src emacs-lisp
 ;; Only set the `crafted-emacs-home' variable if it does not already
 ;; have a value set by the user.
 (when (null crafted-emacs-home)
   (setq crafted-emacs-home
         (expand-file-name
          (vc-find-root load-file-name "modules"))))
-
+#+end_src
+** error if we still don't have a crafted-emacs-home
+#+begin_src emacs-lisp
 ;; we still don't have a `crafted-emacs-home' value, so we can't
 ;; proceed, without it the `load-path' will not be set correctly and
 ;; crafted-emacs modules will not be found.
@@ -74,22 +113,34 @@ explicitly."))
   (error "%s\n%s"
          "The value for crafted-emacs-home is not set"
          "Please set this value to the location where crafted-emacs is installed"))
-
+#+end_src
+** update load-path
+- update the `load-path' to include the Crafted Emacs modules path
+*** include modules path
+#+begin_src emacs-lisp
 ;; update the `load-path' to include the Crafted Emacs modules path
 (let ((modules (expand-file-name "./modules/" crafted-emacs-home)))
   (when (file-directory-p modules)
     (message "adding modules to load-path: %s" modules)
     (add-to-list 'load-path modules)))
-
+#+end_src
+*** include custom-modules path if it exists in the user-emacs-directory
+- in my case, this will be equal to crafted-emacs-home, since i start doom from chemacs with user-emacs-directory set to ~/.config/crafted-emacs
+#+begin_src emacs-lisp
 ;; If a `custom-modules' directory exists in the
 ;; `user-emacs-directory', include it on the load-path.
 (let ((custom-modules (expand-file-name "custom-modules" user-emacs-directory)))
   (when (file-directory-p custom-modules)
     (message "adding custom-modules to load-path: %s" custom-modules)
     (add-to-list 'load-path custom-modules)))
-
+#+end_src
+* KILL inserting header
+** toggle auto-insert-mode
+#+begin_src emacs-lisp
 ;; (auto-insert-mode)
-
+#+end_src
+** define a header for module files of crafted-emacs
+#+begin_src emacs-lisp
 ;; When writing crafted-modules, insert header from skeleton
 (with-eval-after-load "autoinsert"
   ;; Handle a missing `custom-file' by not running `auto-insert' when
@@ -133,13 +184,20 @@ explicitly."))
       ")
 ;;; " (file-name-nondirectory (buffer-file-name)) " ends here\n")))
 
+#+end_src
+* Add the Crafted Emacs documentation to the info nodes
+#+begin_src emacs-lisp
 ;; Add the Crafted Emacs documentation to the info nodes
 (let ((crafted-info-dir (expand-file-name "docs/dir" crafted-emacs-home)))
   (when (file-exists-p crafted-info-dir)
     (require 'info)
     (info-initialize)
     (push (file-name-directory crafted-info-dir) Info-directory-list)))
+#+end_src
 
+
+* saving custom-variables in custom-file
+#+begin_src emacs-lisp
 (defun crafted-save-customized ()
   "Save and reload the customizations made during Emacs initialization.
 
@@ -163,6 +221,10 @@ we can't reload the file."
 
 (provide 'crafted-init-config)
 ;;; crafted-init-config.el ends here
-
+#+end_src
+* add to after-init-hook
+Save all customizations to `custom-file', unless the user opted out.
+#+begin_src emacs-lisp
 (when crafted-init-auto-save-customized
   (add-hook 'after-init-hook #'crafted-save-customized))
+#+end_src

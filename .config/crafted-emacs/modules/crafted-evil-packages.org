@@ -1,32 +1,20 @@
 #+title: Crafted Evil Packages
 #+PROPERTY: header-args:emacs-lisp :tangle crafted-evil-packages.el
 
-
-
+Packages for Evil mode, for those who prefer `Vim' keybindings.
+* evil
+#+begin_src emacs-lisp :padline no
+(straight-use-package 'evil)
+#+end_src
+* evil-collection
+#+begin_src emacs-lisp :padline no
+(straight-use-package 'evil-collection)
+#+end_src
+* evil-nerd-commenter
+#+begin_src emacs-lisp :padline no
+(straight-use-package 'evil-nerd-commenter)
+#+end_src
+* provide
 #+begin_src emacs-lisp
-;;; crafted-evil-packages.el --- Evil mode packages -*- lexical-binding: t; -*-
-
-
-;; Copyright (C) 2022
-;; SPDX-License-Identifier: MIT
-
-;; Author: System Crafters Community
-
-;;; Commentary:
-
-;; Packages for Evil mode, for those who prefer `Vim' keybindings.
-
-;;; Code:
-
-(add-to-list 'package-selected-packages 'evil)
-(add-to-list 'package-selected-packages 'evil-collection)
-(add-to-list 'package-selected-packages 'evil-nerd-commenter)
-
-;; Emacs 28+ prefer the built-in undo-redo facility, but for older
-;; versions, undo-tree is a nice option.
-(when (version< emacs-version "28")
-  (add-to-list 'package-selected-packages 'undo-tree))
-
 (provide 'crafted-evil-packages)
-;;; crafted-evil-packages.el ends here
 #+end_src

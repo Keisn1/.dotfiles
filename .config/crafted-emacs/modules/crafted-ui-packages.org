@@ -1,0 +1,17 @@
+#+title: Crafted Ui Packages
+#+PROPERTY: header-args:emacs-lisp :tangle crafted-ui-packages.el
+
+* all-the-icons
+https://github.com/domtronn/all-the-icons.el
+#+begin_src emacs-lisp :padline no
+(straight-use-package 'all-the-icons)
+#+end_src
+* kaolin-themes
+#+begin_src emacs-lisp :padline no
+(straight-use-package 'kaolin-themes)
+#+end_src
+
+* provide crafted-ui-packages
+#+begin_src emacs-lisp
+(provide 'crafted-ui-packages)
+#+end_src

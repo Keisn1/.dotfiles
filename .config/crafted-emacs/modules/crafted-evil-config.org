@@ -8,9 +8,7 @@
 (when (and (version< emacs-version "28")
            (locate-library "undo-tree"))
   (global-undo-tree-mode))
-
 #+end_src
-
 * Set some variables that must be configured before loading the package
 #+begin_src emacs-lisp
 ;; Set some variables that must be configured before loading the package

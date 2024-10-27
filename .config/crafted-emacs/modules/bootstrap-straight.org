@@ -1,0 +1,45 @@
+#+title: Bootstrap Straight
+#+PROPERTY: header-args:emacs-lisp :tangle bootstrap-straight.el
+
+* commentary
+#+begin_src emacs-lisp
+;; Example early-init.el for using the straight.el package manager.
+;; This does *not* load crafted-early-init-config
+;; (which would normally bootstrap package.el).
+#+end_src
+* disable package-enable-at-startup
+#+begin_src emacs-lisp
+(setq package-enable-at-startup nil)
+#+end_src
+* bootstrap code for straight.el
+[[https://github.com/radian-software/straight.el#getting-started][Getting started straight-el]]
+#+begin_src emacs-lisp
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+#+end_src
+* integration with use-package
+- First install use-package with straight.
+#+begin_src emacs-lisp
+(straight-use-package 'use-package)
+#+end_src
+- Use-Package will now use straight-el automatically and install missing packages if you provide ~:straight t~
+- we don't want to specify  ~:straight t~, therefore we set use-package-always-ensure
+#+begin_src emacs-lisp
+(setq use-package-always-ensure t)
+#+end_src
+* provide bootstrap-straight
+#+begin_src emacs-lisp
+(provide 'bootstrap-straight)
+#+end_src

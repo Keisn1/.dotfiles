@@ -2,27 +2,39 @@
 #+STARTUP: overview
 #+PROPERTY: header-args:emacs-lisp :tangle init.el :mkdirp yes
 
-* load packages
+* packages
+** requiring package bundles
+*** comment
 #+begin_src emacs-lisp
-;; (require 'crafted-evil-packages)
-(package-install-selected-packages :noconfirm)
+;; requiring package bundles
+#+end_src
+*** evil
+#+begin_src emacs-lisp :padline no
+(require 'crafted-evil-packages)
+#+end_src
+*** ui
+#+begin_src emacs-lisp :padline no
+(require 'crafted-ui-packages)
+#+end_src
+** KILL install packages
+#+begin_src emacs-lisp
+;; install packages
+;; using crafted-package-install-selected-packages, since we are using straight-el as backend
+;; (crafted-package-install-selected-packages)
 #+end_src
 * load configs
+** comment
 #+begin_src emacs-lisp
+;; load configs
+#+end_src
+** default-configs
+#+begin_src emacs-lisp :padline no
 (require 'crafted-defaults-config)
-;; (require 'crafted-evil-config)
 #+end_src
-* display startup time
-#+begin_src emacs-lisp
-;; Profile emacs startup
-;; showing the startup time in the echo area
-(defun ce-base-example/display-startup-time ()
-  "Display the startup time after Emacs is fully initialized."
-  (message "Crafted Emacs loaded in %s."
-           (emacs-init-time)))
-(add-hook 'emacs-startup-hook #'ce-base-example/display-startup-time)
+** evil-configs
+#+begin_src emacs-lisp :padline no
+(require 'crafted-evil-config)
 #+end_src
-
 * Appearance
 ** Turning off menu-bar, tool-bar and scroll-bar
 #+begin_src emacs-lisp
@@ -36,4 +48,19 @@
 (set-face-attribute 'default nil
                     :font "Hack Nerd Font"
                     :height 120)
+#+end_src
+* display startup time
+#+begin_src emacs-lisp
+;; showing the startup time in the echo area
+(defun ce-base-example/display-startup-time ()
+  "Display the startup time after Emacs is fully initialized."
+  (message "Crafted Emacs loaded in %s."
+           (emacs-init-time)))
+(add-hook 'emacs-startup-hook #'ce-base-example/display-startup-time)
+#+end_src
+
+* provide init
+#+begin_src emacs-lisp
+;; provide package
+(provide 'init)
 #+end_src

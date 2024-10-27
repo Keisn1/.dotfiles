@@ -1,0 +1,67 @@
+#+title: Bootstrap Straight Doc
+
+[[https://github.com/radian-software/straight.el#getting-started][Getting started straight-el]]
+* code
+#+begin_src emacs-lisp
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+#+end_src
+* explanation
+** let variables
+*** bootstrap-version
+- initialized to 7
+*** bootstrap-file
+- initialized to either (~straight-base-dir~ or ~user-emacs-directory~) + ~"straight/repos/straight.el/bootstrap.el"~
+#+begin_src emacs-lisp :tangle no
+(expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory))
+#+end_src
+** unless statement
+- unless the bootstrap-file exists, an install script will be downloaded and executed inside a temporary buffer, that is killed afterwards
+#+begin_src emacs-lisp :tangle no
+(unless (file-exists-p bootstrap-file)
+  (with-current-buffer
+      (url-retrieve-synchronously "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+       'silent 'inhibit-cookies)
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
+#+end_src
+
+* tell crafted that we are using straight
+- usual way of installing packages is
+#+begin_src emacs-lisp
+(straight-use-package 'evil)
+#+end_src
+
+- crafted is setting its installer variables, functions and predicates to the indicated installer, and uses it e.g.
+#+begin_src emacs-lisp
+(let ((checker (or predicate-fn crafted-package-installed-predicate))
+        (installer (or installer-fn crafted-package-installer)))
+    (unless (funcall checker package)
+      (funcall installer package)))
+#+end_src
+#+begin_src emacs-lisp
+;;; Set up crafted-package
+;; Configure crafted-emacs to use straight as package manager.
+;; See `(info "(crafted-emacs)Using alternate package managers")'
+(load (expand-file-name "modules/crafted-package-config"
+                        user-emacs-directory))
+
+(setq crafted-package-system 'straight)
+(setq crafted-package-installer #'straight-use-package)
+(setq crafted-package-installed-predicate #'straight--installed-p)
+#+end_src
