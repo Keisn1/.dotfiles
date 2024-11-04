@@ -9,6 +9,10 @@
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
                                         ;(package! some-package)
 (package! nerd-icons-dired)
+(package! whisper
+  :recipe (:host github
+	   :repo "natrys/whisper.el"
+	   :files ("*.el")))
 (package! org-superstar)
 (package! catppuccin-theme)
 (package! harpoon)

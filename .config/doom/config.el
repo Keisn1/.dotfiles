@@ -63,6 +63,8 @@
 (use-package! diredfl
   :hook (dired-mode . diredfl-mode))
 
+(add-hook! 'dired-mode-hook #'dired-hide-details-mode)
+
 (display-battery-mode 't)
 
 (use-package! golden-ratio
@@ -347,6 +349,7 @@
 
 (after! evil
   (setq evil-want-fine-undo t)
+  (setq evil-kill-on-visual-paste nil)
   (setq evil-escape-key-sequence "fd")
   (setq evil-escape-delay 0.15)
   (setq evil-escape-excluded-states '(normal multiedit emacs motion)))
@@ -515,6 +518,7 @@ information retrieved from files created by the keychain script."
 
 (use-package! gptel
   :config
+  (setq! gptel-model "gpt-4o")
   (setq! gptel-api-key #'gptel-api-key-from-auth-source)
   (setq! gptel-default-mode 'org-mode)
   (setq! gptel-directives '(
@@ -525,7 +529,7 @@ information retrieved from files created by the keychain script."
      (message \"this is a test\")
      ```
 ")
-                            (default . "You are a large language model living in Emacs and a helpful assistant. Try to avoid long answers.")
+                            (default . "You are a large language model living in Emacs and a helpful assistant. Avoid long answers.")
                             (programming . "You are a large language model and a careful programmer. When asked about something with regards to programming, provide code example")
                             (find-emacs-function . "Please provide the name of the Emacs function that performs this action.")
                             (bash-function . "Assist in generating command line commands by providing the requested action without extra elaboration. Only provide the command without any formatting itself as I will further refine it before execution.")))
@@ -544,9 +548,10 @@ information retrieved from files created by the keychain script."
   (define-key map (kbd "B") 'gptel-buffer)
   (define-key map (kbd "s") 'gptel-send)
   (define-key map (kbd "m") 'gptel-menu)
-  (define-key map (kbd "r") 'gptel--suffix-rewrite)
+  ;; (define-key map (kbd "r") 'gptel--suffix-rewrite)
   (define-key map (kbd "R") 'gptel-rewrite-menu)
-  (define-key map (kbd "P") 'gjg/gptel-select-system-prompt))
+  (define-key map (kbd "P") 'gjg/gptel-select-system-prompt)
+  (define-key map (kbd "r") 'whisper-run))
 
 (map!  :leader
        "k" gptel-global-prefix-map)
@@ -644,6 +649,15 @@ information retrieved from files created by the keychain script."
   :host "localhost:11434"               ;Where it's running
   :stream t                             ;Stream responses
   :models '("llama3:latest"))          ;List of models
+
+(use-package whisper
+  :config
+  (setq whisper-install-directory "~/workspace/"
+        whisper-model "base"
+        whisper-language "en"
+        whisper-translate nil
+        whisper-use-threads (/ (num-processors) 2)
+        ))
 
 (add-hook 'python-mode-hook
           (lambda () (setq-local devdocs-current-docs '("python~3.11" "django~5.0" "django_rest_framework"))))
