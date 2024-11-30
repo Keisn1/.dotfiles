@@ -732,7 +732,7 @@ information retrieved from files created by the keychain script."
 #+begin_src emacs-lisp
 (use-package! gptel
   :config
-  (setq! gptel-model "gpt-4o")
+  (setq! gptel-model 'gpt-4o)
   (setq! gptel-api-key #'gptel-api-key-from-auth-source)
   (setq! gptel-default-mode 'org-mode)
   (setq! gptel-directives '(
@@ -774,15 +774,15 @@ information retrieved from files created by the keychain script."
 #+end_src
 ** add directives
 #+begin_src emacs-lisp
-;; (after! gptel
-;;   (add-to-list 'gptel-directives '(find-emacs-function . "Please provide the name of the Emacs function that performs this action.")
-;;   (add-to-list 'gptel-directives '(bash-function . "Assist in generating command line commands by providing the requested action without extra elaboration. Only provide the command itself as I will further refine it before execution."))))
+(after! gptel
+  (add-to-list 'gptel-directives '(find-emacs-function . "Please provide the name of the Emacs function that performs this action.")
+  (add-to-list 'gptel-directives '(bash-function . "Assist in generating command line commands by providing the requested action without extra elaboration. Only provide the command itself as I will further refine it before execution."))))
 #+end_src
 ** Load my custom system prompts (directives)
 This makes use of my AIPIKHAL package (AI Prompts I Have Known And Loved)
 #+begin_src emacs-lisp
 ;; Use the system prompt builder function
-
+(after! f
 (let ((build-custom-directives-fun "~/.dotfiles/ai/gptel-build-custom-directives.el"))
   (when (f-exists-p build-custom-directives-fun)
     (load build-custom-directives-fun)
@@ -790,6 +790,7 @@ This makes use of my AIPIKHAL package (AI Prompts I Have Known And Loved)
     (setq gptel-custom-directives
           (gjg/gptel-build-custom-directives
            "~/.dotfiles/ai/system-prompts/"))))
+  )
 #+end_src
 ** Convert Markdown LLM responses to Org Mode using Pandoc
 This ultimately replaces the Markdown -> Org Mode conversion built in to =gptel=

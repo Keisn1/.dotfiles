@@ -1,3 +1,4 @@
+[general]
 import = ["/home/kay/.config/alacritty/colors.toml", "/home/kay/.config/alacritty/fonts.toml"]
 live_config_reload = true
 
@@ -12,7 +13,7 @@ shape = "Block"
 TERM = "alacritty"
 WINIT_X11_SCALE_FACTOR = "1.0"
 
-[shell]
+[terminal.shell]
 args = ["--login"]
 program = "/bin/zsh"
 

@@ -518,7 +518,7 @@ information retrieved from files created by the keychain script."
 
 (use-package! gptel
   :config
-  (setq! gptel-model "gpt-4o")
+  (setq! gptel-model 'gpt-4o)
   (setq! gptel-api-key #'gptel-api-key-from-auth-source)
   (setq! gptel-default-mode 'org-mode)
   (setq! gptel-directives '(
@@ -556,12 +556,12 @@ information retrieved from files created by the keychain script."
 (map!  :leader
        "k" gptel-global-prefix-map)
 
-;; (after! gptel
-;;   (add-to-list 'gptel-directives '(find-emacs-function . "Please provide the name of the Emacs function that performs this action.")
-;;   (add-to-list 'gptel-directives '(bash-function . "Assist in generating command line commands by providing the requested action without extra elaboration. Only provide the command itself as I will further refine it before execution."))))
+(after! gptel
+  (add-to-list 'gptel-directives '(find-emacs-function . "Please provide the name of the Emacs function that performs this action.")
+  (add-to-list 'gptel-directives '(bash-function . "Assist in generating command line commands by providing the requested action without extra elaboration. Only provide the command itself as I will further refine it before execution."))))
 
 ;; Use the system prompt builder function
-
+(after! f
 (let ((build-custom-directives-fun "~/.dotfiles/ai/gptel-build-custom-directives.el"))
   (when (f-exists-p build-custom-directives-fun)
     (load build-custom-directives-fun)
@@ -569,6 +569,7 @@ information retrieved from files created by the keychain script."
     (setq gptel-custom-directives
           (gjg/gptel-build-custom-directives
            "~/.dotfiles/ai/system-prompts/"))))
+  )
 
 ;; pandoc -f gfm -t org|sed '/:PROPERTIES:/,/:END:/d'
 
