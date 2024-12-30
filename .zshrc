@@ -81,3 +81,12 @@ alias JackCompilerProject='~/workspace/from-nand-to-tetris/nand2tetris/tools/Jac
 alias francinette=/home/kay/francinette/tester.sh
 
 alias paco=/home/kay/francinette/tester.sh
+
+
+# BEGIN opam configuration
+# This is useful if you're using opam as it adds:
+#   - the correct directories to the PATH
+#   - auto-completion for the opam binary
+# This section can be safely removed at any time if needed.
+[[ ! -r '/home/kay/.opam/opam-init/init.zsh' ]] || source '/home/kay/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+# END opam configuration
