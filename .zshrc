@@ -17,7 +17,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Update mode
-zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' mode auto # update automatically without asking
 
 # Plugins
 plugins=(
@@ -45,8 +45,8 @@ source /usr/share/fzf/completion.zsh
 
 # Setup ssh
 # https://wiki.archlinux.org/title/SSH_keys
-if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-    ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
+if ! pgrep -u "$USER" ssh-agent >/dev/null; then
+    ssh-agent -t 1h >"$XDG_RUNTIME_DIR/ssh-agent.env"
 fi
 if [[ ! -f "$SSH_AUTH_SOCK" ]]; then
     source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
@@ -67,7 +67,7 @@ source /usr/share/nvm/init-nvm.sh
 
 # keychain
 # https://wiki.archlinux.org/title/SSH_keys#Configuration
-eval $(keychain --eval --quiet id_ed25519 )
+eval $(keychain --eval --quiet id_ed25519)
 
 # direnv
 eval "$(direnv hook zsh)"
@@ -82,11 +82,13 @@ alias francinette=/home/kay/francinette/tester.sh
 
 alias paco=/home/kay/francinette/tester.sh
 
-
 # BEGIN opam configuration
 # This is useful if you're using opam as it adds:
 #   - the correct directories to the PATH
 #   - auto-completion for the opam binary
 # This section can be safely removed at any time if needed.
-[[ ! -r '/home/kay/.opam/opam-init/init.zsh' ]] || source '/home/kay/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+[[ ! -r '/home/kay/.opam/opam-init/init.zsh' ]] || source '/home/kay/.opam/opam-init/init.zsh' >/dev/null 2>/dev/null
 # END opam configuration
+
+# for esp toolchain
+alias get_lx106='export PATH="$PATH:$HOME/esp/xtensa-lx106-elf/bin"'

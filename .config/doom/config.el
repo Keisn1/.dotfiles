@@ -11,13 +11,13 @@
 (setq kaolin-themes-comments-style 'contrast)
 
 (if (string= (system-name) "kayarch")
-    (setq doom-font (font-spec :family "Hack Nerd Font" :size 16)
-          doom-variable-pitch-font (font-spec :family "Hack Nerd Font" :size 16)
+    (setq doom-font (font-spec :family "Hack Nerd Font" :size 14)
+          doom-variable-pitch-font (font-spec :family "Hack Nerd Font" :size 14)
           doom-big-font (font-spec :family "Hack Nerd Font" :size 40)))
 
 (if (string= (system-name) "archlinux")
-    (setq doom-font (font-spec :family "Hack Nerd Font" :size 16)
-          doom-variable-pitch-font (font-spec :family "Hack Nerd Font" :size 16)
+    (setq doom-font (font-spec :family "Hack Nerd Font" :size 15)
+          doom-variable-pitch-font (font-spec :family "Hack Nerd Font" :size 15)
           doom-big-font (font-spec :family "Hack Nerd Font" :size 36)))
 
 (custom-set-faces!
