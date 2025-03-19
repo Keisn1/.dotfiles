@@ -8,6 +8,7 @@
 
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
                                         ;(package! some-package)
+(package! ob-mermaid)
 (package! nerd-icons-dired)
 (package! whisper
   :recipe (:host github
@@ -26,7 +27,7 @@
 (package! command-log-mode)
 ;; (package! company-tabnine)
 (package! copilot
-  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
+  :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
 (package! exec-path-from-shell)
 (package! eglot-java)
 (package! go-mode)

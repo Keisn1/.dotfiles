@@ -1,5 +1,9 @@
 ;; Exec-path-from-shell ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(exec-path-from-shell-initialize)
+(use-package! exec-path-from-shell
+  :if (or (memq window-system '(mac ns x pgtk))
+          (daemonp))
+  :config
+  (exec-path-from-shell-initialize))
 
 (setq require-final-newline nil)
 
@@ -132,7 +136,7 @@
 
 ;; org-babel ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(org-babel-do-load-languages 'org-babel-load-languages '((sql . t)))
+(org-babel-do-load-languages 'org-babel-load-languages '((sql . t) (mermaid . t)))
 
 ;; babel-structure templates ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (after! org
@@ -395,7 +399,7 @@
   (add-hook 'c++-mode-hook 'eglot-ensure)
   (add-to-list 'eglot-server-programs '((c-mode) "clangd"))
   (add-to-list 'eglot-server-programs '((go-mode) "gopls"))
-  (add-to-list 'eglot-server-programs '((python-mode) "pyls"))
+  (add-to-list 'eglot-server-programs '((python-mode) "pylsp"))
 )
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -651,6 +655,26 @@ information retrieved from files created by the keychain script."
   :stream t                             ;Stream responses
   :models '("llama3:latest"))          ;List of models
 
+(gptel-make-anthropic "Claude"          ;Any name you want
+  :stream t                             ;Streaming responses
+  :key (lambda () (gptel-api-key-from-auth-source "api.anthropic.com" "kay.freyer@icloud.com")))
+
+(gptel-make-tool
+ :function (lambda (url)
+             (with-current-buffer (url-retrieve-synchronously url)
+               (goto-char (point-min)) (forward-paragraph)
+               (let ((dom (libxml-parse-html-region (point) (point-max))))
+                 (run-at-time 0 nil #'kill-buffer (current-buffer))
+                 (with-temp-buffer
+                   (shr-insert-document dom)
+                   (buffer-substring-no-properties (point-min) (point-max))))))
+ :name "read_url"
+ :description "Fetch and read the contents of a URL"
+ :args (list '(:name "url"
+               :type "string"
+               :description "The URL to read"))
+ :category "web")
+
 (use-package whisper
   :config
   (setq whisper-install-directory "~/workspace/"
@@ -746,8 +770,8 @@ information retrieved from files created by the keychain script."
 (map! :map company-active-map
       "C-SPC" nil)
 (map! :map evil-insert-state-map
-      "C-SPC j" 'copilot-accept-completion
-      "C-SPC l" 'copilot-accept-completion-by-word)
+      "C-c j" 'copilot-accept-completion
+      "C-c l" 'copilot-accept-completion-by-word)
 
 (map! :after cc-mode
       :map doom-leader-code-map :desc "42 formatter" "F" #'format-42-current-c-file)
@@ -1447,3 +1471,12 @@ Best Regards,
                             (if (or (not (file-remote-p file)) (equal "sudo" (file-remote-p file 'method)))
                                 (abbreviate-file-name (file-truename (tramp-file-local-name file)))
                               file))))
+
+(setq ob-mermaid-cli-path "/usr/bin/mmdc")
+
+(defun untabify-buffer ()
+  "Selects whole buffer as a region and run untabify on it"
+  (interactive)
+  (save-excursion
+    (untabify (point-min) (point-max)))
+  )
