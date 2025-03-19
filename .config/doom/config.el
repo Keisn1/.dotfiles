@@ -11,7 +11,7 @@
 ;; Appearance ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq doom-theme 'kaolin-aurora)
+(setq doom-theme 'kaolin-ocean)
 (setq kaolin-themes-comments-style 'contrast)
 
 (if (string= (system-name) "kayarch")
@@ -407,8 +407,8 @@
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; accept completion from copilot and fallback to company
-;; (use-package! copilot
-;;   :hook (prog-mode . copilot-mode))
+;;(use-package! copilot
+  ;;:hook (prog-mode . copilot-mode))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Languages ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -721,10 +721,14 @@ information retrieved from files created by the keychain script."
  :leader :desc "doom dashboard" "b h" '+doom-dashboard/open)
 
 ;; window management ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(map! :n "C-s-l" #'evil-window-right
+      :n "C-s-h" #'evil-window-left
+      :n "C-s-k" #'evil-window-up
+      :n "C-s-j" #'evil-window-down)
 (map!
-        :leader "w /" 'evil-window-vsplit
-        :leader "w -" 'evil-window-split
-        :map evil-window-map "c-n" #'which-key-show-next-page-cycle)
+ :leader "w /" 'evil-window-vsplit
+ :leader "w -" 'evil-window-split
+ :map evil-window-map "c-n" #'which-key-show-next-page-cycle)
 
 ;; org ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
