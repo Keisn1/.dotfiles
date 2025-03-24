@@ -1484,3 +1484,35 @@ Best Regards,
   (save-excursion
     (untabify (point-min) (point-max)))
   )
+
+(defun keisn/project-root ()
+  "Find the root directory of the project."
+  (locate-dominating-file default-directory "Makefile"))
+
+(defun keisn/extract-executable-name ()
+  "Extract the executable name from the Makefile."
+  (let ((name-command "cat Makefile | grep '^NAME :=' | awk '{print $3}'"))
+    (string-trim (shell-command-to-string name-command))))
+
+(defun keisn/run-executable (root)
+  "Run the executable found in the project's root."
+  (let ((executable (concat root (keisn/extract-executable-name))))
+    (message "Running executable: %s" executable)
+    (shell-command (concat executable " &"))))
+
+(defun keisn/compile-and-run ()
+  "Compile the project with make and run the executable."
+  (interactive)
+  (let ((root (keisn/project-root)))
+    (when root
+      (let ((default-directory root))
+        (compile "make")
+        (let ((comp-buf (get-buffer
+                         (compilation-buffer-name "compilation" nil project-compilation-buffer-name-function))))
+          (with-current-buffer comp-buf
+            (setq-local compilation-finish-functions
+                        (lambda (buf msg)
+                          (when (string-match "finished" msg)
+                            (keisn/run-executable root)
+                            ;; Close the compilation buffer
+                            (quit-window nil (get-buffer-window buf)) )))))))))
