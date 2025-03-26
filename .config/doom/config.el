@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;; Exec-path-from-shell ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package! exec-path-from-shell
   :if (or (memq window-system '(mac ns x pgtk))
@@ -11,7 +13,7 @@
 ;; Appearance ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq doom-theme 'kaolin-ocean)
+(setq doom-theme 'kaolin-galaxy)
 (setq kaolin-themes-comments-style 'contrast)
 
 (if (string= (system-name) "kayarch")
@@ -402,6 +404,8 @@
   (add-to-list 'eglot-server-programs '((python-mode) "pylsp"))
 )
 
+(set-eglot-client! 'cc-mode '("clangd" "-j=3" "--clang-tidy" "--header-insertion=never"))
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; copilot ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -414,14 +418,27 @@
 ;; Languages ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; basic configuration for 42 .c and .h files
+(defun my-c-mode-hook ()
+  (setq-default tab-width 4)
+  (setq-default indent-tabs-mode nil)
+  (setq-default c-default-style "linux")
+  (c-set-offset 'substatement-open 0)
+  (setq-default c-basic-offset 4)
+  ;; buggy sometimes if you don't setq it as well
+  (setq c-basic-offset 4))
+(add-hook 'c-mode-hook 'my-c-mode-hook)
 (add-hook 'c-mode-hook (lambda () (apheleia-mode -1)))
-(add-hook 'c++-mode-hook (lambda () (apheleia-mode -1)))
-(set-eglot-client! 'cc-mode '("clangd" "-j=3" "--clang-tidy" "--header-insertion=never"))
 
-;; C  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (after! apheleia
-;;   (add-hook 'c-mode-hook (lambda () (apheleia-mode -1)))
-;;   (add-hook 'c++-mode-hook (lambda () (apheleia-mode -1)))
+;; basic configuration for 42 .c and .h files
+(defun my-cpp-mode-hook ()
+  (setq c-basic-offset 4)
+  (setq-default tab-width 4)
+  (setq-default indent-tabs-mode nil)
+  (setq-default c-default-style "linux")
+  (c-set-offset 'substatement-open 0))
+(add-hook 'c++-mode-hook 'my-c-mode-hook)
+(add-hook 'c++-mode-hook (lambda () (apheleia-mode -1)))
 
 ;; Go ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; (add-hook 'go-ts-mode-hook
@@ -1434,20 +1451,6 @@ Best Regards,
          (string-match "/\\* \\{76\\}\\*/" (nth 9 lines))
          (string-match "/\\* \\*\\{74\\} \\*/" (nth 10 lines)))))
 
-;; (auto-insert-mode t)
-;; (add-hook 'c-mode-hook 'my-42-header)
-
-;; basic configuration for 42 .c and .h files
-(defun my-c-mode-hook ()
-  (setq-default tab-width 4)
-  (setq-default indent-tabs-mode t)
-  (setq-default c-default-style "linux")
-  (c-set-offset 'substatement-open 0)
-  (setq-default c-basic-offset 4)
-  ;; buggy sometimes if you don't setq it as well
-  (setq c-basic-offset 4))
-(add-hook 'c-mode-hook 'my-c-mode-hook)
-
 ;; basic configuration for whitespace mode to assist with norminette requirements
 (setq whitespace-style (quote (tab-mark space-mark face tabs spaces)))
 (setq whitespace-display-mappings
@@ -1456,10 +1459,6 @@ Best Regards,
 (custom-set-faces
  '(whitespace-space ((t (:bold t :foreground "red"))))
  '(whitespace-tab ((t (:bold t :foreground "green")))))
-
-;; (global-set-key (kbd "C-c r") 'my-42-header)
-;; (global-set-key (kbd "TAB") 'tab-to-tab-stop)
-;; (global-set-key (kbd "C-c w") 'whitespace-mode)
 
 (defun format-42-current-c-file ()
   (interactive)
@@ -1500,8 +1499,7 @@ Best Regards,
     (message "Running executable: %s" executable)
     (shell-command (concat executable " &"))
     (with-current-buffer "*Async Shell Command*"
-      (evil-force-normal-state))
-    ))
+      (evil-force-normal-state))))
 
 (defun keisn/compile-and-run ()
   "Compile the project with make and run the executable."
@@ -1518,4 +1516,4 @@ Best Regards,
                           (when (string-match "finished" msg)
                             (keisn/run-executable root)
                             ;; Close the compilation buffer
-                            (quit-window nil (get-buffer-window buf)) )))))))))
+                            (quit-window nil (get-buffer-window buf)))))))))))
