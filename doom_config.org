@@ -1821,9 +1821,7 @@ Best Regards,
   "Run the executable found in the project's root."
   (let ((executable (concat root (keisn/extract-executable-name))))
     (message "Running executable: %s" executable)
-    (shell-command (concat executable " &"))
-    (with-current-buffer "*Async Shell Command*"
-      (evil-force-normal-state))))
+    (shell-command (concat executable " &"))))
 
 (defun keisn/compile-and-run ()
   "Compile the project with make and run the executable."
