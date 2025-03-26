@@ -437,7 +437,7 @@
   (setq-default indent-tabs-mode nil)
   (setq-default c-default-style "linux")
   (c-set-offset 'substatement-open 0))
-(add-hook 'c++-mode-hook 'my-c-mode-hook)
+(add-hook 'c++-mode-hook 'my-cpp-mode-hook)
 (add-hook 'c++-mode-hook (lambda () (apheleia-mode -1)))
 
 ;; Go ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
