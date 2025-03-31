@@ -1819,9 +1819,17 @@ Best Regards,
 
 (defun keisn/run-executable (root)
   "Run the executable found in the project's root."
-  (let ((executable (concat root (keisn/extract-executable-name))))
+  (let* ((executable (concat root (keisn/extract-executable-name)))
+         (buffer-name (format "*Program Output %s*" executable)))
     (message "Running executable: %s" executable)
-    (shell-command (concat executable " &"))))
+    (async-shell-command executable buffer-name)
+    (select-window (display-buffer buffer-name))
+    (with-current-buffer buffer-name
+      ;; Set up 'q' to kill buffer and window
+      (local-set-key (kbd "q") (lambda ()
+                                 (interactive)
+                                 (kill-buffer-and-window)))
+      (read-only-mode 1))))
 
 (defun keisn/compile-and-run ()
   "Compile the project with make and run the executable."
