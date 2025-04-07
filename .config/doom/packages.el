@@ -47,6 +47,8 @@
 (package! gptel)
 ;; (package! gptel :recipe (:host github :repo "https://github.com/karthink/gptel.git" :type git :fork "gregoryg"))
 (package! org-ai)
+(package! rfc-mode
+  :recipe (:host github :repo "galdor/rfc-mode" :files ("*.el")))
 (package! ox-pandoc)
 (package! mu4e-compat
   :recipe (:host github :repo "tecosaur/mu4e-compat"))

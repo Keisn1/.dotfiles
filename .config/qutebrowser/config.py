@@ -240,15 +240,15 @@ config.bind("<Ctrl+j>", "completion-item-focus --history next", mode="command")
 config.bind("<Ctrl+k>", "completion-item-focus --history prev", mode="command")
 
 # use ranger as a file picker
-config.set("fileselect.handler", "external")
-config.set(
-    "fileselect.single_file.command",
-    ["alacritty", "--class", "ranger,ranger", "-e", "ranger", "--choosefile", "{}"],
-)
-config.set(
-    "fileselect.multiple_files.command",
-    ["alacritty", "--class", "ranger,ranger", "-e", "ranger", "--choosefiles", "{}"],
-)
+# config.set("fileselect.handler", "external")
+# config.set(
+#     "fileselect.single_file.command",
+#     ["alacritty", "--class", "ranger,ranger", "-e", "ranger", "--choosefile", "{}"],
+# )
+# config.set(
+#     "fileselect.multiple_files.command",
+#     ["alacritty", "--class", "ranger,ranger", "-e", "ranger", "--choosefiles", "{}"],
+# )
 
 config.set(
     "url.searchengines",
