@@ -186,6 +186,9 @@
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 
+(after! plantuml
+  (setq plantuml-default-exec-mode 'executable))
+
 ;; org-pomodoro ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun set-pomodoro-length (minutes)
@@ -435,10 +438,12 @@
   (setq c-basic-offset 4)
   (setq-default tab-width 4)
   (setq-default indent-tabs-mode nil)
+  (setq compilation-scroll-output t)
   (setq-default c-default-style "linux")
   (c-set-offset 'substatement-open 0))
 (add-hook 'c++-mode-hook 'my-cpp-mode-hook)
-(add-hook 'c++-mode-hook (lambda () (apheleia-mode -1)))
+
+;; (add-hook 'c++-mode-hook (lambda () (apheleia-mode -1)))
 
 ;; Go ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; (add-hook 'go-ts-mode-hook
@@ -1523,3 +1528,5 @@ Best Regards,
                             (keisn/run-executable root)
                             ;; Close the compilation buffer
                             (quit-window nil (get-buffer-window buf)))))))))))
+
+(setq compilation-scroll-output t)

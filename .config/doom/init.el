@@ -158,6 +158,7 @@
        ocaml             ; an objective camel
        ;; (org +dragndrop +hugo +pomodoro +pretty)              ; organize your plain life in plain text
        (org +dragndrop +hugo +pomodoro +pretty +roam2)               ; organize your plain life in plain text
+       (plantuml)
        ;;php               ; perl's insecure younger brother plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
        ;; (python +lsp +pyright +pyenv)            ; beautiful is better than ugly

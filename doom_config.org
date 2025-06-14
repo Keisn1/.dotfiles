@@ -278,6 +278,11 @@ following situations:
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'efs/org-babel-tangle-config)))
 #+end_src
+** org-plantuml
+#+begin_src emacs-lisp
+(after! plantuml
+  (setq plantuml-default-exec-mode 'executable))
+#+end_src
 ** Org-Pomodoro
 #+begin_src emacs-lisp
 ;; org-pomodoro ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -599,10 +604,12 @@ following situations:
   (setq c-basic-offset 4)
   (setq-default tab-width 4)
   (setq-default indent-tabs-mode nil)
+  (setq compilation-scroll-output t)
   (setq-default c-default-style "linux")
   (c-set-offset 'substatement-open 0))
 (add-hook 'c++-mode-hook 'my-cpp-mode-hook)
-(add-hook 'c++-mode-hook (lambda () (apheleia-mode -1)))
+
+;; (add-hook 'c++-mode-hook (lambda () (apheleia-mode -1)))
 #+end_src
 ** GO
 #+begin_src emacs-lisp
@@ -1847,4 +1854,9 @@ Best Regards,
                             (keisn/run-executable root)
                             ;; Close the compilation buffer
                             (quit-window nil (get-buffer-window buf)))))))))))
+#+end_src
+
+** compile-buffer
+#+begin_src emacs-lisp
+(setq compilation-scroll-output t)
 #+end_src
