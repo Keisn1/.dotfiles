@@ -1,0 +1,16 @@
+[Unit]
+Description=SSH key agent
+Documentation=man:ssh-agent(1)
+
+[Service]
+Type=simple
+# Use XDG_RUNTIME_DIR for the socket (usually /run/user/1000)
+Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
+ExecStart=/usr/bin/ssh-agent -D -a $SSH_AUTH_SOCK
+# Automatically add your key when the service starts
+# ExecStartPost=/usr/bin/ssh-add %h/.ssh/id_ed25519
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

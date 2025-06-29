@@ -43,14 +43,14 @@ eval "$(starship init zsh)"
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
 
-# Setup ssh
-# https://wiki.archlinux.org/title/SSH_keys
-if ! pgrep -u "$USER" ssh-agent >/dev/null; then
-    ssh-agent -t 1h >"$XDG_RUNTIME_DIR/ssh-agent.env"
-fi
-if [[ ! -f "$SSH_AUTH_SOCK" ]]; then
-    source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
-fi
+# # Setup ssh
+# # https://wiki.archlinux.org/title/SSH_keys
+# if ! pgrep -u "$USER" ssh-agent >/dev/null; then
+#     ssh-agent -t 1h >"$XDG_RUNTIME_DIR/ssh-agent.env"
+# fi
+# if [ ! -f "$SSH_AUTH_SOCK" ]; then
+#     source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
+# fi
 
 # Path
 PATH=$PATH:$HOME/.config/.doom-emacs/bin
@@ -65,9 +65,13 @@ export VISUAL="emacsclient -c -s doom"
 # nvm
 source /usr/share/nvm/init-nvm.sh
 
-# keychain
-# https://wiki.archlinux.org/title/SSH_keys#Configuration
-eval $(keychain --eval id_ed25519)
+# Set SSH_AUTH_SOCK to the systemd-managed socket
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+ssh-add ~/.ssh/id_ed25519
+
+# # keychain
+# # https://wiki.archlinux.org/title/SSH_keys#Configuration
+# eval $(keychain --eval --quiet id_ed25519)
 
 # direnv
 eval "$(direnv hook zsh)"

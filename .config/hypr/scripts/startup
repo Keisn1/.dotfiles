@@ -38,11 +38,11 @@ nm-applet --indicator &
 # Start mpd
 exec mpd &
 
-eval $(keychain --eval id_ed25519)
+# eval $(keychain --eval id_ed25519)
 
 # Launch emacs daemon (Doom by default)
 # emacs --with-profile crafted --daemon &
-# emacs --with-profile doom --daemon
+emacs --with-profile doom --daemon
 # emacs --with-profile gnu --daemon &
 # could be possible to create a symlink from /usr/bin/emacs to ./local/bin/emacs
 # where you put emacsclient -c -s doom -a emacs or something similar inside

@@ -1860,3 +1860,8 @@ Best Regards,
 #+begin_src emacs-lisp
 (setq compilation-scroll-output t)
 #+end_src
+* ssh-environment setting
+#+begin_src emacs-lisp
+;; Set SSH_AUTH_SOCK for Emacs to use the systemd-managed socket
+(setenv "SSH_AUTH_SOCK" (concat (getenv "XDG_RUNTIME_DIR") "/ssh-agent.socket"))
+#+end_src

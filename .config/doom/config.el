@@ -1530,3 +1530,6 @@ Best Regards,
                             (quit-window nil (get-buffer-window buf)))))))))))
 
 (setq compilation-scroll-output t)
+
+;; Set SSH_AUTH_SOCK for Emacs to use the systemd-managed socket
+(setenv "SSH_AUTH_SOCK" (concat (getenv "XDG_RUNTIME_DIR") "/ssh-agent.socket"))
