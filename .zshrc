@@ -65,9 +65,9 @@ export VISUAL="emacsclient -c -s doom"
 # nvm
 source /usr/share/nvm/init-nvm.sh
 
-# Set SSH_AUTH_SOCK to the systemd-managed socket
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-ssh-add ~/.ssh/id_ed25519
+# # Set SSH_AUTH_SOCK to the systemd-managed socket
+# export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+# ssh-add ~/.ssh/id_ed25519
 
 # # keychain
 # # https://wiki.archlinux.org/title/SSH_keys#Configuration

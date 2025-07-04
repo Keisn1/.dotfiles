@@ -264,16 +264,16 @@ config.set(
 config.set("content.autoplay", False)
 
 # set external editor
-# c.editor.command = [
-#     "emacsclient",
-#     "-c",
-#     # "-e",
-#     # '"(set-frame-parameter nil \'alpha-background 97)"',
-#     "-s",
-#     "doom",
-#     "-a",
-#     "emacs",
-#     "{}",
-# ]
+c.editor.command = [
+    "emacsclient",
+    "-c",
+    # "-e",
+    # '"(set-frame-parameter nil \'alpha-background 97)"',
+    "-s",
+    "doom",
+    "-a",
+    "emacs",
+    "{}",
+]
 # c.editor.command = ["emacs", "--with-profile", "doom", "{}"]
-c.editor.command = ["emacsclient", "-s", "doom", "-a", "emacs", "{}"]
+# c.editor.command = ["emacsclient", "-s", "doom", "-a", "emacs", "{}"]

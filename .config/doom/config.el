@@ -150,6 +150,7 @@
   (add-to-list 'org-structure-template-alist '("sql" . "src sql"))
   (add-to-list 'org-structure-template-alist '("sqlite" . "src sqlite"))
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+  (add-to-list 'org-structure-template-alist '("js" . "src js :results output"))
   (setq org-hide-emphasis-markers t)
   )
 
@@ -405,7 +406,11 @@
   (add-to-list 'eglot-server-programs '((c-mode) "clangd"))
   (add-to-list 'eglot-server-programs '((go-mode) "gopls"))
   (add-to-list 'eglot-server-programs '((python-mode) "pylsp"))
-)
+   (add-to-list 'eglot-server-programs
+                '((js-mode js2-mode typescript-mode) . ("typescript-language-server" "--stdio")))
+  ;; (add-to-list 'eglot-server-programs '((mhtml-mode) "tailwindcss-language-server"))
+
+  )
 
 (set-eglot-client! 'cc-mode '("clangd" "-j=3" "--clang-tidy" "--header-insertion=never"))
 
@@ -524,17 +529,17 @@ information retrieved from files created by the keychain script."
   (setq flymake-show-diagnostics-at-end-of-line t)
   )
 
-(use-package! org-ai
-  :commands (
-             org-ai-mode
-             org-ai-global-mode)
-  :init
-  (add-hook 'org-mode-hook #'org-ai-mode) ;enable org-ai in org mode
-  (org-ai-global-mode)                    ; installs global keybindings C-c M-a
-  :config
-  (setq org-ai-default-chat-model "gpt-3.5-turbo")
-  (org-ai-install-yasnippets)
-  )
+;; (use-package! org-ai
+;;   :commands (
+;;              org-ai-mode
+;;              org-ai-global-mode)
+;;   :init
+;;   (add-hook 'org-mode-hook #'org-ai-mode) ;enable org-ai in org mode
+;;   (org-ai-global-mode)                    ; installs global keybindings C-c M-a
+;;   :config
+;;   (setq org-ai-default-chat-model "gpt-3.5-turbo")
+;;   (org-ai-install-yasnippets)
+;;   )
 
 ;; (map!  :leader
 ;;        "k" org-ai-global-prefix-map
