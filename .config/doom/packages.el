@@ -8,6 +8,7 @@
 
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
                                         ;(package! some-package)
+(package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
 (package! ob-mermaid)
 (package! nerd-icons-dired)
 (package! whisper
@@ -28,6 +29,12 @@
 ;; (package! company-tabnine)
 (package! copilot
   :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
+(package! skewer
+  :recipe (:host github :repo "skeeto/skewer-mode" :files ("*.el")))
+(package! whisper
+  :recipe (:host github :repo "natrys/whisper.el" :branch "master"))
+(package! js2-mode
+  :recipe (:host github :repo "mooz/js2-mode" :files ("*.el")))
 (package! exec-path-from-shell)
 (package! eglot-java)
 (package! go-mode)

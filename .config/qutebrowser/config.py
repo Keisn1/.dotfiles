@@ -255,6 +255,7 @@ config.set(
     {
         "DEFAULT": "https://duckduckgo.com/?q={}",
         "yt": "youtube.com/results?search_query={}",
+        "gg": "https://www.google.com/search?q={}",
         "gop": "https://pkg.go.dev/search?q={}",
         "en_wiki": "https://en.wikipedia.org/wiki/{}",
         "de_wiki": "https://de.wikipedia.org/wiki/{}",

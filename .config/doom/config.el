@@ -151,6 +151,7 @@
   (add-to-list 'org-structure-template-alist '("sqlite" . "src sqlite"))
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (add-to-list 'org-structure-template-alist '("js" . "src js :results output"))
+  (add-to-list 'org-structure-template-alist '("ts" . "src typescript :results output"))
   (setq org-hide-emphasis-markers t)
   )
 
@@ -406,13 +407,24 @@
   (add-to-list 'eglot-server-programs '((c-mode) "clangd"))
   (add-to-list 'eglot-server-programs '((go-mode) "gopls"))
   (add-to-list 'eglot-server-programs '((python-mode) "pylsp"))
-   (add-to-list 'eglot-server-programs
-                '((js-mode js2-mode typescript-mode) . ("typescript-language-server" "--stdio")))
+  (add-to-list 'eglot-server-programs
+               '((js-mode js2-mode typescript-mode) . ("typescript-language-server" "--stdio")))
+  (add-to-list 'eglot-server-programs '((mhtml-mode) "tailwindcss-language-server"))
   ;; (add-to-list 'eglot-server-programs '((mhtml-mode) "tailwindcss-language-server"))
-
   )
 
 (set-eglot-client! 'cc-mode '("clangd" "-j=3" "--clang-tidy" "--header-insertion=never"))
+
+(use-package lsp-tailwindcss
+  :init
+  (setq lsp-tailwindcss-add-on-mode t)
+  :config
+  (add-to-list 'lsp-tailwindcss-major-modes 'mhtml-mode))
+;; (lsp-register-client
+;;     (make-lsp-client :new-connection (lsp-stdio-connection '("tailwindcss-language-server" "--stdio"))
+;;                      :activation-fn (lsp-activate-on "html")
+;;                      :major-modes '(mhtml-mode)
+;;                      :server-id 'tailwindcss-ls))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; copilot ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -704,12 +716,8 @@ information retrieved from files created by the keychain script."
 
 (use-package whisper
   :config
-  (setq whisper-install-directory "~/workspace/"
-        whisper-model "base"
-        whisper-language "en"
-        whisper-translate nil
-        whisper-use-threads (/ (num-processors) 2)
-        ))
+  (setq
+        whisper-model "medium"))
 
 (add-hook 'python-mode-hook
           (lambda () (setq-local devdocs-current-docs '("python~3.11" "django~5.0" "django_rest_framework"))))
@@ -1538,3 +1546,5 @@ Best Regards,
 
 ;; Set SSH_AUTH_SOCK for Emacs to use the systemd-managed socket
 (setenv "SSH_AUTH_SOCK" (concat (getenv "XDG_RUNTIME_DIR") "/ssh-agent.socket"))
+
+(global-whitespace-mode -1)
