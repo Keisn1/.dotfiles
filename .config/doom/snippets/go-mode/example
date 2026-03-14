@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: func Example...() { ... }
-# key: example
-# --
-
-func Example() {
-    `%`$0
-}
