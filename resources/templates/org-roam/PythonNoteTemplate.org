@@ -1,8 +1,0 @@
-* Source
-
-Title: ${title}
-Year: %^{Year}
-
-* Summary
-
-%?

@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# contributor: Kay Freyer
-# name: <main>...</main>
-# --
-<main>
-  $0
-</main>
