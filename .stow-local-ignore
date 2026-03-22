@@ -1,4 +1,5 @@
 \.git
+\.gitignore
 resources
 doom_config.org
 crafted_config.org
